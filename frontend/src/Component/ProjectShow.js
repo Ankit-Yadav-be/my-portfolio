@@ -20,7 +20,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/user-profile")
+      .get("https://my-portfolio-10zk.onrender.com/api/user-profile")
       .then((response) => setUser(response.data))
       .catch((error) => console.error("Error fetching user profile:", error));
 
