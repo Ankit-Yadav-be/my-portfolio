@@ -6,11 +6,14 @@ import ProjectApi from './routes/ProjectApi.js';
 import testimonialRoutes from "./routes/testimonialRoute.js";
 import VisitorRoute from "./routes/VisitorApi.js";
 import hakerrankapi from "./routes/hakerrankApi.js";
-import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
 dotenv.config();
 
-const _dirname = path.resolve();
+// Get the directory name using import.meta.url for ES modules
+const _dirname = dirname(fileURLToPath(import.meta.url));
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -18,8 +21,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Serve static files (images) from the 'uploads' folder inside the backend
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve static files (images) from the 'uploads' folder inside backend
+app.use('/uploads', express.static(join(_dirname, 'uploads')));
 
 // Project routes
 app.use("/api", ProjectApi);
@@ -28,9 +31,9 @@ app.use("/api", VisitorRoute);
 app.use("/api", hakerrankapi);
 
 // Serve frontend (if any)
-app.use(express.static(path.join(_dirname, "/frontend/dist")));
+app.use(express.static(join(_dirname, "/frontend/dist")));
 app.get('*', (_, res) => {
-  res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
+  res.sendFile(join(_dirname, "frontend", "dist", "index.html"));
 });
 
 // MongoDB connection
