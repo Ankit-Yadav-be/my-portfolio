@@ -31,7 +31,8 @@ app.use("/api", VisitorRoute);
 app.use("/api", hakerrankapi);
 
 // Serve frontend (if any)
-app.use(express.static(join(_dirname, "/frontend/dist")));
+app.use(express.static(join(_dirname, 'frontend', 'build')));  // Update this line
+
 app.get('*', (_, res) => {
   res.sendFile(join(_dirname, "frontend", "dist", "index.html"));
 });
