@@ -9,6 +9,7 @@ import hakerrankapi from "./routes/hakerrankApi.js";
 import path from "path";
 
 dotenv.config();
+
 const _dirname = path.resolve();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,9 +18,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Serve static files (images) from the 'uploads' folder
-// This will handle image requests at /uploads/your-image.jpg
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+// Serve static files (images) from the 'uploads' folder inside the backend
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Project routes
 app.use("/api", ProjectApi);
@@ -27,7 +27,7 @@ app.use("/api", testimonialRoutes);
 app.use("/api", VisitorRoute);
 app.use("/api", hakerrankapi);
 
-// Serve the frontend files
+// Serve frontend (if any)
 app.use(express.static(path.join(_dirname, "/frontend/dist")));
 app.get('*', (_, res) => {
   res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
