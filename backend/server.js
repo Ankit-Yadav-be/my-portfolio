@@ -2,7 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path'; // to work with paths
 import ProjectApi from './routes/ProjectApi.js';
 import testimonialRoutes from "./routes/testimonialRoute.js"
 import VisitorRoute from "./routes/VisitorApi.js";
