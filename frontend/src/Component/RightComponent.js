@@ -11,7 +11,7 @@ const RightComponent = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/get');
+        const response = await axios.get('https://my-portfolio-10zk.onrender.com/api/get');
         setProjects(response.data);
         setLoading(false);
       } catch (error) {
