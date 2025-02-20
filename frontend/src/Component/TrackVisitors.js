@@ -9,7 +9,7 @@ const TrackVisitor = () => {
       const browser = /Chrome/.test(userAgent) ? "Chrome" : /Firefox/.test(userAgent) ? "Firefox" : "Other";
       const device = /Mobi|Android/i.test(userAgent) ? "Mobile" : "Desktop";
 
-      await axios.post("http://localhost:8000/api/track-visitor", {
+      await axios.post("https://my-portfolio-10zk.onrender.com/api/track-visitor", {
         ip: ipResponse.data.ip,
         device,
         browser,
