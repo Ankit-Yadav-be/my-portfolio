@@ -16,7 +16,7 @@ const TestimonialList = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState(null); // ✅ For Modal
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/testimonials")
+    axios.get("https://my-portfolio-10zk.onrender.com/api/testimonials")
       .then((response) => {
         setTestimonials(response.data);
         setLoading(false);
