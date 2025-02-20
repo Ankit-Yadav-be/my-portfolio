@@ -49,7 +49,7 @@ const AddProjectForm = () => {
         if (image) formData.append("image", image);
 
         try {
-            const response = await axios.post("http://localhost:8000/api/add", formData, {
+            const response = await axios.post("https://my-portfolio-10zk.onrender.com/api/add", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
