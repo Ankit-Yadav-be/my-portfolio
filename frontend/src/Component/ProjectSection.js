@@ -37,7 +37,7 @@ const ProjectsSection = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/get")
+      .get("https://my-portfolio-10zk.onrender.com/api/get")
       .then((response) => {
         setProjects(response.data);
         setLoading(false);
