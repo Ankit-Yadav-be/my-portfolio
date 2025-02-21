@@ -2,44 +2,38 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path'; // to work with paths
 import ProjectApi from './routes/ProjectApi.js';
-import testimonialRoutes from "./routes/testimonialRoute.js";
+import testimonialRoutes from "./routes/testimonialRoute.js"
 import VisitorRoute from "./routes/VisitorApi.js";
 import hakerrankapi from "./routes/hakerrankApi.js";
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
+import path from "path";
 dotenv.config();
-
-// Get the directory name using import.meta.url for ES modules
-const _dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const port = process.env.PORT || 5000;
-
-// Middleware
- const corsOptions = {
+const _dirname = path.resolve();
+const corsOptions = {
   origin:"https://my-portfolio-10zk.onrender.com",
   credentials:true
 }
+// Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Serve static files (images) from the 'uploads' folder inside backend
-app.use('/uploads', express.static(join(_dirname, 'uploads')));
+// Serve static files (images) from the 'uploads' folder
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Project routes
 app.use("/api", ProjectApi);
-app.use("/api", testimonialRoutes);
-app.use("/api", VisitorRoute);
-app.use("/api", hakerrankapi);
+app.use("/api",testimonialRoutes);
+app.use("/api",VisitorRoute);
+app.use("/api",hakerrankapi);
 
-// Serve frontend (if any)
-app.use(express.static(join(_dirname, 'frontend', 'build')));  // Update this line
-
-app.get('*', (_, res) => {
-  res.sendFile(join(_dirname, "frontend", "dist", "index.html"));
-});
+app.use(express.static(path.join(_dirname, "/frontend/dist")))
+app.get('*',(_,res)=>{
+  res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
+})
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
