@@ -66,7 +66,7 @@ const TestimonialForm = ({ onTestimonialAdded }) => {
           shadow="lg"
           _hover={{ bg: isOpen ? "red.500" : "blue.500", transform: "scale(1.05)" }}
         >
-          {isOpen ? "Close Form" : "Add Testimonial"}
+          {isOpen ? "Close Form" : "Add Testimonial & Feedback"}
         </Button>
       </motion.div>
 
