@@ -140,7 +140,7 @@ const ProjectsSection = () => {
                   </Text>
                   {project.image && (
                     <Image
-                      src={`https://my-portfolio-10zk.onrender.com/${project.image}`}
+                      src={project.image}
                       alt={project.title}
                       borderRadius="md"
                       mt={4}
