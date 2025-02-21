@@ -7,7 +7,7 @@ const GitHubActivityFeed = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showRepos, setShowRepos] = useState(false); // State to toggle showing repos
-  const token = "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"; // Insert your new token here
+  const token = process.env.REACT_APP_GITHUB_TOKEN; // Insert your new token here
 
   useEffect(() => {
     const fetchRepos = async () => {
