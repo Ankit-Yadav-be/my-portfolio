@@ -12,30 +12,19 @@ const TestimonialList = () => {
   const { colorMode } = useColorMode();
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [maxHeight, setMaxHeight] = useState("auto"); 
-  const [selectedTestimonial, setSelectedTestimonial] = useState(null); // ✅ For Modal
+  const [selectedTestimonial, setSelectedTestimonial] = useState(null);
 
   useEffect(() => {
     axios.get("https://my-portfolio-10zk.onrender.com/api/testimonials")
       .then((response) => {
         setTestimonials(response.data);
         setLoading(false);
-        updateMaxHeight(response.data);
       })
       .catch((error) => {
         console.error("Error fetching testimonials:", error);
         setLoading(false);
       });
   }, []);
-
-  const updateMaxHeight = (testimonials) => {
-    if (!testimonials.length) return;
-    let maxH = 0;
-    testimonials.forEach((testimonial) => {
-      maxH = Math.max(maxH, 120); // Fixed height for uniformity
-    });
-    setMaxHeight(`${maxH + 100}px`);
-  };
 
   return (
     <Box 
@@ -45,12 +34,13 @@ const TestimonialList = () => {
       p={6}
     >
       <TestimonialForm/>
+      
       {/* Scrollable Testimonials */}
       <Box 
         display="flex"
-        overflowX="auto"
+        overflowX={{ base: "scroll", md: "auto" }}
         scrollSnapType="x mandatory"
-        width="80%"
+        width={{ base: "100%", md: "80%" }}
         maxW="800px"
         mx="auto"
         p={4}
@@ -67,7 +57,8 @@ const TestimonialList = () => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
             style={{
-              minWidth: "calc(50% - 10px)", 
+              minWidth: "calc(90% - 10px)", 
+              maxWidth: "400px", 
               scrollSnapAlign: "start",
             }}
           >
@@ -81,16 +72,14 @@ const TestimonialList = () => {
               textAlign="center"
               position="relative"
               mx={2}
-              height={maxHeight} 
               _hover={{ transform: "scale(1.02)", transition: "0.3s" }}
-              onClick={() => setSelectedTestimonial(testimonial)} // ✅ Open Modal on Click
+              onClick={() => setSelectedTestimonial(testimonial)}
               cursor="pointer"
             >
-              {/* Avatar */}
               <Flex justify="center" mb={3}>
                 {testimonial.image && (
                   <Image 
-                    src={testimonial.image} 
+                    src={testimonial.image}
                     alt={testimonial.name} 
                     borderRadius="full" 
                     boxSize="80px"
@@ -101,32 +90,25 @@ const TestimonialList = () => {
                   />
                 )}
               </Flex>
-
-              {/* Name & Designation */}
               <Text fontWeight="bold" fontSize="xl" textTransform="uppercase" letterSpacing="wider">
                 {testimonial.name}
               </Text>
               <Text fontSize="sm" color={colorMode === "dark" ? "blue.400" : "blue.600"}>
                 {testimonial.designation}
               </Text>
-
-              {/* Summary (Shortened Message) */}
               <Flex justify="center" align="center" mt={4}>
                 <Icon as={FaQuoteLeft} fontSize="md" color="gray.400" mr={2} />
-                <Text fontStyle="italic" color={colorMode === "dark" ? "gray.300" : "gray.600"} maxW="400px" noOfLines={1}>
+                <Text fontStyle="italic" color={colorMode === "dark" ? "gray.300" : "gray.600"} maxW="400px" noOfLines={2}>
                   {testimonial.message}
                 </Text>
                 <Icon as={FaQuoteRight} fontSize="md" color="gray.400" ml={2} />
               </Flex>
-
-              {/* Click to View Full */}
-             
             </Box>
           </motion.div>
         ))}
       </Box>
 
-      {/* 🔥 Modal for Full Message */}
+      {/* Modal for Full Message */}
       {selectedTestimonial && (
         <Modal isOpen={true} onClose={() => setSelectedTestimonial(null)}>
           <ModalOverlay />
@@ -137,7 +119,7 @@ const TestimonialList = () => {
               <VStack spacing={3}>
                 {selectedTestimonial.image && (
                   <Image 
-                    src={`http://localhost:8000/uploads/${selectedTestimonial.image.split("\\").pop()}`} 
+                    src={selectedTestimonial.image} 
                     alt={selectedTestimonial.name} 
                     borderRadius="full" 
                     boxSize="100px"
@@ -152,7 +134,6 @@ const TestimonialList = () => {
           </ModalContent>
         </Modal>
       )}
-
     </Box>
   );
 };
