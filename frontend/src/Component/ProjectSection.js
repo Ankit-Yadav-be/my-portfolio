@@ -200,7 +200,7 @@ const ProjectsSection = () => {
             <Divider my={4} borderColor="gray.500" />
             {selectedProject?.image && (
               <Image
-                src={`http://localhost:8000/${selectedProject.image}`}
+                src={selectedProject.image}
                 alt={selectedProject?.title}
                 borderRadius="md"
                 mb={4}
