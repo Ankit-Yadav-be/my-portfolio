@@ -18,7 +18,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+ const corsOptions = {
+  origin:"https://my-portfolio-10zk.onrender.com",
+  credentials:true
+}
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve static files (images) from the 'uploads' folder inside backend
