@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Heading, Text, Stack, Link, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
 import { FaGithub, FaRegClock, FaBook, FaEye, FaEyeSlash } from 'react-icons/fa'; // Importing icons
-
+import axios from "axios";
 const GitHubActivityFeed = () => {
   const [repos, setRepos] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showRepos, setShowRepos] = useState(false); // State to toggle showing repos
-  const token = process.env.REACT_APP_GITHUB_TOKEN; // Insert your new token here
+  const token = "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"; // Insert your new token here
 
   useEffect(() => {
     const fetchRepos = async () => {
       try {
-        const response = await fetch("https://api.github.com/users/Ankit-Yadav-be/repos", {
+        const response = await axios.get("https://api.github.com/users/Ankit-Yadav-be/repos", {
           headers: {
             Authorization: `token ${token}`,
           },
