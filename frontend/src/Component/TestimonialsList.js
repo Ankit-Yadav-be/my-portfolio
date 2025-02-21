@@ -90,7 +90,7 @@ const TestimonialList = () => {
               <Flex justify="center" mb={3}>
                 {testimonial.image && (
                   <Image 
-                    src={`http://localhost:8000/uploads/${testimonial.image.split("\\").pop()}`} 
+                    src={`https://my-portfolio-10zk.onrender.com/uploads/${testimonial.image.split("\\").pop()}`} 
                     alt={testimonial.name} 
                     borderRadius="full" 
                     boxSize="80px"
