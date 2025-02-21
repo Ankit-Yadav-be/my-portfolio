@@ -5,7 +5,7 @@ import cloudinary from "../config/cloudinary.js";
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary.v2,
   params: {
-    folder: "portfolio-projects", // Cloudinary folder name
+    folder: "pizza-projects", // Cloudinary folder name
     allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
