@@ -16,7 +16,7 @@ import { FaUsers, FaCity, FaChevronDown, FaChevronUp } from "react-icons/fa";
 const VisitorStats = () => {
   const [visitors, setVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showStats, setShowStats] = useState(false);
+  const [showStats, setShowStats] = useState(true);
 
   useEffect(() => {
     const fetchVisitors = async () => {
