@@ -166,7 +166,7 @@ const ProjectsSection = () => {
                   <HStack spacing={4}>
                     <Button
                       as="a"
-                      href={`https://github.com/${selectedProject?.github}`}
+                      href={selectedProject?.github}
                       target="_blank"
                       leftIcon={<FaGithub />}
                       colorScheme="gray"
