@@ -22,7 +22,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve static files (images) from the 'uploads' folder
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+app.use('/uploads', express.static(path.join(_dirname, 'uploads')));
+
 
 // Project routes
 app.use("/api", ProjectApi);
