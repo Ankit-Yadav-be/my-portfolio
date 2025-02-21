@@ -19,7 +19,7 @@ import {
 } from "react-icons/fa";
 import LeetCodeWidget from "./LeetcodeWidgets";
 import HackerRankWidget from "./HakerRankWidgets";
-import GitHubActivityFeed from "./GitHubActivityFeed";
+
 
 const AboutMeSection = () => {
   const [usernamel, setuserNamel] = useState("codersourya123");
@@ -67,7 +67,7 @@ const AboutMeSection = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         style={{ position: "relative", zIndex: 2 }}
       >
-         <GitHubActivityFeed />
+       
         {/* Name & Title */}
         <Text
           fontSize={{ base: "3xl", md: "4xl" }}
