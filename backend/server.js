@@ -7,7 +7,7 @@ import ProjectApi from './routes/ProjectApi.js';
 import testimonialRoutes from "./routes/testimonialRoute.js"
 import VisitorRoute from "./routes/VisitorApi.js";
 import hakerrankapi from "./routes/hakerrankApi.js";
-import path from "path";
+
 dotenv.config();
 
 const app = express();
