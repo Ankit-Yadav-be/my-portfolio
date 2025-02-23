@@ -36,7 +36,7 @@ const certifications = [
    {
     title: "Full Stack Certification ",
     issuer: "Hakerrank",
-    image: "https://www.hackerrank.com/certificates/iframe/bbde8932447f",
+    image: "/h.png",
     link: "https://www.hackerrank.com/certificates/bbde8932447f",
     date: "23 Feb 2025",
     skills: "React,Mongodb,javascript",
@@ -44,7 +44,7 @@ const certifications = [
    {
     title: "Data Strcuture(Linked List)",
     issuer: "Code Chef",
-    image: "https://www.codechef.com/certificates/public/bbb6135",
+    image: "/c.png",
     link: "https://www.codechef.com/certificates/public/bbb6135",
     date: "3 Sep 2024",
     skills: "java ",

@@ -67,7 +67,11 @@ const AboutMeSection = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         style={{ position: "relative", zIndex: 2 }}
       >
+<<<<<<< HEAD
        
+=======
+        
+>>>>>>> ca5080d (all done finally)
         {/* Name & Title */}
         <Text
           fontSize={{ base: "3xl", md: "4xl" }}
