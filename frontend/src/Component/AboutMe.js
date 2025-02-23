@@ -4,26 +4,19 @@ import {
   Text,
   VStack,
   HStack,
-  Badge,
   Divider,
   Icon,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ReactTyped } from "react-typed";
 import { motion } from "framer-motion";
-import {
-  FaRobot,
-  FaBrain,
-  FaLaptopCode,
-  FaGlobe,
-} from "react-icons/fa";
+import { FaRobot, FaBrain } from "react-icons/fa";
 import LeetCodeWidget from "./LeetcodeWidgets";
 import HackerRankWidget from "./HakerRankWidgets";
 
-
 const AboutMeSection = () => {
-  const [usernamel, setuserNamel] = useState("codersourya123");
-  const [usernameh, setuserNameh] = useState("ay870421");
+  const [usernamel] = useState("codersourya123");
+  const [usernameh] = useState("ay870421");
   const glowColor = useColorModeValue(
     "rgba(0, 255, 255, 0.8)",
     "rgba(0, 255, 255, 1)"
@@ -43,7 +36,6 @@ const AboutMeSection = () => {
       position="relative"
       overflow="hidden"
     >
-      
       {/* Floating Glow Effect */}
       <motion.div
         animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.02, 1] }}
@@ -67,11 +59,6 @@ const AboutMeSection = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         style={{ position: "relative", zIndex: 2 }}
       >
-<<<<<<< HEAD
-       
-=======
-        
->>>>>>> ca5080d (all done finally)
         {/* Name & Title */}
         <Text
           fontSize={{ base: "3xl", md: "4xl" }}
@@ -88,7 +75,7 @@ const AboutMeSection = () => {
 
         {/* Typing Effect with Icons */}
         <HStack justify="center" mt={2} spacing={3}>
-          <Icon as={FaRobot} boxSize={5} color="cyan.300" /> {/* Reduced size */}
+          <Icon as={FaRobot} boxSize={5} color="cyan.300" />
           <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="medium">
             <ReactTyped
               strings={[
@@ -102,7 +89,7 @@ const AboutMeSection = () => {
               loop
             />
           </Text>
-          <Icon as={FaBrain} boxSize={5} color="cyan.300" /> {/* Reduced size */}
+          <Icon as={FaBrain} boxSize={5} color="cyan.300" />
         </HStack>
 
         {/* Glowing Divider */}
@@ -114,21 +101,10 @@ const AboutMeSection = () => {
         />
 
         {/* LeetCode and HackerRank Section */}
-        <Text
-          fontSize={{ base: "xl", md: "xl" }}
-          fontWeight="bold"
-          color="cyan.100"
-          mt={4}
-        >
+        <Text fontSize="xl" fontWeight="bold" color="cyan.100" mt={4}>
           My Coding Profiles
         </Text>
-        <HStack
-          spacing={5}
-          mt={6}
-          justify="center"
-          flexWrap="wrap"
-          px={4}
-        >
+        <HStack spacing={5} mt={6} justify="center" flexWrap="wrap" px={4}>
           {/* LeetCode Widget */}
           <Box
             p={4}
@@ -159,7 +135,6 @@ const AboutMeSection = () => {
             transition="all 0.3s ease"
           >
             <HackerRankWidget usernameh={usernameh} />
-            
           </Box>
         </HStack>
       </motion.div>
