@@ -33,6 +33,22 @@ const certifications = [
     date: "27 Aug 2024",
     skills: "Business Analytics, Digital Marketing",
   },
+   {
+    title: "Full Stack Certification ",
+    issuer: "Hakerrank",
+    image: "https://www.hackerrank.com/certificates/iframe/bbde8932447f",
+    link: "https://www.hackerrank.com/certificates/bbde8932447f",
+    date: "23 Feb 2025",
+    skills: "React,Mongodb,javascript",
+  },
+   {
+    title: "Data Strcuture(Linked List)",
+    issuer: "Code Chef",
+    image: "https://www.codechef.com/certificates/public/bbb6135",
+    link: "https://www.codechef.com/certificates/public/bbb6135",
+    date: "3 Sep 2024",
+    skills: "java ",
+  },
 ];
 
 const Certifications = () => {
