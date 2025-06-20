@@ -14,7 +14,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const _dirname = path.resolve();
 const corsOptions = {
-  origin:"https://my-portfolio-10zk.onrender.com",
+  origin:"https://my-portfolio-blue-alpha-48.vercel.app",
   credentials:true
 }
 // Middleware
