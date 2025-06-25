@@ -37,10 +37,11 @@ import {
   SiPostgresql,
   SiKubernetes,
   SiGmail,
-  SiVisualstudiocode,
+  SiVisualstudioCode,
   SiPostman,
   SiInsomnia,
 } from "react-icons/si";
+
 
 const MotionBox = motion(Box);
 
