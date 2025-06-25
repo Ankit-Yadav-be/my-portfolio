@@ -106,7 +106,7 @@ const categories = [
   },
 ];
 
-const SkillsSection = () => {
+const SkillSection = () => {
   const { colorMode } = useColorMode();
   const bgCard = useColorModeValue("whiteAlpha.700", "gray.700");
   const [visibleSections, setVisibleSections] = useState({});
@@ -207,4 +207,4 @@ const SkillsSection = () => {
   );
 };
 
-export default SkillsSection;
+export default SkillSection;
