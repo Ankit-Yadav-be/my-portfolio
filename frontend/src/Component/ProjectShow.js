@@ -17,7 +17,6 @@ const Portfolio = () => {
   const { toggleColorMode } = useColorMode();
   const [showVisitorStats, setShowVisitorStats] = useState(false);
   const [highlightButton, setHighlightButton] = useState(true); // Indicator effect
-
   useEffect(() => {
     axios
       .get("https://my-portfolio-10zk.onrender.com/api/user-profile")
