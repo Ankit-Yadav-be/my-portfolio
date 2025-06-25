@@ -19,7 +19,6 @@ import {
   FaHtml5,
   FaCss3Alt,
   FaJs,
-  FaDatabase,
   FaDocker,
   FaAws,
   FaGoogle,
@@ -28,7 +27,6 @@ import {
   FaPython,
   FaCloud,
   FaGithub,
-  FaTools,
 } from "react-icons/fa";
 import {
   SiMongodb,
@@ -41,7 +39,6 @@ import {
   SiPostman,
   SiInsomnia,
 } from "react-icons/si";
-
 
 const MotionBox = motion(Box);
 
@@ -101,7 +98,7 @@ const categories = [
   {
     title: "Tools I Use",
     skills: [
-      { name: "VS Code", icon: SiVisualstudiocode, color: "blue.400" },
+      { name: "VS Code", icon: SiVisualstudioCode, color: "blue.400" },
       { name: "Postman", icon: SiPostman, color: "orange.400" },
       { name: "Insomnia", icon: SiInsomnia, color: "purple.300" },
       { name: "GitHub Desktop", icon: FaGithub, color: "gray.600" },
@@ -176,7 +173,11 @@ const SkillsSection = () => {
 
           <Collapse in={visibleSections[category.title] || !isMobile} animateOpacity>
             <Grid
-              templateColumns={{ base: "repeat(2, 1fr)", sm: "repeat(3, 1fr)", md: "repeat(4, 1fr)" }}
+              templateColumns={{
+                base: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
+                md: "repeat(4, 1fr)",
+              }}
               gap={4}
             >
               {category.skills.map((skill, index) => (
