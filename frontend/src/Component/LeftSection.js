@@ -19,9 +19,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import TypingEffect from "./TypingEffect";
-import SkillsSection from "./SkillSection";
-import AboutMeSection from "./AboutMe";
+import { useNavigate } from "react-router-dom"; // ✅ Redirect hook
 
 // Animated Gradient Background
 const AnimatedGradient = () => (
@@ -44,6 +42,8 @@ const AnimatedGradient = () => (
 );
 
 const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
+  const navigate = useNavigate(); // ✅ For redirection
+
   return (
     <VStack
       w={{ base: "100%", md: "25%" }}
@@ -85,9 +85,8 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
           }}
         />
       </motion.div>
-      
 
-      {/* Name with Shining Effect */}
+      {/* Name and Title */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -109,8 +108,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
         </Text>
       </motion.div>
 
-      {/* Social Media Icons with Tilt Effect */}
-      {/* Social Media Icons with Tilt Effect */}
+      {/* Social Media Icons */}
       <HStack spacing={4} justify="center">
         {[
           {
@@ -127,7 +125,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
             icon: FaTwitter,
             color: "cyan.500",
             link: "https://twitter.com/your-twitter",
-          }, // Twitter ka link daalna hoga
+          }, // Update this
         ].map(({ icon, color, link }, index) => (
           <motion.div
             key={index}
@@ -148,13 +146,13 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
           </motion.div>
         ))}
       </HStack>
-      
-      {/* Contact Information */}
+
+      {/* Contact Info */}
       <VStack align="start" w="full" spacing={2}>
         {[
           { icon: FaPhone, text: user.phone || "+917830237144" },
           { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
-          { icon: FaMapMarkerAlt, text: user.location || "Agra,utter pradesh" },
+          { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
         ].map(({ icon, text }, index) => (
           <HStack key={index} spacing={3}>
             <Box as={icon} fontSize="1.2rem" color="teal.300" />
@@ -171,7 +169,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
         ))}
       </VStack>
 
-      {/* Download Resume Button with Gradient Animation */}
+      {/* Download Resume */}
       <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
         <Button
           leftIcon={<FaDownload />}
@@ -188,10 +186,27 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
         >
           Download Resume
         </Button>
-        <SkillsSection/>
       </motion.div>
 
-      {/* Dark Mode Toggle with Icon Animation */}
+      {/* ✅ View All Skills Redirect Button */}
+      <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+        <Button
+          w="full"
+          mt={3}
+          colorScheme="teal"
+          variant="outline"
+          _hover={{
+            bgGradient: "linear(to-r, teal.300, cyan.400)",
+            color: "white",
+            border: "none",
+          }}
+          onClick={() => navigate("/skill")}
+        >
+          View All Skills
+        </Button>
+      </motion.div>
+
+      {/* Dark Mode Toggle */}
       <HStack justify="center" mt={5}>
         <Text fontWeight="bold">Dark Mode</Text>
         <motion.div
