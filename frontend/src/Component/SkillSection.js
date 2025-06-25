@@ -9,6 +9,8 @@ import {
   Collapse,
   Divider,
   useBreakpointValue,
+  Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
@@ -26,8 +28,19 @@ import {
   FaPython,
   FaCloud,
   FaGithub,
+  FaTools,
 } from "react-icons/fa";
-import { SiMongodb, SiFirebase, SiPrisma, SiPostgresql, SiKubernetes, SiGmail } from "react-icons/si";
+import {
+  SiMongodb,
+  SiFirebase,
+  SiPrisma,
+  SiPostgresql,
+  SiKubernetes,
+  SiGmail,
+  SiVisualstudiocode,
+  SiPostman,
+  SiInsomnia,
+} from "react-icons/si";
 
 const MotionBox = motion(Box);
 
@@ -84,10 +97,20 @@ const categories = [
       { name: "Open Source Contributor", icon: FaGithub, color: "gray.600" },
     ],
   },
+  {
+    title: "Tools I Use",
+    skills: [
+      { name: "VS Code", icon: SiVisualstudiocode, color: "blue.400" },
+      { name: "Postman", icon: SiPostman, color: "orange.400" },
+      { name: "Insomnia", icon: SiInsomnia, color: "purple.300" },
+      { name: "GitHub Desktop", icon: FaGithub, color: "gray.600" },
+    ],
+  },
 ];
 
 const SkillsSection = () => {
   const { colorMode } = useColorMode();
+  const bgCard = useColorModeValue("whiteAlpha.700", "gray.700");
   const [visibleSections, setVisibleSections] = useState({});
   const isMobile = useBreakpointValue({ base: true, md: false });
 
@@ -99,10 +122,32 @@ const SkillsSection = () => {
   };
 
   return (
-    <VStack spacing={8} p={6} w="full" maxW="1000px" mx="auto">
-      <Text fontSize="3xl" fontWeight="bold" textAlign="center" color="teal.400">
-        My Tech Stack & Skills
-      </Text>
+    <VStack spacing={10} p={{ base: 4, md: 10 }} w="full" maxW="1200px" mx="auto">
+      {/* Animated Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Heading
+          fontSize={{ base: "2xl", md: "3xl" }}
+          textAlign="center"
+          color="teal.400"
+          position="relative"
+          _after={{
+            content: `""`,
+            position: "absolute",
+            width: "80px",
+            height: "2px",
+            bg: "teal.400",
+            bottom: "-4px",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          My Tech Stack & Skills
+        </Heading>
+      </motion.div>
 
       {categories.map((category, idx) => (
         <MotionBox
@@ -110,7 +155,8 @@ const SkillsSection = () => {
           w="full"
           p={5}
           borderRadius="2xl"
-          bg={colorMode === "dark" ? "gray.800" : "gray.100"}
+          bg={bgCard}
+          backdropFilter="blur(10px)"
           boxShadow="lg"
           whileHover={{ scale: 1.01 }}
           transition="0.3s ease"
@@ -122,22 +168,23 @@ const SkillsSection = () => {
             cursor="pointer"
             color="teal.500"
             onClick={() => toggleSection(category.title)}
+            _hover={{ textDecoration: "underline" }}
           >
             {category.title}
           </Text>
 
           <Collapse in={visibleSections[category.title] || !isMobile} animateOpacity>
             <Grid
-              templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
+              templateColumns={{ base: "repeat(2, 1fr)", sm: "repeat(3, 1fr)", md: "repeat(4, 1fr)" }}
               gap={4}
             >
               {category.skills.map((skill, index) => (
                 <MotionBox
                   key={index}
-                  p={3}
-                  borderRadius="lg"
+                  p={4}
+                  borderRadius="xl"
                   shadow="md"
-                  bg={colorMode === "dark" ? "gray.700" : "white"}
+                  bg={colorMode === "dark" ? "gray.800" : "white"}
                   textAlign="center"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
