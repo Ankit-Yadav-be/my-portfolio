@@ -181,7 +181,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
             transition: "0.3s",
           }}
           onClick={() =>
-            (window.location.href = user.resumeLink || "/RESUME.pdf")
+            (window.location.href = user.resumeLink || "/RESUMEE.pdf")
           }
         >
           Download Resume
