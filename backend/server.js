@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path'; // to work with paths
-import ProjectApi from './routes/ProjectApi.js';
-import testimonialRoutes from "./routes/testimonialRoute.js"
-import VisitorRoute from "./routes/VisitorApi.js";
-import hakerrankapi from "./routes/hakerrankApi.js";
+import ProjectApi from './src/routes/ProjectApi.js';
+import testimonialRoutes from "./src/routes/testimonialRoute.js"
+import VisitorRoute from "./src/routes/VisitorApi.js";
+import hakerrankapi from "./src/routes/hakerrankApi.js";
 
 dotenv.config();
 
@@ -17,15 +17,15 @@ const corsOptions = {
   origin:"https://my-portfolio-blue-alpha-48.vercel.app",
   credentials:true
 }
-// Middleware
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Serve static files (images) from the 'uploads' folder
+
 app.use('/uploads', express.static(path.join(_dirname, 'uploads')));
 
 
-// Project routes
+
 app.use("/api", ProjectApi);
 app.use("/api",testimonialRoutes);
 app.use("/api",VisitorRoute);
