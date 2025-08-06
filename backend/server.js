@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 const _dirname = path.resolve();
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 
