@@ -24,7 +24,9 @@ app.use(express.json());
 
 app.use('/uploads', express.static(path.join(_dirname, 'uploads')));
 
-
+app.get('/',(req,res)=>{
+   res.send("API Running...")
+})
 
 app.use("/api", ProjectApi);
 app.use("/api",testimonialRoutes);
@@ -45,7 +47,5 @@ mongoose.connect(process.env.MONGO_URI)
     console.log("MongoDB connection error:", err);
   });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+
+export default app;``
