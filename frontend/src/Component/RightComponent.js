@@ -11,7 +11,7 @@ const RightComponent = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('https://my-portfolio-10zk.onrender.com/api/get');
+        const response = await axios.get('https://my-portfolio-lw4x.vercel.app/api/get');
         setProjects(response.data);
         setLoading(false);
       } catch (error) {

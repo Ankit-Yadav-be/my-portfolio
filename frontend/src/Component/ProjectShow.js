@@ -19,7 +19,7 @@ const Portfolio = () => {
   const [highlightButton, setHighlightButton] = useState(true); // Indicator effect
   useEffect(() => {
     axios
-      .get("https://my-portfolio-10zk.onrender.com/api/user-profile")
+      .get("https://my-portfolio-lw4x.vercel.app/api/user-profile")
       .then((response) => setUser(response.data))
       .catch((error) => console.error("Error fetching user profile:", error));
 

@@ -28,7 +28,7 @@ const TestimonialForm = ({ onTestimonialAdded }) => {
     if (image) formData.append("image", image);
 
     try {
-      const response = await axios.post("https://my-portfolio-10zk.onrender.com/api/addtestimonials", formData, {
+      const response = await axios.post("https://my-portfolio-lw4x.vercel.app/api/addtestimonials", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       alert("Testimonial added successfully!");

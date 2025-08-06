@@ -15,7 +15,7 @@ const TestimonialList = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
 
   useEffect(() => {
-    axios.get("https://my-portfolio-10zk.onrender.com/api/testimonials")
+    axios.get("https://my-portfolio-lw4x.vercel.app/api/testimonials")
       .then((response) => {
         setTestimonials(response.data);
         setLoading(false);

@@ -21,7 +21,7 @@ const VisitorStats = () => {
   useEffect(() => {
     const fetchVisitors = async () => {
       try {
-        const { data } = await axios.get("https://my-portfolio-10zk.onrender.com/api/get-visitors");
+        const { data } = await axios.get("https://my-portfolio-lw4x.vercel.app/api/get-visitors");
         setVisitors(data);
       } catch (error) {
         console.error("Error fetching visitor stats:", error);

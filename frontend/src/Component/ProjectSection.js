@@ -37,7 +37,7 @@ const ProjectsSection = () => {
 
   useEffect(() => {
     axios
-      .get("https://my-portfolio-10zk.onrender.com/api/get")
+      .get("https://my-portfolio-lw4x.vercel.app/api/get")
       .then((response) => {
         setProjects(response.data);
         setLoading(false);
