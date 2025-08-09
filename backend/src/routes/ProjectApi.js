@@ -17,17 +17,27 @@ router.get("/get", async (req, res) => {
 // Add new project
 router.post("/add", upload.single("image"), async (req, res) => {
   try {
-    const { title, description, link, techStack, github } = req.body;
+    const { title, description, link, techStack, github, category } = req.body;
 
     // Validate required fields
-    if (!title || !description || !link || !github) {
-      return res.status(400).json({ error: "All fields (title, description, link, github) are required" });
+    if (!title || !description || !link || !github || !category) {
+      return res.status(400).json({ 
+        error: "All fields (title, description, link, github, category) are required" 
+      });
     }
 
-    const image = req.file ? req.file.path : ""; // Cloudinary se image URL milega
+    const image = req.file ? req.file.path : "";
     const parsedTechStack = techStack ? JSON.parse(techStack) : [];
 
-    const newProject = new Project({ title, description, link, github, image, techStack: parsedTechStack });
+    const newProject = new Project({
+      title,
+      description,
+      link,
+      github,
+      image,
+      techStack: parsedTechStack,
+      category
+    });
 
     await newProject.save();
     res.status(201).json(newProject);
