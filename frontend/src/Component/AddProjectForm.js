@@ -11,6 +11,7 @@ import {
   TagLabel,
   TagCloseButton,
   useToast,
+  Select
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -22,6 +23,7 @@ const AddProjectForm = () => {
   const [image, setImage] = useState(null);
   const [techStack, setTechStack] = useState([]);
   const [newTech, setNewTech] = useState("");
+  const [category, setCategory] = useState(""); // NEW STATE
   const toast = useToast();
 
   const handleTechAdd = () => {
@@ -38,7 +40,7 @@ const AddProjectForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !description || !link || !github) {
+    if (!title || !description || !link || !github || !category) {
       toast({
         title: "Missing Fields",
         description: "Please fill all required fields.",
@@ -54,11 +56,12 @@ const AddProjectForm = () => {
     formData.append("description", description);
     formData.append("link", link);
     formData.append("github", github);
+    formData.append("category", category); // APPEND CATEGORY
     formData.append("techStack", JSON.stringify(techStack));
     if (image) formData.append("image", image);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://my-portfolio-lw4x.vercel.app/api/add",
         formData,
         {
@@ -74,13 +77,15 @@ const AddProjectForm = () => {
         isClosable: true,
       });
 
+      // Reset form
       setTitle("");
       setDescription("");
       setLink("");
       setGithub("");
+      setCategory("");
       setImage(null);
       setTechStack([]);
-      document.getElementById("imageInput").value = ""; // Reset file input
+      document.getElementById("imageInput").value = "";
     } catch (error) {
       console.error("Error adding project:", error);
       toast({
@@ -130,6 +135,19 @@ const AddProjectForm = () => {
               value={github}
               onChange={(e) => setGithub(e.target.value)}
             />
+          </FormControl>
+
+          {/* NEW CATEGORY FIELD */}
+          <FormControl id="category" isRequired>
+            <FormLabel>Category</FormLabel>
+            <Select
+              placeholder="Select category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="web">Web</option>
+              <option value="android">Android</option>
+            </Select>
           </FormControl>
 
           <FormControl id="image">
