@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all projects
 router.get("/get", async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().sort({ createdAt: -1 });;
     res.json(projects);
   } catch (err) {
     res.status(500).json({ error: "Error fetching projects", details: err.message });
