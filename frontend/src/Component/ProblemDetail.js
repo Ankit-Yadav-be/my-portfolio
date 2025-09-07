@@ -165,7 +165,7 @@ export default function ProblemDetail() {
       </Card>
 
       {/* Common Mistakes */}
-      <Card mb={6} shadow="md" bg="white">
+      <Card mb={6} shadow="md">
         <CardHeader fontWeight="bold" fontSize="lg" color="red.500">
           Common Mistakes ❌
         </CardHeader>

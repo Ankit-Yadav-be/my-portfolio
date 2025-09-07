@@ -88,7 +88,7 @@ export default function ProblemsList() {
         {/* Search Bar */}
         <InputGroup maxW="400px">
           <InputLeftElement pointerEvents="none">
-            <Search2Icon color="gray.400" />
+            <Search2Icon color="gray.500" />
           </InputLeftElement>
           <Input
             placeholder="Search problems..."
@@ -96,7 +96,7 @@ export default function ProblemsList() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             _focus={{ borderColor: "teal.400", boxShadow: "0 0 0 1px teal" }}
-            bg="white"
+            
           />
         </InputGroup>
 
@@ -105,7 +105,7 @@ export default function ProblemsList() {
           maxW="200px"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          bg="white"
+          
           _focus={{ borderColor: "teal.400" }}
         >
           {categories.map((cat, idx) => (
@@ -120,7 +120,6 @@ export default function ProblemsList() {
           maxW="200px"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          bg="white"
           _focus={{ borderColor: "teal.400" }}
         >
           <option value="All">All Difficulties</option>
