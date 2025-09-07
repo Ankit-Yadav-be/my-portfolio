@@ -18,7 +18,8 @@ const problemSchema = new mongoose.Schema(
         "Frontend",
         "Git",
         "Optimization",
-        "AI Integration"
+        "AI Integration",
+        "Backend"
       ], // fix categories for filtering
       required: true,
     },
