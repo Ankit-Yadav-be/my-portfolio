@@ -7,6 +7,7 @@ import TrackVisitor from "./Component/TrackVisitors";
 import VisitorDashboard from "./Component/VisitorDashboard";
 import SkillsSection from "./Component/SkillSection";
 import ProblemsList from "./Component/ProblemList";
+import ProblemDetail from "./Component/ProblemDetail";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ProjectShow />} />
            <Route path="/problem-list" element={<ProblemsList />} />
+           <Route path="/problems/:id" element={<ProblemDetail />} />
           <Route path="/skill" element={<SkillsSection />} />
           <Route path="/add-project" element={<AddProjectForm />} />
           <Route path="/admin" element={<VisitorDashboard />} />
