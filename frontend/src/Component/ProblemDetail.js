@@ -20,7 +20,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { CheckCircleIcon, StarIcon, CopyIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import {
+  CheckCircleIcon,
+  StarIcon,
+  CopyIcon,
+  ExternalLinkIcon,
+} from "@chakra-ui/icons";
 import axios from "axios";
 
 export default function ProblemDetail() {
@@ -49,13 +54,17 @@ export default function ProblemDetail() {
   if (loading) {
     return (
       <Box textAlign="center" mt={10}>
-        <Spinner size="xl" />
+        <Spinner size="xl" color="teal.500" />
       </Box>
     );
   }
 
   if (!problem) {
-    return <Text textAlign="center">Problem not found</Text>;
+    return (
+      <Text textAlign="center" fontSize="lg" color="red.500">
+        Problem not found
+      </Text>
+    );
   }
 
   // Difficulty color
@@ -79,9 +88,11 @@ export default function ProblemDetail() {
   return (
     <Box p={6} maxW="1000px" mx="auto">
       {/* Title & Tags */}
-      <Flex justify="space-between" align="center" mb={4}>
-        <Heading size="xl">{problem.title}</Heading>
-        <Flex gap={2}>
+      <Flex justify="space-between" align="center" mb={4} wrap="wrap">
+        <Heading size="xl" color="gray.800">
+          {problem.title}
+        </Heading>
+        <Flex gap={2} mt={[3, 0]}>
           <Tag colorScheme="blue">{problem.category}</Tag>
           <Tag colorScheme={difficultyColor}>{problem.difficulty}</Tag>
         </Flex>
@@ -89,28 +100,28 @@ export default function ProblemDetail() {
       <Divider mb={6} />
 
       {/* Problem Statement */}
-      <Card mb={6} shadow="md">
-        <CardHeader fontWeight="bold" fontSize="lg">
+      <Card mb={6} shadow="md" bg="white">
+        <CardHeader fontWeight="bold" fontSize="lg" color="gray.700">
           Problem Statement
         </CardHeader>
         <CardBody>
-          <Text>{problem.problemStatement}</Text>
+          <Text color="gray.700">{problem.problemStatement}</Text>
         </CardBody>
       </Card>
 
       {/* Why It Happens */}
-      <Card mb={6} shadow="md">
-        <CardHeader fontWeight="bold" fontSize="lg">
+      <Card mb={6} shadow="md" bg="white">
+        <CardHeader fontWeight="bold" fontSize="lg" color="gray.700">
           Why it Happens 🤔
         </CardHeader>
         <CardBody>
-          <Text>{problem.whyItHappens}</Text>
+          <Text color="gray.700">{problem.whyItHappens}</Text>
         </CardBody>
       </Card>
 
       {/* Solution Steps Timeline */}
-      <Card mb={6} shadow="md">
-        <CardHeader fontWeight="bold" fontSize="lg">
+      <Card mb={6} shadow="md" bg="white">
+        <CardHeader fontWeight="bold" fontSize="lg" color="gray.700">
           Solution Steps 🛠️
         </CardHeader>
         <CardBody>
@@ -122,7 +133,7 @@ export default function ProblemDetail() {
                 pl={3}
                 pb={2}
               >
-                <Text fontWeight="semibold" mb={1}>
+                <Text fontWeight="semibold" mb={1} color="gray.800">
                   ✅ Step {step.stepNumber}: {step.description}
                 </Text>
                 {step.codeSnippet && (
@@ -154,7 +165,7 @@ export default function ProblemDetail() {
       </Card>
 
       {/* Common Mistakes */}
-      <Card mb={6} shadow="md">
+      <Card mb={6} shadow="md" bg="white">
         <CardHeader fontWeight="bold" fontSize="lg" color="red.500">
           Common Mistakes ❌
         </CardHeader>
@@ -168,6 +179,7 @@ export default function ProblemDetail() {
                 rounded="md"
                 border="1px solid"
                 borderColor="red.200"
+                color="gray.700"
               >
                 {mistake}
               </ListItem>
@@ -177,8 +189,8 @@ export default function ProblemDetail() {
       </Card>
 
       {/* Resources */}
-      <Card mb={6} shadow="md">
-        <CardHeader fontWeight="bold" fontSize="lg">
+      <Card mb={6} shadow="md" bg="white">
+        <CardHeader fontWeight="bold" fontSize="lg" color="gray.700">
           Resources 🔗
         </CardHeader>
         <CardBody>
@@ -200,13 +212,17 @@ export default function ProblemDetail() {
       </Card>
 
       {/* Engagement Buttons */}
-      <Flex gap={4} justify="center" mt={8}>
+      <Flex gap={4} justify="center" mt={8} wrap="wrap">
         <Button
           leftIcon={<CheckCircleIcon />}
           colorScheme="teal"
           variant="solid"
           onClick={() =>
-            toast({ title: "Glad it helped!", status: "success", duration: 2000 })
+            toast({
+              title: "Glad it helped!",
+              status: "success",
+              duration: 2000,
+            })
           }
         >
           Helpful

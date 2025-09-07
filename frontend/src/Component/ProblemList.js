@@ -92,11 +92,11 @@ export default function ProblemsList() {
           </InputLeftElement>
           <Input
             placeholder="Search problems..."
-            variant="filled"
+            variant="outline"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            _focus={{ bg: "white", borderColor: "teal.400" }}
-            bg="gray.50"
+            _focus={{ borderColor: "teal.400", boxShadow: "0 0 0 1px teal" }}
+            bg="white"
           />
         </InputGroup>
 
@@ -105,7 +105,7 @@ export default function ProblemsList() {
           maxW="200px"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          bg="gray.50"
+          bg="white"
           _focus={{ borderColor: "teal.400" }}
         >
           {categories.map((cat, idx) => (
@@ -120,7 +120,7 @@ export default function ProblemsList() {
           maxW="200px"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          bg="gray.50"
+          bg="white"
           _focus={{ borderColor: "teal.400" }}
         >
           <option value="All">All Difficulties</option>
@@ -133,7 +133,7 @@ export default function ProblemsList() {
       {/* Problems Grid */}
       {filteredProblems.length === 0 ? (
         <Box textAlign="center" mt={10}>
-          <Text fontSize="lg" fontWeight="semibold" color="gray.600">
+          <Text fontSize="lg" fontWeight="semibold" color="gray.700">
             🚀 No problems found
           </Text>
         </Box>
@@ -179,7 +179,7 @@ export default function ProblemsList() {
                 </Flex>
               </CardHeader>
               <CardBody>
-                <Text noOfLines={3} color="gray.600">
+                <Text noOfLines={3} color="gray.700">
                   {problem.problemStatement}
                 </Text>
                 <Button
