@@ -15,8 +15,11 @@ import {
   InputLeftElement,
   Flex,
   Select,
+  IconButton,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { Search2Icon } from "@chakra-ui/icons";
+import { Search2Icon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -31,6 +34,17 @@ export default function ProblemsList() {
   const [difficulty, setDifficulty] = useState("All");
 
   const navigate = useNavigate();
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  // color-mode aware values
+  const pageBg = useColorModeValue("gray.50", "gray.900");
+  const cardBg = useColorModeValue("white", "gray.700");
+  const cardBorder = useColorModeValue("gray.200", "gray.600");
+  const textColor = useColorModeValue("gray.800", "gray.100");
+  const secondaryText = useColorModeValue("gray.700", "gray.200");
+  const inputBg = useColorModeValue("white", "gray.600");
+  const iconColor = useColorModeValue("gray.500", "gray.300");
+  const noResultColor = useColorModeValue("gray.700", "gray.200");
 
   useEffect(() => {
     const fetchProblems = async () => {
@@ -38,9 +52,10 @@ export default function ProblemsList() {
         const { data } = await axios.get(
           "https://my-portfolio-lw4x.vercel.app/api/problems"
         );
-        setProblems(data);
+        setProblems(data || []);
       } catch (error) {
         console.error(error);
+        setProblems([]);
       } finally {
         setLoading(false);
       }
@@ -48,18 +63,19 @@ export default function ProblemsList() {
     fetchProblems();
   }, []);
 
-  // unique category list banate hain
-  const categories = ["All", ...new Set(problems.map((p) => p.category))];
+  // unique categories (handle empty)
+  const categories = ["All", ...new Set((problems || []).map((p) => p.category))];
 
-  // filtering logic
-  const filteredProblems = problems.filter((p) => {
-    const matchesSearch =
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.category.toLowerCase().includes(search.toLowerCase()) ||
-      p.difficulty.toLowerCase().includes(search.toLowerCase());
+  // filtering logic (safe for missing fields)
+  const filteredProblems = (problems || []).filter((p) => {
+    const title = (p.title || "").toString().toLowerCase();
+    const cat = (p.category || "").toString().toLowerCase();
+    const diff = (p.difficulty || "").toString().toLowerCase();
+    const q = search.toLowerCase();
 
-    const matchesCategory = category === "All" || p.category === category;
-    const matchesDifficulty = difficulty === "All" || p.difficulty === difficulty;
+    const matchesSearch = title.includes(q) || cat.includes(q) || diff.includes(q);
+    const matchesCategory = category === "All" || (p.category === category);
+    const matchesDifficulty = difficulty === "All" || (p.difficulty === difficulty);
 
     return matchesSearch && matchesCategory && matchesDifficulty;
   });
@@ -68,7 +84,7 @@ export default function ProblemsList() {
     return (
       <Box textAlign="center" mt={10}>
         <Spinner size="xl" thickness="4px" speed="0.65s" color="teal.500" />
-        <Text mt={3} fontWeight="bold">
+        <Text mt={3} fontWeight="bold" color={secondaryText}>
           Loading problems...
         </Text>
       </Box>
@@ -76,7 +92,20 @@ export default function ProblemsList() {
   }
 
   return (
-    <Box p={6}>
+    <Box p={6} bg={pageBg} minH="100vh">
+      {/* Header: title + color mode toggle */}
+      <Flex justify="space-between" align="center" mb={4} wrap="wrap" gap={4}>
+        <Text fontSize="2xl" fontWeight="bold" color={textColor}>
+          Problems
+        </Text>
+        <IconButton
+          aria-label={colorMode === "light" ? "Switch to dark" : "Switch to light"}
+          icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          onClick={toggleColorMode}
+          size="md"
+        />
+      </Flex>
+
       {/* Filters Section */}
       <Flex
         justify="center"
@@ -84,28 +113,31 @@ export default function ProblemsList() {
         direction={["column", "row"]}
         gap={4}
         align="center"
+        flexWrap="wrap"
       >
         {/* Search Bar */}
-        <InputGroup maxW="400px">
+        <InputGroup maxW="420px">
           <InputLeftElement pointerEvents="none">
-            <Search2Icon color="gray.500" />
+            <Search2Icon color={iconColor} />
           </InputLeftElement>
           <Input
-            placeholder="Search problems..."
+            placeholder="Search by title, category or difficulty..."
             variant="outline"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             _focus={{ borderColor: "teal.400", boxShadow: "0 0 0 1px teal" }}
-            
+            bg={inputBg}
+            color={textColor}
           />
         </InputGroup>
 
         {/* Category Filter */}
         <Select
-          maxW="200px"
+          maxW="220px"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          
+          bg={inputBg}
+          color={textColor}
           _focus={{ borderColor: "teal.400" }}
         >
           {categories.map((cat, idx) => (
@@ -117,9 +149,11 @@ export default function ProblemsList() {
 
         {/* Difficulty Filter */}
         <Select
-          maxW="200px"
+          maxW="220px"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
+          bg={inputBg}
+          color={textColor}
           _focus={{ borderColor: "teal.400" }}
         >
           <option value="All">All Difficulties</option>
@@ -132,7 +166,7 @@ export default function ProblemsList() {
       {/* Problems Grid */}
       {filteredProblems.length === 0 ? (
         <Box textAlign="center" mt={10}>
-          <Text fontSize="lg" fontWeight="semibold" color="gray.700">
+          <Text fontSize="lg" fontWeight="semibold" color={noResultColor}>
             🚀 No problems found
           </Text>
         </Box>
@@ -140,17 +174,20 @@ export default function ProblemsList() {
         <SimpleGrid columns={[1, 2, 3]} spacing={6}>
           {filteredProblems.map((problem) => (
             <MotionCard
-              key={problem._id}
+              key={problem._id || Math.random()}
               shadow="lg"
               borderWidth="1px"
               rounded="2xl"
               whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.18 }}
               _hover={{ shadow: "2xl", borderColor: "teal.300" }}
+              bg={cardBg}
+              borderColor={cardBorder}
+              color={textColor}
             >
               <CardHeader>
-                <Text fontSize="xl" fontWeight="bold" mb={2} noOfLines={1}>
-                  {problem.title}
+                <Text fontSize="xl" fontWeight="bold" mb={2} noOfLines={1} color={textColor}>
+                  {problem.title || "Untitled Problem"}
                 </Text>
                 <Flex gap={2} wrap="wrap">
                   <Tag
@@ -159,7 +196,7 @@ export default function ProblemsList() {
                     borderRadius="full"
                     px={3}
                   >
-                    {problem.category}
+                    {problem.category || "General"}
                   </Tag>
                   <Tag
                     size="sm"
@@ -173,13 +210,13 @@ export default function ProblemsList() {
                     borderRadius="full"
                     px={3}
                   >
-                    {problem.difficulty}
+                    {problem.difficulty || "Unknown"}
                   </Tag>
                 </Flex>
               </CardHeader>
               <CardBody>
-                <Text noOfLines={3} color="gray.700">
-                  {problem.problemStatement}
+                <Text noOfLines={3} color={secondaryText}>
+                  {problem.problemStatement || "No description available."}
                 </Text>
                 <Button
                   mt={4}
