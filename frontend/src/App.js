@@ -6,6 +6,7 @@ import AddProjectForm from "./Component/AddProjectForm";
 import TrackVisitor from "./Component/TrackVisitors";
 import VisitorDashboard from "./Component/VisitorDashboard";
 import SkillsSection from "./Component/SkillSection";
+import ProblemsList from "./Component/ProblemList";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <TrackVisitor />
         <Routes>
           <Route path="/" element={<ProjectShow />} />
+           <Route path="/problem-list" element={<ProblemsList />} />
           <Route path="/skill" element={<SkillsSection />} />
           <Route path="/add-project" element={<AddProjectForm />} />
           <Route path="/admin" element={<VisitorDashboard />} />
