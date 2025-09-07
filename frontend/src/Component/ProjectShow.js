@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton, useColorMode, Divider } from "@chakra-ui/react";
+import {
+  Box,
+  IconButton,
+  useColorMode,
+  Divider,
+  Tooltip,
+  Fade,
+  Text,
+} from "@chakra-ui/react";
 import axios from "axios";
 import ProjectsSection from "./ProjectSection";
 import Certifications from "./certifications";
@@ -16,8 +24,9 @@ const Portfolio = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const { toggleColorMode } = useColorMode();
   const [showVisitorStats, setShowVisitorStats] = useState(false);
-  const [highlightButton, setHighlightButton] = useState(true); // Indicator effect
-  const [highlightProblem, setHighlightProblem] = useState(true); // Problem indicator
+  const [highlightButton, setHighlightButton] = useState(true);
+  const [highlightProblem, setHighlightProblem] = useState(true);
+  const [showIntro, setShowIntro] = useState(true); // Show intro spotlight
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,9 +35,9 @@ const Portfolio = () => {
       .then((response) => setUser(response.data))
       .catch((error) => console.error("Error fetching user profile:", error));
 
-    // Indicators off after 3 sec
     setTimeout(() => setHighlightButton(false), 3000);
     setTimeout(() => setHighlightProblem(false), 4000);
+    setTimeout(() => setShowIntro(false), 7000); // Spotlight auto hide
   }, []);
 
   return (
@@ -49,40 +58,65 @@ const Portfolio = () => {
       />
 
       {/* Visitor Stats Button */}
-      <IconButton
-        icon={<FaChartBar />}
-        colorScheme="blue"
-        position="absolute"
-        top={4}
-        right={4}
-        zIndex="10"
-        size="lg"
-        onClick={() => setShowVisitorStats(!showVisitorStats)}
-        boxShadow={highlightButton ? "0 0 15px #00A3FF" : "none"}
-        transition="0.3s ease-in-out"
-        _hover={{
-          transform: "scale(1.1)",
-          boxShadow: "0 0 20px #00A3FF",
-        }}
-      />
+      <Tooltip label="Check website visitor analytics" placement="left">
+        <IconButton
+          icon={<FaChartBar />}
+          colorScheme="blue"
+          position="absolute"
+          top={4}
+          right={4}
+          zIndex="10"
+          size="lg"
+          onClick={() => setShowVisitorStats(!showVisitorStats)}
+          boxShadow={highlightButton ? "0 0 15px #00A3FF" : "none"}
+          transition="0.3s ease-in-out"
+          _hover={{
+            transform: "scale(1.1)",
+            boxShadow: "0 0 20px #00A3FF",
+          }}
+        />
+      </Tooltip>
 
-      {/* Problem List Redirect Button */}
-      <IconButton
-        icon={<FaBug />}
-        colorScheme="red"
-        position="absolute"
-        top={16}
-        right={4}
-        zIndex="10"
-        size="lg"
-        onClick={() => navigate("/problem-list")}
-        boxShadow={highlightProblem ? "0 0 15px #FF4C4C" : "none"}
-        transition="0.3s ease-in-out"
-        _hover={{
-          transform: "scale(1.1)",
-          boxShadow: "0 0 20px #FF4C4C",
-        }}
-      />
+      {/* Problem List Redirect Button with Engagement */}
+      <Tooltip label="Explore coding problems & solutions" placement="left" isOpen={showIntro}>
+        <IconButton
+          icon={<FaBug />}
+          colorScheme="red"
+          position="absolute"
+          top={16}
+          right={4}
+          zIndex="10"
+          size="lg"
+          onClick={() => navigate("/problem-list")}
+          boxShadow={highlightProblem ? "0 0 15px #FF4C4C" : "none"}
+          transition="0.3s ease-in-out"
+          _hover={{
+            transform: "scale(1.1)",
+            boxShadow: "0 0 20px #FF4C4C",
+          }}
+        />
+      </Tooltip>
+
+      {/* Animated Text Banner for engagement */}
+      {showIntro && (
+        <Fade in={showIntro}>
+          <Box
+            position="absolute"
+            top={16}
+            right={20}
+            bg="red.500"
+            px={4}
+            py={2}
+            borderRadius="md"
+            boxShadow="lg"
+            zIndex="9"
+          >
+            <Text fontWeight="bold" color="white">
+              NEW: Problems & Solutions 🚀
+            </Text>
+          </Box>
+        </Fade>
+      )}
 
       {/* Right Section */}
       <Box
