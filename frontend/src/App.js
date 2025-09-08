@@ -8,6 +8,7 @@ import VisitorDashboard from "./Component/VisitorDashboard";
 import SkillsSection from "./Component/SkillSection";
 import ProblemsList from "./Component/ProblemList";
 import ProblemDetail from "./Component/ProblemDetail";
+import AdminPanel from "./Component/AdminPanel";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <TrackVisitor />
         <Routes>
           <Route path="/" element={<ProjectShow />} />
+          <Route path="/admin-dsa" element={<AdminPanel/>} />
            <Route path="/problem-list" element={<ProblemsList />} />
            <Route path="/problems/:id" element={<ProblemDetail />} />
           <Route path="/skill" element={<SkillsSection />} />
