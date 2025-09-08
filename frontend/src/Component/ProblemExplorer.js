@@ -29,60 +29,80 @@ import {
   AccordionIcon,
   Spacer,
   useColorModeValue,
+  Progress,
+  Code,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon, CheckIcon } from "@chakra-ui/icons";
+import {
+  Search2Icon,
+  ExternalLinkIcon,
+  ArrowUpIcon,
+  CheckIcon,
+  SunIcon,
+  MoonIcon,
+} from "@chakra-ui/icons";
 import axios from "axios";
+import Confetti from "react-confetti";
 
-const API_BASE = "https://my-portfolio-lw4x.vercel.app/api/patterns"; // replace with your deployed api
+const API_BASE = "https://my-portfolio-lw4x.vercel.app/api/patterns"; // replace if needed
 
 export default function ProblemsExplorer() {
+  // data + state
   const [patterns, setPatterns] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [query, setQuery] = useState("");
   const [filterDifficulty, setFilterDifficulty] = useState("All");
   const [doneMap, setDoneMap] = useState({});
   const [loading, setLoading] = useState(true);
-  const toast = useToast();
 
-  // Hint modal state
+  // hint modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentHint, setCurrentHint] = useState("");
   const [currentProblemTitle, setCurrentProblemTitle] = useState("");
 
-  // Chakra color mode values
+  // confetti
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  // color mode friendly values
+  const pageBg = useColorModeValue("gray.50", "gray.900");
   const cardBg = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("gray.700", "gray.200");
+  const textColor = useColorModeValue("gray.800", "gray.100");
   const subTextColor = useColorModeValue("gray.500", "gray.400");
   const borderColor = useColorModeValue("gray.200", "gray.700");
+  const accentStart = useColorModeValue("teal.400", "teal.300");
+  const accentEnd = useColorModeValue("blue.500", "blue.400");
 
-  // Load patterns from API
+  const toast = useToast();
+
+  // load patterns from API (deployed)
   useEffect(() => {
-    const fetchPatterns = async () => {
+    const fetch = async () => {
       try {
         setLoading(true);
         const res = await axios.get(API_BASE);
-        setPatterns(res.data.patterns || []);
+        const loaded = res.data.patterns || [];
+        setPatterns(loaded);
 
-        if (!selectedTopic && res.data.patterns && res.data.patterns.length > 0) {
-          setSelectedTopic(res.data.patterns[0].topic);
-        }
+        if (!selectedTopic && loaded.length > 0) setSelectedTopic(loaded[0].topic);
       } catch (err) {
-        toast({ title: "Failed to load topics", status: "error" });
+        toast({ title: "Failed to load patterns", status: "error" });
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPatterns();
+    fetch();
 
-    const saved = localStorage.getItem("dsa_done_map_v1");
+    // load doneMap from localStorage
+    const saved = localStorage.getItem("dsa_done_map_v2");
     if (saved) setDoneMap(JSON.parse(saved));
-  }, []);
+  }, []); // eslint-disable-line
 
+  // persist doneMap
   useEffect(() => {
-    localStorage.setItem("dsa_done_map_v1", JSON.stringify(doneMap));
+    localStorage.setItem("dsa_done_map_v2", JSON.stringify(doneMap));
   }, [doneMap]);
 
+  // helpers
   const topics = patterns.map((p) => p.topic);
   const selectedPattern = patterns.find((p) => p.topic === selectedTopic) || null;
 
@@ -100,8 +120,14 @@ export default function ProblemsExplorer() {
     setDoneMap((prev) => {
       const key = `${topic}||${title}`;
       const next = { ...prev };
-      if (next[key]) delete next[key];
-      else next[key] = true;
+      if (next[key]) {
+        delete next[key];
+      } else {
+        next[key] = true;
+        // confetti trigger
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 2500);
+      }
       return next;
     });
   };
@@ -112,95 +138,122 @@ export default function ProblemsExplorer() {
     setCurrentProblemTitle(problem.title);
     setCurrentHint(
       problem.hint ||
-        `Think about ${problem.level} level approach and common patterns used in ${selectedTopic}.`
+        `Think about ${problem.level} approaches. Identify state, transition, and base cases for Dynamic Programming.`
     );
     onOpen();
   };
 
+  const totalProblems = patterns.reduce((sum, p) => sum + (p.problems?.length || 0), 0);
+  const solvedCount = Object.keys(doneMap).length;
+
+  const getDifficultyColorScheme = (level) => {
+    if (level === "Easy") return "green";
+    if (level === "Medium") return "orange";
+    return "red";
+  };
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  // UI
   return (
-    <Flex direction={{ base: "column", md: "row" }} minH="80vh" p={6} gap={6}>
-      {/* Sidebar */}
+    <Flex minH="80vh" bg={pageBg} p={{ base: 4, md: 8 }} gap={6}>
+      {showConfetti && <Confetti recycle={false} numberOfPieces={180} />}
+
+      {/* SIDEBAR */}
       <Box
-        minW={{ base: "100%", md: "280px" }}
-        borderRadius="lg"
-        p={4}
-        bg={cardBg}
-        boxShadow="md"
+        minW={{ base: "100%", md: "300px" }}
+        maxW={{ md: "300px" }}
+        alignSelf="flex-start"
+        p={5}
+        borderRadius="xl"
+        bg={useColorModeValue("rgba(255,255,255,0.6)", "rgba(20,20,20,0.6)")}
+        boxShadow="lg"
+        backdropFilter="blur(10px)"
         borderWidth="1px"
         borderColor={borderColor}
       >
-        <Heading size="md" mb={4} color={textColor}>
-          Practice Paths
-        </Heading>
+        <HStack mb={4} justifyContent="space-between">
+          <Heading size="md" color={textColor}>
+            Practice Paths
+          </Heading>
+        </HStack>
 
         <Input
-          placeholder="Search topics..."
-          mb={3}
+          placeholder="Filter topics..."
+          mb={4}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          bg={useColorModeValue("white", "gray.700")}
+          size="sm"
         />
 
         <VStack
           align="stretch"
           spacing={2}
           divider={<StackDivider borderColor={borderColor} />}
-          maxH="60vh"
+          maxH="55vh"
           overflowY="auto"
         >
-          {loading && <Text color={subTextColor}>Loading topics...</Text>}
+          {loading && <Text color={subTextColor}>Loading...</Text>}
+
+          {!loading && topics.length === 0 && (
+            <Text color={subTextColor}>No topics yet — add from admin</Text>
+          )}
+
           {topics
             .filter((t) => t.toLowerCase().includes(query.toLowerCase()))
-            .map((t) => (
-              <HStack key={t} spacing={3} align="center">
-                <Button
-                  variant={t === selectedTopic ? "solid" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTopic(t)}
-                  flex="1"
-                >
-                  {t}
-                </Button>
-                <Badge>
-                  {(patterns.find((p) => p.topic === t)?.problems || []).length}
-                </Badge>
-              </HStack>
-            ))}
+            .map((t) => {
+              const count = patterns.find((p) => p.topic === t)?.problems?.length || 0;
+              const selected = t === selectedTopic;
+              return (
+                <HStack key={t} spacing={3} align="center">
+                  <Button
+                    onClick={() => setSelectedTopic(t)}
+                    variant={selected ? "solid" : "ghost"}
+                    size="sm"
+                    flex="1"
+                    justifyContent="flex-start"
+                    bg={selected ? `${accentStart}20` : "transparent"}
+                    _hover={{ bg: useColorModeValue("gray.100", "gray.700") }}
+                  >
+                    <Text color={textColor}>{t}</Text>
+                  </Button>
+                  <Badge colorScheme="purple" fontSize="0.8rem">
+                    {count}
+                  </Badge>
+                </HStack>
+              );
+            })}
         </VStack>
 
-        <Spacer />
-
-        <Box mt={4}>
+        <Box mt={6}>
           <Text fontSize="sm" color={subTextColor}>
-            Pro tip: Use the filters in the topic view to narrow problems.
+            Tip: Click a topic to view ordered practice problems. Mark problems as done to track progress.
           </Text>
         </Box>
       </Box>
 
-      {/* Main content */}
-      <Box
-        flex="1"
-        bg={cardBg}
-        p={6}
-        borderRadius="lg"
-        boxShadow="md"
-        borderWidth="1px"
-        borderColor={borderColor}
-      >
-        <HStack mb={4} align="center">
-          <Heading size="lg" color={textColor}>
+      {/* MAIN */}
+      <Box flex="1">
+        <HStack mb={5} align="center">
+          <Heading size="lg" bgGradient={`linear(to-r, ${accentStart}, ${accentEnd})`} bgClip="text">
             {selectedTopic || "Select a topic"}
           </Heading>
           <Spacer />
           <Input
             placeholder="Search problems in this topic..."
-            maxW="320px"
+            maxW="420px"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            size="sm"
+            bg={cardBg}
           />
           <Select
             value={filterDifficulty}
             onChange={(e) => setFilterDifficulty(e.target.value)}
             maxW="140px"
+            size="sm"
+            bg={cardBg}
           >
             <option value="All">All</option>
             <option value="Easy">Easy</option>
@@ -209,132 +262,170 @@ export default function ProblemsExplorer() {
           </Select>
         </HStack>
 
+        {/* Progress */}
+        <Box mb={6}>
+          <HStack justify="space-between" mb={2}>
+            <Text color={subTextColor} fontWeight="medium">
+              Progress: {solvedCount}/{totalProblems}
+            </Text>
+            <Text color={subTextColor} fontSize="sm">
+              Keep going — solve problems in order!
+            </Text>
+          </HStack>
+          <Progress
+            value={totalProblems === 0 ? 0 : (solvedCount / totalProblems) * 100}
+            size="sm"
+            borderRadius="md"
+            bg={useColorModeValue("gray.200", "gray.700")}
+          />
+        </Box>
+
+        {/* Problems list (Accordion by difficulty) */}
         {!selectedPattern && (
-          <Text color={subTextColor}>
-            No topic selected. Choose a topic from the left.
-          </Text>
-        )}
-
-        {selectedPattern && (
-          <Box>
-            <HStack mb={4} spacing={3}>
-              <Text color={subTextColor}>Showing</Text>
-              <Tag>{selectedPattern.topic}</Tag>
-              <Badge>{selectedPattern.problems.length} problems</Badge>
-            </HStack>
-
-            <Accordion allowMultiple>
-              {Object.entries(groupProblems(selectedPattern.problems)).map(
-                ([level, probs]) => (
-                  <AccordionItem
-                    key={level}
-                    mb={3}
-                    borderRadius="md"
-                    borderWidth="1px"
-                    borderColor={borderColor}
-                    overflow="hidden"
-                  >
-                    <h2>
-                      <AccordionButton>
-                        <Box flex="1" textAlign="left">
-                          <HStack>
-                            <Text fontWeight="semibold" color={textColor}>
-                              {level}
-                            </Text>
-                            <Text color={subTextColor}>({probs.length})</Text>
-                          </HStack>
-                        </Box>
-                        <AccordionIcon />
-                      </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                      <VStack align="stretch" spacing={3}>
-                        {probs.length === 0 && (
-                          <Text color={subTextColor}>
-                            No problems found for this filter.
-                          </Text>
-                        )}
-                        {probs.map((p) => (
-                          <Flex
-                            key={p.title}
-                            p={3}
-                            borderWidth="1px"
-                            borderRadius="md"
-                            borderColor={borderColor}
-                            align="center"
-                          >
-                            <Box>
-                              <Text fontWeight="semibold" color={textColor}>
-                                {p.title}
-                              </Text>
-                              <Text fontSize="sm" color={subTextColor}>
-                                {p.platform} • {p.link}
-                              </Text>
-                            </Box>
-
-                            <Spacer />
-
-                            <HStack spacing={2}>
-                              <IconButton
-                                aria-label="Open problem"
-                                icon={<ExternalLinkIcon />}
-                                size="sm"
-                                onClick={() => window.open(p.link, "_blank")}
-                              />
-
-                              <Button size="sm" onClick={() => openHint(p)}>
-                                Hint
-                              </Button>
-
-                              <Button
-                                size="sm"
-                                variant={
-                                  isDone(selectedPattern.topic, p.title)
-                                    ? "solid"
-                                    : "outline"
-                                }
-                                leftIcon={
-                                  isDone(selectedPattern.topic, p.title) ? (
-                                    <CheckIcon />
-                                  ) : null
-                                }
-                                onClick={() =>
-                                  toggleDone(selectedPattern.topic, p.title)
-                                }
-                              >
-                                {isDone(selectedPattern.topic, p.title)
-                                  ? "Done"
-                                  : "Mark done"}
-                              </Button>
-                            </HStack>
-                          </Flex>
-                        ))}
-                      </VStack>
-                    </AccordionPanel>
-                  </AccordionItem>
-                )
-              )}
-            </Accordion>
+          <Box p={6} bg={cardBg} borderRadius="lg" borderWidth="1px" borderColor={borderColor}>
+            <Text color={subTextColor}>No topic selected. Choose one from the left.</Text>
           </Box>
         )}
 
-        {/* Hint Modal */}
-        <Modal isOpen={isOpen} onClose={onClose} size="lg">
-          <ModalOverlay />
-          <ModalContent bg={cardBg}>
-            <ModalHeader color={textColor}>
-              Hint — {currentProblemTitle}
-            </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text color={textColor}>{currentHint}</Text>
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+        {selectedPattern && (
+          <Accordion allowMultiple>
+            {Object.entries(groupProblems(selectedPattern.problems)).map(([level, probs]) => {
+              const gradient =
+                level === "Easy"
+                  ? `linear(to-r, green.300, green.400)`
+                  : level === "Medium"
+                  ? `linear(to-r, orange.300, orange.400)`
+                  : `linear(to-r, red.300, red.500)`;
+              return (
+                <AccordionItem key={level} mb={4} border="none">
+                  <h2>
+                    <AccordionButton
+                      _expanded={{
+                        bg: useColorModeValue("gray.100", "gray.700"),
+                        borderRadius: "md",
+                      }}
+                      p={3}
+                    >
+                      <Box flex="1" textAlign="left">
+                        <HStack>
+                          <Text fontWeight="semibold" color={textColor}>
+                            {level}
+                          </Text>
+                          <Text color={subTextColor}>({probs.length})</Text>
+                        </HStack>
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+
+                  <AccordionPanel pb={4}>
+                    <VStack align="stretch" spacing={4}>
+                      {probs.length === 0 && (
+                        <Text color={subTextColor}>No problems found for this filter.</Text>
+                      )}
+
+                      {probs.map((p) => (
+                        <Flex
+                          key={p.title}
+                          p={4}
+                          borderWidth="1px"
+                          borderRadius="md"
+                          borderColor={borderColor}
+                          bg={useColorModeValue("white", "gray.800")}
+                          align="center"
+                          transition="all 0.18s"
+                          _hover={{
+                            transform: "translateY(-4px)",
+                            boxShadow: "lg",
+                          }}
+                        >
+                          <Box>
+                            <Text fontSize="md" fontWeight="bold" color={textColor}>
+                              {p.title}
+                            </Text>
+
+                            <HStack mt={1} spacing={2}>
+                              <Badge colorScheme={getDifficultyColorScheme(p.level)}>{p.level}</Badge>
+                              <Text fontSize="sm" color={subTextColor}>
+                                {p.platform}
+                              </Text>
+                              <Text fontSize="sm" color={subTextColor} isTruncated maxW="420px">
+                                {p.link}
+                              </Text>
+                            </HStack>
+                          </Box>
+
+                          <Spacer />
+
+                          <HStack spacing={2}>
+                            <IconButton
+                              aria-label="Open problem"
+                              icon={<ExternalLinkIcon />}
+                              size="sm"
+                              onClick={() => window.open(p.link, "_blank")}
+                            />
+                            <Button size="sm" variant="outline" onClick={() => openHint(p)}>
+                              Hint
+                            </Button>
+                            <Button
+                              size="sm"
+                              colorScheme={isDone(selectedPattern.topic, p.title) ? "green" : "gray"}
+                              leftIcon={isDone(selectedPattern.topic, p.title) ? <CheckIcon /> : null}
+                              onClick={() => toggleDone(selectedPattern.topic, p.title)}
+                            >
+                              {isDone(selectedPattern.topic, p.title) ? "Done" : "Mark done"}
+                            </Button>
+                          </HStack>
+                        </Flex>
+                      ))}
+                    </VStack>
+                  </AccordionPanel>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
+        )}
       </Box>
+
+      {/* Floating Scroll-to-top */}
+      <IconButton
+        aria-label="Scroll to top"
+        icon={<ArrowUpIcon />}
+        position="fixed"
+        bottom="24px"
+        right="24px"
+        borderRadius="full"
+        size="lg"
+        colorScheme="teal"
+        onClick={scrollToTop}
+        boxShadow="lg"
+      />
+
+      {/* Hint Modal */}
+      <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
+        <ModalOverlay />
+        <ModalContent bg={cardBg} borderWidth="1px" borderColor={borderColor}>
+          <ModalHeader color={textColor}>Hint — {currentProblemTitle}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color={textColor} mb={4}>
+              {currentHint}
+            </Text>
+
+            <Text fontSize="sm" color={subTextColor} mb={2}>
+              Starter snippet:
+            </Text>
+
+            <Box p={3} borderRadius="md" bg={useColorModeValue("gray.50", "gray.700")}>
+              <Code whiteSpace="pre" width="100%" children={`// Pseudocode / starter\nfunction dpExample(arr) {\n  const dp = new Array(arr.length).fill(0);\n  // fill base cases\n  // iterate and fill transitions\n}`} />
+            </Box>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 }
