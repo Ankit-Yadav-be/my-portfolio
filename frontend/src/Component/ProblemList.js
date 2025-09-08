@@ -23,6 +23,7 @@ import { Search2Icon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import FeatureIntro from "./FeatureIntro";
 
 const MotionCard = motion(Card);
 
@@ -94,6 +95,7 @@ export default function ProblemsList() {
   return (
     <Box p={6} bg={pageBg} minH="100vh">
       {/* Header: title + color mode toggle */}
+      <FeatureIntro/>
       <Flex justify="space-between" align="center" mb={4} wrap="wrap" gap={4}>
         <Text fontSize="2xl" fontWeight="bold" color={textColor}>
           Problems
