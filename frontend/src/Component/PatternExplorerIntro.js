@@ -1,8 +1,8 @@
-// src/components/FeatureIntro.jsx
+// src/components/PatternExplorerIntro.jsx
 import {
   Box,
-  Text,
   Heading,
+  Text,
   VStack,
   HStack,
   Tag,
@@ -10,51 +10,48 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { FiCpu, FiCode, FiCloud, FiZap, FiDatabase } from "react-icons/fi";
+import { FiList, FiCheckCircle, FiCode, FiZap, FiBookOpen } from "react-icons/fi";
 
 const MotionBox = motion(Box);
 
-export default function FeatureIntro() {
-  const bg = useColorModeValue("teal.50", "teal.900");
+export default function PatternExplorerIntro() {
+  const bg = useColorModeValue("orange.50", "orange.900");
   const textColor = useColorModeValue("gray.800", "gray.100");
   const secondaryText = useColorModeValue("gray.700", "gray.300");
-  const highlight = useColorModeValue("teal.600", "teal.300");
-  const tagBg = useColorModeValue("whiteAlpha.800", "blackAlpha.400");
+  const highlight = useColorModeValue("orange.500", "orange.300");
 
   return (
     <MotionBox
-      initial={{ opacity: 0, y: -30 }}
+      initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.7 }}
       bg={bg}
       p={8}
       mb={6}
       rounded="2xl"
       shadow="2xl"
-      borderLeftWidth={8}
+      borderLeftWidth={6}
       borderLeftColor={highlight}
-      borderTopRadius="3xl"
-      borderBottomRadius="3xl"
     >
       <VStack align="start" spacing={4}>
         <Heading
           size="xl"
           color={textColor}
-          bgGradient="linear(to-r, teal.400, blue.500)"
+          bgGradient="linear(to-r, orange.400, red.500)"
           bgClip="text"
         >
-          🚀 Master Coding, Deployment & Scalable Apps
+          🧩 Explore DSA Practice Paths
         </Heading>
 
         <Text fontSize="md" color={secondaryText}>
-          This section is your **one-stop hub** for everything a student or beginner needs:
-          from solving algorithm problems, exploring different AI models, to building scalable
-          MERN apps using best practices like the **MVC pattern**.
+          Here you can **practice coding problems structured by topics and patterns**, track your progress,
+          and learn systematically. Perfect for students and beginners aiming to strengthen their
+          problem-solving skills.
         </Text>
 
         <Text fontSize="md" color={secondaryText}>
-          You’ll get **practical guidance, code examples, and step-by-step solutions** to real-world
-          problems, including:
+          Each problem comes with hints, starter pseudocode, and guidance so you can **solve it step by step**.
+          Mark problems done to track your growth, and see your progress with interactive stats.
         </Text>
 
         <HStack spacing={3} wrap="wrap">
@@ -64,12 +61,26 @@ export default function FeatureIntro() {
             px={3}
             py={1}
             fontWeight="bold"
-            colorScheme="green"
-            leftIcon={<FiCpu />}
+            colorScheme="teal"
+            leftIcon={<FiList />}
             cursor="pointer"
             _hover={{ transform: "scale(1.05)", shadow: "lg" }}
           >
-            Development Hurdles
+            Structured Topics
+          </Tag>
+
+          <Tag
+            size="lg"
+            borderRadius="full"
+            px={3}
+            py={1}
+            fontWeight="bold"
+            colorScheme="green"
+            leftIcon={<FiCheckCircle />}
+            cursor="pointer"
+            _hover={{ transform: "scale(1.05)", shadow: "lg" }}
+          >
+            Track Progress
           </Tag>
 
           <Tag
@@ -83,21 +94,7 @@ export default function FeatureIntro() {
             cursor="pointer"
             _hover={{ transform: "scale(1.05)", shadow: "lg" }}
           >
-            Coding Challenges
-          </Tag>
-
-          <Tag
-            size="lg"
-            borderRadius="full"
-            px={3}
-            py={1}
-            fontWeight="bold"
-            colorScheme="purple"
-            leftIcon={<FiCloud />}
-            cursor="pointer"
-            _hover={{ transform: "scale(1.05)", shadow: "lg" }}
-          >
-            Free Deployment
+            Hints & Pseudocode
           </Tag>
 
           <Tag
@@ -111,7 +108,7 @@ export default function FeatureIntro() {
             cursor="pointer"
             _hover={{ transform: "scale(1.05)", shadow: "lg" }}
           >
-            AI Guidance
+            Real Coding Patterns
           </Tag>
 
           <Tag
@@ -121,39 +118,30 @@ export default function FeatureIntro() {
             py={1}
             fontWeight="bold"
             colorScheme="red"
-            leftIcon={<FiDatabase />}
+            leftIcon={<FiBookOpen />}
             cursor="pointer"
             _hover={{ transform: "scale(1.05)", shadow: "lg" }}
           >
-            Scalable Architecture
+            Step-by-step Guidance
           </Tag>
         </HStack>
 
         <Divider borderColor={highlight} />
 
-        <Text fontSize="md" color={secondaryText}>
-          💡 You will learn:
-        </Text>
-
         <VStack align="start" spacing={2}>
-          <Text color={secondaryText}>• How to solve coding problems systematically.</Text>
-          <Text color={secondaryText}>
-            • How to implement different AI models in your projects with sample code.
+          <Text fontSize="md" color={secondaryText}>
+            💡 What you’ll learn:
           </Text>
-          <Text color={secondaryText}>
-            • Best practices for building **MERN apps using MVC pattern**.
-          </Text>
-          <Text color={secondaryText}>
-            • Guidance on **deployment**, scalability, and project optimization.
-          </Text>
-          <Text color={secondaryText}>
-            • Real-world examples and step-by-step tutorials for students and beginners.
-          </Text>
+          <Text color={secondaryText}>• Solve problems by patterns and difficulty levels.</Text>
+          <Text color={secondaryText}>• Track your completed problems and overall progress.</Text>
+          <Text color={secondaryText}>• Read hints and starter pseudocode to implement solutions.</Text>
+          <Text color={secondaryText}>• Understand real coding patterns used in interviews.</Text>
+          <Text color={secondaryText}>• Learn step-by-step approaches to strengthen problem-solving skills.</Text>
         </VStack>
 
         <Text fontSize="sm" color={highlight} fontWeight="semibold" mt={2}>
-          🎯 Tip: Start with easy problems to build confidence, explore AI integration gradually, 
-          and learn scalable patterns step by step!
+          🎯 Tip: Filter topics, mark problems done, and gradually progress from Easy → Medium → Hard
+          for maximum learning!
         </Text>
       </VStack>
     </MotionBox>
