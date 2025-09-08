@@ -7,6 +7,8 @@ import {
   Tooltip,
   Fade,
   Text,
+  Button,
+  HStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import ProjectsSection from "./ProjectSection";
@@ -26,7 +28,7 @@ const Portfolio = () => {
   const [showVisitorStats, setShowVisitorStats] = useState(false);
   const [highlightButton, setHighlightButton] = useState(true);
   const [highlightProblem, setHighlightProblem] = useState(true);
-  const [showIntro, setShowIntro] = useState(true); // Show intro spotlight
+  const [showIntro, setShowIntro] = useState(true); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const Portfolio = () => {
 
     setTimeout(() => setHighlightButton(false), 3000);
     setTimeout(() => setHighlightProblem(false), 4000);
-    setTimeout(() => setShowIntro(false), 7000); // Spotlight auto hide
+    setTimeout(() => setShowIntro(false), 7000); 
   }, []);
 
   return (
@@ -50,6 +52,44 @@ const Portfolio = () => {
       color={isDarkMode ? "white" : "black"}
       position="relative"
     >
+      {/* 🔹 Top Nav Buttons */}
+      <HStack
+        spacing={6}
+        position="absolute"
+        top={4}
+        left="50%"
+        transform="translateX(-50%)"
+        zIndex="20"
+      >
+        <Button
+          variant="solid"
+          colorScheme="blue"
+          size="sm"
+          onClick={() => navigate("/")}
+          _hover={{ transform: "scale(1.05)" }}
+        >
+          Web
+        </Button>
+        <Button
+          variant="solid"
+          colorScheme="teal"
+          size="sm"
+          onClick={() => navigate("/dsa")}
+          _hover={{ transform: "scale(1.05)" }}
+        >
+          DSA
+        </Button>
+        <Button
+          variant="solid"
+          colorScheme="red"
+          size="sm"
+          onClick={() => navigate("/problem-list")}
+          _hover={{ transform: "scale(1.05)" }}
+        >
+          Problems
+        </Button>
+      </HStack>
+
       {/* Left Sidebar */}
       <LeftSection
         user={user}
@@ -63,7 +103,7 @@ const Portfolio = () => {
           icon={<FaChartBar />}
           colorScheme="blue"
           position="absolute"
-          top={4}
+          top={16}
           right={4}
           zIndex="10"
           size="lg"
@@ -77,13 +117,13 @@ const Portfolio = () => {
         />
       </Tooltip>
 
-      {/* Problem List Redirect Button with Engagement */}
+      {/* Problem List Redirect Floating Button */}
       <Tooltip label="Explore coding problems & solutions" placement="left" isOpen={showIntro}>
         <IconButton
           icon={<FaBug />}
           colorScheme="red"
           position="absolute"
-          top={16}
+          top={28}
           right={4}
           zIndex="10"
           size="lg"
@@ -97,12 +137,12 @@ const Portfolio = () => {
         />
       </Tooltip>
 
-      {/* Animated Text Banner for engagement */}
+      {/* Animated Text Banner */}
       {showIntro && (
         <Fade in={showIntro}>
           <Box
             position="absolute"
-            top={16}
+            top={28}
             right={20}
             bg="red.500"
             px={4}
