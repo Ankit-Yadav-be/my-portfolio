@@ -77,29 +77,7 @@ const Portfolio = () => {
         />
       </Tooltip>
 
-      {/* Problem List Redirect Button with Engagement */}
-      <Tooltip
-        label="Explore coding problems & solutions"
-        placement="left"
-        isOpen={showIntro}
-      >
-        <IconButton
-          icon={<FaBug />}
-          colorScheme="red"
-          position="absolute"
-          top={16}
-          right={4}
-          zIndex="10"
-          size="lg"
-          onClick={() => navigate("/problem-list")}
-          boxShadow={highlightProblem ? "0 0 15px #FF4C4C" : "none"}
-          transition="0.3s ease-in-out"
-          _hover={{
-            transform: "scale(1.1)",
-            boxShadow: "0 0 20px #FF4C4C",
-          }}
-        />
-      </Tooltip>
+     
 
       {/* Animated Text Banner for engagement */}
       {showIntro && (

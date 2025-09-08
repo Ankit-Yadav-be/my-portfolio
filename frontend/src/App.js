@@ -10,11 +10,13 @@ import ProblemsList from "./Component/ProblemList";
 import ProblemDetail from "./Component/ProblemDetail";
 import AdminPanel from "./Component/AdminPanel";
 import ProblemsExplorer from "./Component/ProblemExplorer";
+import Navbar from "./Component/Navbar";
 
 function App() {
   return (
     <Router>
       <Box>
+        <Navbar />
         <TrackVisitor />
         <Routes>
           <Route path="/" element={<ProjectShow />} />
