@@ -8,6 +8,7 @@ import testimonialRoutes from "./src/routes/testimonialRoute.js";
 import VisitorRoute from "./src/routes/VisitorApi.js";
 import hakerrankapi from "./src/routes/hakerrankApi.js";
 import problemRoutes from "./src/routes/problemRoutes.js";
+import patternRoutes from "./src/routes/patternRoute.js";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use("/api", testimonialRoutes);
 app.use("/api", VisitorRoute);
 app.use("/api", hakerrankapi);
 app.use("/api/problems", problemRoutes);
+app.use("/api/patterns", patternRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
