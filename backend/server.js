@@ -10,12 +10,14 @@ import hakerrankapi from "./src/routes/hakerrankApi.js";
 import problemRoutes from "./src/routes/problemRoutes.js";
 import patternRoutes from "./src/routes/patternRoute.js";
 import compression from "compression";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
 const app = express();
 const _dirname = path.resolve();
-
+const limiter = rateLimit({ windowMs: 1 * 60 * 1000, max: 100 });
 // ✅ Allow specific origin (your frontend)
 app.use(
   cors({
@@ -25,7 +27,8 @@ app.use(
 );
 
 app.use(compression());
-
+app.use(helmet());
+app.use(limiter);
 app.use(express.json());
 app.use("/uploads", express.static(path.join(_dirname, "uploads")));
 
