@@ -160,12 +160,18 @@ export default function ProblemsExplorer() {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  // UI
-  return (
-    <Flex minH="80vh" bg={pageBg} p={{ base: 4, md: 8 }} gap={6}>
-      <PatternExplorerIntro/>
-      {showConfetti && <Confetti recycle={false} numberOfPieces={180} />}
-     
+// ✅ Corrected layout
+return (
+  <Box bg={pageBg} minH="100vh" p={{ base: 4, md: 8 }}>
+    {/* Intro always at top, full width */}
+    <Box mb={8}>
+      <PatternExplorerIntro />
+    </Box>
+
+    {showConfetti && <Confetti recycle={false} numberOfPieces={180} />}
+
+    {/* Main 2-column layout */}
+    <Flex gap={6} align="flex-start">
       {/* SIDEBAR */}
       <Box
         minW={{ base: "100%", md: "300px" }}
@@ -202,11 +208,9 @@ export default function ProblemsExplorer() {
           overflowY="auto"
         >
           {loading && <Text color={subTextColor}>Loading...</Text>}
-
           {!loading && topics.length === 0 && (
             <Text color={subTextColor}>No topics yet — add from admin</Text>
           )}
-
           {topics
             .filter((t) => t.toLowerCase().includes(query.toLowerCase()))
             .map((t) => {
@@ -237,6 +241,7 @@ export default function ProblemsExplorer() {
 
       {/* MAIN */}
       <Box flex="1">
+        {/* Topic heading + filters */}
         <HStack mb={5} align="center">
           <Heading
             size="lg"
@@ -276,16 +281,14 @@ export default function ProblemsExplorer() {
             </Text>
           </HStack>
           <Progress
-            value={
-              totalProblems === 0 ? 0 : (solvedCount / totalProblems) * 100
-            }
+            value={totalProblems === 0 ? 0 : (solvedCount / totalProblems) * 100}
             size="sm"
             borderRadius="md"
             bg={progressBg}
           />
         </Box>
 
-        {/* Problems Accordion */}
+        {/* Problems */}
         {selectedPattern && (
           <Accordion allowMultiple>
             {Object.entries(groupProblems(selectedPattern.problems)).map(
@@ -400,49 +403,49 @@ export default function ProblemsExplorer() {
           </Accordion>
         )}
       </Box>
+    </Flex>
 
-      {/* Scroll-to-top */}
-      <IconButton
-        aria-label="Scroll to top"
-        icon={<ArrowUpIcon />}
-        position="fixed"
-        bottom="24px"
-        right="24px"
-        borderRadius="full"
-        size="lg"
-        colorScheme="teal"
-        onClick={scrollToTop}
-        boxShadow="lg"
-      />
+    {/* Scroll-to-top */}
+    <IconButton
+      aria-label="Scroll to top"
+      icon={<ArrowUpIcon />}
+      position="fixed"
+      bottom="24px"
+      right="24px"
+      borderRadius="full"
+      size="lg"
+      colorScheme="teal"
+      onClick={scrollToTop}
+      boxShadow="lg"
+    />
 
-      {/* Hint Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
-        <ModalOverlay />
-        <ModalContent bg={cardBg} borderWidth="1px" borderColor={borderColor}>
-          <ModalHeader color={textColor}>
-            Hint — {currentProblemTitle}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text color={textColor} mb={4}>
-              {currentHint}
-            </Text>
-            <Box p={3} borderRadius="md" bg={modalCodeBg}>
-              <Code whiteSpace="pre" width="100%">
-                {`// Pseudocode / starter
+    {/* Hint Modal */}
+    <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
+      <ModalOverlay />
+      <ModalContent bg={cardBg} borderWidth="1px" borderColor={borderColor}>
+        <ModalHeader color={textColor}>
+          Hint — {currentProblemTitle}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Text color={textColor} mb={4}>
+            {currentHint}
+          </Text>
+          <Box p={3} borderRadius="md" bg={modalCodeBg}>
+            <Code whiteSpace="pre" width="100%">
+              {`// Pseudocode / starter
 function dpExample(arr) {
   const dp = new Array(arr.length).fill(0);
   // fill base cases
   // iterate and fill transitions
 }`}
-              </Code>
-            </Box>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Flex>
-  );
-}
+            </Code>
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={onClose}>Close</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  </Box>
+);
