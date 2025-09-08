@@ -16,18 +16,23 @@ function App() {
   return (
     <Router>
       <Box>
+        {/* 🔹 Fixed Navbar */}
         <Navbar />
-        <TrackVisitor />
-        <Routes>
-          <Route path="/" element={<ProjectShow />} />
-          <Route path="/dsa" element={<ProblemsExplorer />} />
-          <Route path="/admin-dsa" element={<AdminPanel/>} />
-           <Route path="/problem-list" element={<ProblemsList />} />
-           <Route path="/problems/:id" element={<ProblemDetail />} />
-          <Route path="/skill" element={<SkillsSection />} />
-          <Route path="/add-project" element={<AddProjectForm />} />
-          <Route path="/admin" element={<VisitorDashboard />} />
-        </Routes>
+
+        {/* 🔹 Main Content Wrapper */}
+        <Box pt="80px"> {/* 80px padding for Navbar height */}
+          <TrackVisitor />
+          <Routes>
+            <Route path="/" element={<ProjectShow />} />
+            <Route path="/dsa" element={<ProblemsExplorer />} />
+            <Route path="/admin-dsa" element={<AdminPanel />} />
+            <Route path="/problem-list" element={<ProblemsList />} />
+            <Route path="/problems/:id" element={<ProblemDetail />} />
+            <Route path="/skill" element={<SkillsSection />} />
+            <Route path="/add-project" element={<AddProjectForm />} />
+            <Route path="/admin" element={<VisitorDashboard />} />
+          </Routes>
+        </Box>
       </Box>
     </Router>
   );
