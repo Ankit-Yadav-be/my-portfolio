@@ -9,6 +9,7 @@ import {
   Text,
   Button,
   HStack,
+  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import ProjectsSection from "./ProjectSection";
@@ -60,33 +61,38 @@ const Portfolio = () => {
         left="50%"
         transform="translateX(-50%)"
         zIndex="20"
+        backdropFilter="blur(12px)"
+        bg={isDarkMode ? "rgba(30,30,30,0.7)" : "rgba(255,255,255,0.7)"}
+        px={6}
+        py={3}
+        borderRadius="2xl"
+        boxShadow="xl"
       >
         <Button
-          variant="solid"
+          size="md"
           colorScheme="blue"
-          size="sm"
-          onClick={() => navigate("/")}
-          _hover={{ transform: "scale(1.05)" }}
-        >
-          Web
-        </Button>
-        <Button
-          variant="solid"
-          colorScheme="teal"
-          size="sm"
-          onClick={() => navigate("/dsa")}
-          _hover={{ transform: "scale(1.05)" }}
-        >
-          DSA
-        </Button>
-        <Button
-          variant="solid"
-          colorScheme="red"
-          size="sm"
+          fontWeight="bold"
+          leftIcon={<FaBug />}
           onClick={() => navigate("/problem-list")}
-          _hover={{ transform: "scale(1.05)" }}
+          _hover={{
+            transform: "scale(1.05)",
+            bgGradient: "linear(to-r, blue.400, blue.600)",
+          }}
         >
-          Problems
+          🌐 Web
+        </Button>
+        <Button
+          size="md"
+          colorScheme="teal"
+          fontWeight="bold"
+          leftIcon={<FaBug />}
+          onClick={() => navigate("/dsa")}
+          _hover={{
+            transform: "scale(1.05)",
+            bgGradient: "linear(to-r, teal.400, teal.600)",
+          }}
+        >
+          💻 DSA
         </Button>
       </HStack>
 
@@ -117,42 +123,22 @@ const Portfolio = () => {
         />
       </Tooltip>
 
-      {/* Problem List Redirect Floating Button */}
-      <Tooltip label="Explore coding problems & solutions" placement="left" isOpen={showIntro}>
-        <IconButton
-          icon={<FaBug />}
-          colorScheme="red"
-          position="absolute"
-          top={28}
-          right={4}
-          zIndex="10"
-          size="lg"
-          onClick={() => navigate("/problem-list")}
-          boxShadow={highlightProblem ? "0 0 15px #FF4C4C" : "none"}
-          transition="0.3s ease-in-out"
-          _hover={{
-            transform: "scale(1.1)",
-            boxShadow: "0 0 20px #FF4C4C",
-          }}
-        />
-      </Tooltip>
-
-      {/* Animated Text Banner */}
+      {/* Animated Intro Banner */}
       {showIntro && (
         <Fade in={showIntro}>
           <Box
             position="absolute"
             top={28}
             right={20}
-            bg="red.500"
+            bgGradient="linear(to-r, pink.400, red.500)"
             px={4}
             py={2}
-            borderRadius="md"
-            boxShadow="lg"
+            borderRadius="xl"
+            boxShadow="2xl"
             zIndex="9"
           >
             <Text fontWeight="bold" color="white">
-              NEW: Problems & Solutions 🚀
+              🚀 NEW: Explore Web & DSA Problems!
             </Text>
           </Box>
         </Fade>
@@ -167,15 +153,17 @@ const Portfolio = () => {
         borderRadius="lg"
         boxShadow="xl"
       >
-        {showVisitorStats && <VisitorStats />}
+        <VStack spacing={6} align="stretch">
+          {showVisitorStats && <VisitorStats />}
 
-        <AboutMeSection />
-        <ProjectsSection />
-        <Certifications />
-        <Divider my={4} borderColor="gray.600" />
-        <TestimonialList />
-        <Divider my={4} borderColor="gray.600" />
-        <CTASection />
+          <AboutMeSection />
+          <ProjectsSection />
+          <Certifications />
+          <Divider my={4} borderColor="gray.600" />
+          <TestimonialList />
+          <Divider my={4} borderColor="gray.600" />
+          <CTASection />
+        </VStack>
       </Box>
     </Box>
   );
