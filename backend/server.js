@@ -9,6 +9,7 @@ import VisitorRoute from "./src/routes/VisitorApi.js";
 import hakerrankapi from "./src/routes/hakerrankApi.js";
 import problemRoutes from "./src/routes/problemRoutes.js";
 import patternRoutes from "./src/routes/patternRoute.js";
+import compression from "compression";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(compression());
 
 app.use(express.json());
 app.use("/uploads", express.static(path.join(_dirname, "uploads")));
