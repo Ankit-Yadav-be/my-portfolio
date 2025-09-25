@@ -16,7 +16,7 @@ const LeetCodeIcon = (props) => (
 );
 
 const LeetCodeWidget = ({ usernamel }) => {
-  const [showWidget, setShowWidget] = useState(ture);
+  const [showWidget, setShowWidget] = useState(true);
 
   return (
     <VStack textAlign="center" my={5}>
