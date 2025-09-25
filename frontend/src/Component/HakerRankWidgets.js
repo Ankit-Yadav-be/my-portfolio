@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FaHackerrank } from "react-icons/fa";
 
 const HackerRankWidget = ({ usernameh }) => {
-  const [showWidget, setShowWidget] = useState(false);
+  const [showWidget, setShowWidget] = useState(true);
 
   return (
     <VStack textAlign="center" my={5}>

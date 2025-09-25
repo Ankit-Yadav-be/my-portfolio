@@ -20,7 +20,9 @@ function App() {
         <Navbar />
 
         {/* 🔹 Main Content Wrapper */}
-        <Box pt="80px"> {/* 80px padding for Navbar height */}
+        <Box pt="80px">
+          {" "}
+          {/* 80px padding for Navbar height */}
           <TrackVisitor />
           <Routes>
             <Route path="/" element={<ProjectShow />} />
