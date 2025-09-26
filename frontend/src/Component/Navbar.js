@@ -2,16 +2,17 @@
 import React from "react";
 import { Box, HStack, Button, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaCode, FaLaptopCode } from "react-icons/fa";
+import { FaCode, FaLaptopCode, FaHome } from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
   const bg = useColorModeValue("whiteAlpha.900", "gray.900");
   const activeBg = useColorModeValue("blue.500", "teal.400");
 
   const navItems = [
+    { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Web", path: "/problem-list", icon: <FaCode /> },
     { name: "DSA", path: "/dsa", icon: <FaLaptopCode /> },
   ];
@@ -38,14 +39,20 @@ const Navbar = () => {
               leftIcon={item.icon}
               size="md"
               fontWeight="bold"
-              colorScheme={isActive ? "blue" : "gray"}
               variant={isActive ? "solid" : "ghost"}
+              colorScheme={isActive ? "blue" : "gray"}
               bg={isActive ? activeBg : "transparent"}
-              color={isActive ? "white" : colorMode === "dark" ? "whiteAlpha.900" : "blackAlpha.900"}
+              color={
+                isActive
+                  ? "white"
+                  : colorMode === "dark"
+                  ? "whiteAlpha.900"
+                  : "blackAlpha.900"
+              }
               _hover={{
                 transform: "scale(1.08)",
                 bgGradient: isActive
-                  ? "linear(to-r, blue.400, blue.600)"
+                  ? "linear(to-r, blue.500, blue.700)"
                   : "linear(to-r, teal.300, teal.500)",
                 color: "white",
               }}
