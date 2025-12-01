@@ -16,6 +16,7 @@ import rateLimit from "express-rate-limit";
 dotenv.config();
 
 const app = express();
+app.set("trust proxy", 1);
 const _dirname = path.resolve();
 const limiter = rateLimit({ windowMs: 1 * 60 * 1000, max: 100 });
 // ✅ Allow specific origin (your frontend)
