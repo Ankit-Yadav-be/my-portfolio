@@ -31,31 +31,38 @@ const ProjectsSection = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // ---------------------------
-  // ✔ Fetch Projects
-  // ---------------------------
+  /* ================================
+        ✔ GET ALL PROJECTS
+  ================================= */
   useEffect(() => {
     axios
       .get("https://my-portfolio-lw4x.vercel.app/api/get")
       .then((response) => {
-        setProjects(response.data.data || []); // IMPORTANT FIX
+        setProjects(response.data?.data || []); // SAFE ARRAY
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.log("Error fetching projects:", err);
+        setLoading(false);
+      });
   }, []);
 
-  // ---------------------------
-  // ✔ Filter Projects
-  // ---------------------------
+  /* ================================
+        ✔ FILTER PROJECTS
+  ================================= */
   const filterProjects = (category) => {
-    return projects
-      .filter((p) => p.category?.toLowerCase() === category)
-      .filter((p) => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    return (projects || [])
+      .filter(
+        (p) => p.category?.toLowerCase().trim() === category.toLowerCase()
+      )
+      .filter((p) =>
+        p.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
   };
 
-  // ---------------------------
-  // ✔ Project Card Grid
-  // ---------------------------
+  /* ================================
+        ✔ PROJECT GRID COMPONENT
+  ================================= */
   const ProjectGrid = ({ items }) => (
     <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6}>
       {loading
@@ -89,7 +96,7 @@ const ProjectsSection = () => {
                 }}
                 onClick={() => navigate(`/project/${project._id}`)}
               >
-                <Text fontWeight="bold" fontSize="xl" isTruncated noOfLines={1}>
+                <Text fontWeight="bold" fontSize="xl" noOfLines={1}>
                   {project.title}
                 </Text>
 
@@ -110,7 +117,7 @@ const ProjectsSection = () => {
                   />
                 )}
 
-                {/* ✔ techStack FIX */}
+                {/* ✔ SAFE techStack */}
                 <HStack spacing={2} mt={3} wrap="wrap">
                   {(project.techStack || []).map((tech, index) => (
                     <Badge
@@ -155,7 +162,7 @@ const ProjectsSection = () => {
 
   return (
     <Box py={10} px={6}>
-      {/* Header */}
+      {/* HEADER */}
       <HStack justify="space-between" mb={4} flexWrap="wrap">
         <Heading
           size="lg"
@@ -185,6 +192,7 @@ const ProjectsSection = () => {
 
       <Divider mb={4} />
 
+      {/* TABS */}
       <Tabs variant="enclosed" colorScheme="teal">
         <TabList>
           <Tab fontWeight="bold">Web Projects</Tab>
