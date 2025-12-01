@@ -1,5 +1,5 @@
 import Problem from "../models/Problem.js";
-import redis from "../utils/redisClient.js";
+
 // @desc Create new problem
 export const createProblem = async (req, res) => {
   try {
@@ -22,23 +22,9 @@ export const getProblems = async (req, res) => {
       query.title = { $regex: search, $options: "i" }; // case-insensitive search
     }
 
-    // 👇 Unique cache key based on query
-    const cacheKey = `problems:${JSON.stringify(query)}`;
-
-    // Check Redis cache
-    const cachedData = await redis.get(cacheKey);
-    if (cachedData) {
-      console.log("Cache hit ✅");
-      return res.json(JSON.parse(cachedData));
-    }
-
-    // MongoDB se data
+    // MongoDB se data fetch
     const problems = await Problem.find(query).sort({ createdAt: -1 });
 
-    // Cache set for 60 sec
-    await redis.set(cacheKey, JSON.stringify(problems), "EX", 60);
-
-    console.log("Cache miss ❌");
     res.json(problems);
   } catch (error) {
     res.status(500).json({ message: error.message });

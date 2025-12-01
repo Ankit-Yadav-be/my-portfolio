@@ -6,14 +6,14 @@ import { getCache, setCache, deleteCache } from "../utils/cache.js";
 const router = express.Router();
 
 /* =====================================================
-   ⭐ GET ALL PROJECTS (Redis Cache)
+   ⭐ GET ALL PROJECTS (Node-Cache)
 ===================================================== */
 router.get("/get", async (req, res) => {
   try {
     const cacheKey = "all_projects";
 
-    // 🔥 Check Redis cache
-    const cachedData = await getCache(cacheKey);
+    // 🔥 Check cache
+    const cachedData = getCache(cacheKey);
     if (cachedData) {
       return res.json({
         fromCache: true,
@@ -25,8 +25,8 @@ router.get("/get", async (req, res) => {
     // ⏳ Fetch from DB
     const projects = await Project.find().sort({ createdAt: -1 });
 
-    // 💾 Save in Redis for 10 minutes
-    await setCache(cacheKey, projects, 600);
+    // 💾 Save to cache (TTL handled in cache.js default)
+    setCache(cacheKey, projects);
 
     res.json({
       fromCache: false,
@@ -42,14 +42,13 @@ router.get("/get", async (req, res) => {
 });
 
 /* =====================================================
-   ⭐ GET SINGLE PROJECT (Redis Cache)
+   ⭐ GET SINGLE PROJECT (Node-Cache)
 ===================================================== */
 router.get("/get/:id", async (req, res) => {
   try {
     const cacheKey = `project_${req.params.id}`;
 
-    // 🔥 Check Redis cache
-    const cachedProject = await getCache(cacheKey);
+    const cachedProject = getCache(cacheKey);
     if (cachedProject) {
       return res.json({
         fromCache: true,
@@ -63,8 +62,8 @@ router.get("/get/:id", async (req, res) => {
       return res.status(404).json({ error: "Project not found" });
     }
 
-    // 🕒 Cache TTL = 600s (10 minutes)
-    await setCache(cacheKey, project, 600);
+    // 🕒 Cache TTL = 600 seconds (10 minutes)
+    setCache(cacheKey, project, 600);
 
     res.json({
       fromCache: false,
@@ -79,7 +78,7 @@ router.get("/get/:id", async (req, res) => {
 });
 
 /* =====================================================
-   ⭐ ADD NEW PROJECT (Invalidate Redis Cache)
+   ⭐ ADD NEW PROJECT (Invalidate Cache)
 ===================================================== */
 router.post("/add", upload.single("image"), async (req, res) => {
   try {
@@ -109,8 +108,8 @@ router.post("/add", upload.single("image"), async (req, res) => {
 
     await newProject.save();
 
-    // 🔥 Delete old cached list
-    await deleteCache("all_projects");
+    // 🔥 Invalidate cache after insert
+    deleteCache("all_projects");
 
     res.status(201).json({
       success: true,
