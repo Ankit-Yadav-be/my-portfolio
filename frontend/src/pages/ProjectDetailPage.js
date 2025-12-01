@@ -79,7 +79,7 @@ const ProjectDetailPage = () => {
           {project.video ? (
             <Box w="100%" h="300px" borderRadius="lg" overflow="hidden" boxShadow="lg">
               <iframe
-                src={getEmbedUrl(project.videoUrl)}
+                src={getEmbedUrl(project.video)}
                 title="Project Video"
                 width="100%"
                 height="100%"
