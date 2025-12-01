@@ -1,28 +1,26 @@
-const cache = new Map();
+import NodeCache from "node-cache";
 
-export const setCache = (key, value, ttl = 5 * 60 * 1000) => {  // default 5 min
-  cache.set(key, {
-    value,
-    expiry: Date.now() + ttl,
-  });
+// default TTL = 5 minutes
+const cache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
+
+// Set cache
+export const setCache = (key, value, ttl = 300) => {
+  cache.set(key, value, ttl);
 };
 
+// Get cache
 export const getCache = (key) => {
-  const data = cache.get(key);
-  if (!data) return null;
-
-  if (Date.now() > data.expiry) {
-    cache.delete(key);
-    return null;
-  }
-
-  return data.value;
+  return cache.get(key) || null;
 };
 
+// Delete specific key
 export const deleteCache = (key) => {
-  cache.delete(key);
+  cache.del(key);
 };
 
+// Clear all cached data
 export const clearAllCache = () => {
-  cache.clear();
+  cache.flushAll();
 };
+
+export default cache;

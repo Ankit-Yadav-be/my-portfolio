@@ -5,14 +5,14 @@ import { getCache, setCache, deleteCache } from "../utils/cache.js";
 
 const router = express.Router();
 
-// --------------------------------------
-// ⭐ GET ALL PROJECTS (with In-memory Cache)
-// --------------------------------------
+/* =====================================================
+   ⭐ GET ALL PROJECTS (Node-Cache)
+===================================================== */
 router.get("/get", async (req, res) => {
   try {
     const cacheKey = "all_projects";
 
-    // Return cached data
+    // 🔥 Check cache
     const cachedData = getCache(cacheKey);
     if (cachedData) {
       return res.json({
@@ -22,9 +22,10 @@ router.get("/get", async (req, res) => {
       });
     }
 
+    // ⏳ Fetch from DB
     const projects = await Project.find().sort({ createdAt: -1 });
 
-    // Save cache
+    // 💾 Save to cache (TTL handled in cache.js default)
     setCache(cacheKey, projects);
 
     res.json({
@@ -40,9 +41,9 @@ router.get("/get", async (req, res) => {
   }
 });
 
-// --------------------------------------
-// ⭐ GET SINGLE PROJECT (cached)
-// --------------------------------------
+/* =====================================================
+   ⭐ GET SINGLE PROJECT (Node-Cache)
+===================================================== */
 router.get("/get/:id", async (req, res) => {
   try {
     const cacheKey = `project_${req.params.id}`;
@@ -61,8 +62,8 @@ router.get("/get/:id", async (req, res) => {
       return res.status(404).json({ error: "Project not found" });
     }
 
-    // Save in cache
-    setCache(cacheKey, project, 10 * 60 * 1000); // 10 min
+    // 🕒 Cache TTL = 600 seconds (10 minutes)
+    setCache(cacheKey, project, 600);
 
     res.json({
       fromCache: false,
@@ -76,9 +77,9 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
-// --------------------------------------
-// ⭐ ADD NEW PROJECT (invalidate cache)
-// --------------------------------------
+/* =====================================================
+   ⭐ ADD NEW PROJECT (Invalidate Cache)
+===================================================== */
 router.post("/add", upload.single("image"), async (req, res) => {
   try {
     const { title, description, link, techStack, github, category, video } =
@@ -107,7 +108,7 @@ router.post("/add", upload.single("image"), async (req, res) => {
 
     await newProject.save();
 
-    // 🔥 Cache Invalidation
+    // 🔥 Invalidate cache after insert
     deleteCache("all_projects");
 
     res.status(201).json({
