@@ -1,26 +1,15 @@
-import NodeCache from "node-cache";
+import redis from "../utils/redisClient.js"; // your redis instance from ioredis
 
-// default TTL = 5 minutes
-const cache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
-
-// Set cache
-export const setCache = (key, value, ttl = 300) => {
-  cache.set(key, value, ttl);
+// TTL in seconds
+export const setCache = async (key, value, ttl = 600) => {
+  await redis.set(key, JSON.stringify(value), "EX", ttl);
 };
 
-// Get cache
-export const getCache = (key) => {
-  return cache.get(key) || null;
+export const getCache = async (key) => {
+  const data = await redis.get(key);
+  return data ? JSON.parse(data) : null;
 };
 
-// Delete specific key
-export const deleteCache = (key) => {
-  cache.del(key);
+export const deleteCache = async (key) => {
+  await redis.del(key);
 };
-
-// Clear all cached data
-export const clearAllCache = () => {
-  cache.flushAll();
-};
-
-export default cache;
