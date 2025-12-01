@@ -15,7 +15,7 @@ const Navbar = () => {
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Web", path: "/problem-list", icon: <FaCode /> },
     { name: "DSA", path: "/dsa", icon: <FaLaptopCode /> },
-  ];
+  ]; 
 
   return (
     <Box

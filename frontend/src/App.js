@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
+
 import ProjectShow from "./Component/ProjectShow";
 import AddProjectForm from "./Component/AddProjectForm";
 import TrackVisitor from "./Component/TrackVisitors";
@@ -12,18 +13,19 @@ import AdminPanel from "./Component/AdminPanel";
 import ProblemsExplorer from "./Component/ProblemExplorer";
 import Navbar from "./Component/Navbar";
 
+// 🔥 New Component (Detail Page)
+
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+
 function App() {
   return (
     <Router>
       <Box>
-        {/* 🔹 Fixed Navbar */}
         <Navbar />
 
-        {/* 🔹 Main Content Wrapper */}
         <Box pt="80px">
-          {" "}
-          {/* 80px padding for Navbar height */}
           <TrackVisitor />
+
           <Routes>
             <Route path="/" element={<ProjectShow />} />
             <Route path="/dsa" element={<ProblemsExplorer />} />
@@ -33,6 +35,9 @@ function App() {
             <Route path="/skill" element={<SkillsSection />} />
             <Route path="/add-project" element={<AddProjectForm />} />
             <Route path="/admin" element={<VisitorDashboard />} />
+
+            {/* ⭐ NEW PROJECT DETAIL PAGE ROUTE */}
+            <Route path="/project/:id" element={<ProjectDetailPage />} />
           </Routes>
         </Box>
       </Box>

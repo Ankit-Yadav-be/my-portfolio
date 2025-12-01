@@ -23,7 +23,7 @@ const Portfolio = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showVisitorStats, setShowVisitorStats] = useState(false);
   const [highlightButton, setHighlightButton] = useState(true);
-  const [showIntro, setShowIntro] = useState(true); 
+  const [showIntro, setShowIntro] = useState(true);
   const { toggleColorMode } = useColorMode();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Portfolio = () => {
       .catch((error) => console.error("Error fetching user profile:", error));
 
     setTimeout(() => setHighlightButton(false), 3000);
-    setTimeout(() => setShowIntro(false), 7000); 
+    setTimeout(() => setShowIntro(false), 7000);
   }, []);
 
   return (
@@ -72,8 +72,6 @@ const Portfolio = () => {
           }}
         />
       </Tooltip>
-
-     
 
       {/* Right Section */}
       <Box

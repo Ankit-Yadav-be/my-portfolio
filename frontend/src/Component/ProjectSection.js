@@ -10,14 +10,6 @@ import {
   Badge,
   useColorMode,
   Skeleton,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  Button,
   Divider,
   Input,
   Tabs,
@@ -25,18 +17,19 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Button
 } from "@chakra-ui/react";
 import { FaGithub, FaLink, FaSun, FaMoon, FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProjectsSection = () => {
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { colorMode, toggleColorMode } = useColorMode();
   const [loading, setLoading] = useState(true);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -45,23 +38,13 @@ const ProjectsSection = () => {
         setProjects(response.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching projects:", error);
-        setLoading(false);
-      });
+      .catch(() => setLoading(false));
   }, []);
-
-  const openProjectModal = (project) => {
-    setSelectedProject(project);
-    onOpen();
-  };
 
   const filterProjects = (category) => {
     return projects
-      .filter((project) => project.category?.toLowerCase() === category)
-      .filter((project) =>
-        project.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      .filter((p) => p.category?.toLowerCase() === category)
+      .filter((p) => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
   };
 
   const ProjectGrid = ({ items }) => (
@@ -86,6 +69,7 @@ const ProjectsSection = () => {
                 display="flex"
                 flexDirection="column"
                 justifyContent="space-between"
+                cursor="pointer"
                 _hover={{
                   boxShadow:
                     colorMode === "dark"
@@ -94,15 +78,18 @@ const ProjectsSection = () => {
                   transform: "translateY(-5px)",
                   transition: "0.3s ease-in-out",
                 }}
-                onClick={() => openProjectModal(project)}
+                onClick={() => navigate(`/project/${project._id}`)}
               >
                 <Text fontWeight="bold" fontSize="xl" isTruncated noOfLines={1}>
                   {project.title}
                 </Text>
-                <Divider my={2} borderColor="gray.500" />
+
+                <Divider my={2} />
+
                 <Text fontSize="sm" mt={2} noOfLines={3}>
                   {project.description}
                 </Text>
+
                 {project.image && (
                   <Image
                     src={project.image}
@@ -111,7 +98,6 @@ const ProjectsSection = () => {
                     mt={4}
                     maxHeight="150px"
                     objectFit="cover"
-                    loading="lazy"
                   />
                 )}
 
@@ -127,7 +113,9 @@ const ProjectsSection = () => {
                       </Badge>
                     ))}
                 </HStack>
-                <Divider my={4} borderColor="gray.500" />
+
+                <Divider my={4} />
+
                 <HStack spacing={4}>
                   <Button
                     as="a"
@@ -135,15 +123,18 @@ const ProjectsSection = () => {
                     target="_blank"
                     leftIcon={<FaGithub />}
                     colorScheme="gray"
+                    size="sm"
                   >
                     GitHub
                   </Button>
+
                   <Button
                     as="a"
                     href={project.link}
                     target="_blank"
                     leftIcon={<FaLink />}
                     colorScheme="green"
+                    size="sm"
                   >
                     Live Demo
                   </Button>
@@ -156,12 +147,9 @@ const ProjectsSection = () => {
 
   return (
     <Box py={10} px={6}>
+      {/* Header */}
       <HStack justify="space-between" mb={4} flexWrap="wrap">
-        <Heading
-          as="h2"
-          size="lg"
-          color={colorMode === "dark" ? "teal.300" : "teal.600"}
-        >
+        <Heading size="lg" color={colorMode === "dark" ? "teal.300" : "teal.600"}>
           My Projects
         </Heading>
 
@@ -173,13 +161,8 @@ const ProjectsSection = () => {
             borderRadius="md"
             borderColor="gray.400"
             focusBorderColor="teal.400"
-            _placeholder={{ color: "gray.500" }}
           />
-          <IconButton
-            icon={<FaSearch />}
-            aria-label="Search"
-            colorScheme="teal"
-          />
+          <IconButton icon={<FaSearch />} aria-label="Search" colorScheme="teal" />
           <IconButton
             icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
             aria-label="Toggle Dark Mode"
@@ -189,53 +172,24 @@ const ProjectsSection = () => {
         </HStack>
       </HStack>
 
-      <Divider my={4} borderColor="gray.500" />
+      <Divider mb={4} />
 
       <Tabs variant="enclosed" colorScheme="teal">
         <TabList>
           <Tab fontWeight="bold">Web Projects</Tab>
           <Tab fontWeight="bold">Android Projects</Tab>
         </TabList>
+
         <TabPanels>
           <TabPanel>
             <ProjectGrid items={filterProjects("web")} />
           </TabPanel>
+
           <TabPanel>
             <ProjectGrid items={filterProjects("android")} />
           </TabPanel>
         </TabPanels>
       </Tabs>
-
-      <Modal isOpen={isOpen} onClose={onClose} size="lg">
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{selectedProject?.title}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text fontSize="md" mb={4}>
-              {selectedProject?.description}
-            </Text>
-            <Divider my={4} borderColor="gray.500" />
-            {selectedProject?.image && (
-              <Image
-                src={selectedProject.image}
-                alt={selectedProject?.title}
-                borderRadius="md"
-                mb={4}
-                maxHeight="250px"
-                objectFit="cover"
-              />
-            )}
-            <HStack spacing={2} wrap="wrap" mb={4}>
-              {selectedProject?.technologies?.split(", ").map((tech, index) => (
-                <Badge key={index} colorScheme="purple">
-                  {tech}
-                </Badge>
-              ))}
-            </HStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 };
