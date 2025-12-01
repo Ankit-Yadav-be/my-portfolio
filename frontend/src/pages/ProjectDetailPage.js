@@ -76,7 +76,7 @@ const ProjectDetailPage = () => {
       <HStack align="start" spacing={10} flexWrap="wrap">
         {/* LEFT – VIDEO */}
         <Box flex="1" minW="300px">
-          {project.videoUrl ? (
+          {project.video ? (
             <Box w="100%" h="300px" borderRadius="lg" overflow="hidden" boxShadow="lg">
               <iframe
                 src={getEmbedUrl(project.videoUrl)}
