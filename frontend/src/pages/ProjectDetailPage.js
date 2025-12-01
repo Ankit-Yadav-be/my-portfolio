@@ -14,30 +14,81 @@ import {
   Stack,
   Alert,
   AlertIcon,
+  Code,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaGithub, FaLink } from "react-icons/fa";
+import {
+  SiReact,
+  SiNodedotjs,
+  SiMongodb,
+  SiExpress,
+  SiChakraui,
+  SiFirebase,
+  SiJavascript,
+  SiTypescript,
+  SiRedux,
+  SiTailwindcss,
+  SiGit,
+  SiHtml5,
+  SiCss3,
+} from "react-icons/si";
 import { motion } from "framer-motion";
+
+const techIcons = {
+  react: SiReact,
+  "react.js": SiReact,
+  javascript: SiJavascript,
+  js: SiJavascript,
+  typescript: SiTypescript,
+  ts: SiTypescript,
+  node: SiNodedotjs,
+  "node.js": SiNodedotjs,
+  express: SiExpress,
+  mongodb: SiMongodb,
+  chakra: SiChakraui,
+  "chakra ui": SiChakraui,
+  firebase: SiFirebase,
+  redux: SiRedux,
+  tailwind: SiTailwindcss,
+  git: SiGit,
+  html: SiHtml5,
+  css: SiCss3,
+};
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [videoLoading, setVideoLoading] = useState(true);
+  const [apiInfo, setApiInfo] = useState(null);
   const { colorMode } = useColorMode();
 
+  const endpoint = `https://my-portfolio-lw4x.vercel.app/api/get/${id}`;
+
   useEffect(() => {
-    axios
-      .get(`https://my-portfolio-lw4x.vercel.app/api/get/${id}`)
-      .then((res) => {
+    const fetchProject = async () => {
+      const start = performance.now();
+
+      try {
+        const res = await axios.get(endpoint);
+        const end = performance.now();
+
         setProject(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
+        setApiInfo({
+          url: endpoint,
+          responseTime: (end - start).toFixed(2),
+          size: JSON.stringify(res.data).length,
+        });
+      } catch (err) {
         console.error("Error:", err);
-        setLoading(false);
-      });
+      }
+
+      setLoading(false);
+    };
+
+    fetchProject();
   }, [id]);
 
   if (loading)
@@ -60,12 +111,10 @@ const ProjectDetailPage = () => {
       </Box>
     );
 
-  // Video Embed
   const getEmbedUrl = (url) => {
     if (!url) return null;
-    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    if (url.includes("youtube.com") || url.includes("youtu.be"))
       return url.replace("watch?v=", "embed/");
-    }
     if (url.includes("drive.google.com")) {
       const fileId = url.match(/[-\w]{25,}/);
       return fileId
@@ -77,25 +126,54 @@ const ProjectDetailPage = () => {
 
   return (
     <Box p={{ base: 4, md: 12 }} maxW="7xl" mx="auto">
+      {/* ----------- API INFO SECTION ----------- */}
+      {apiInfo && (
+        <Box
+          p={5}
+          mb={10}
+          borderRadius="xl"
+          bg={colorMode === "dark" ? "gray.700" : "gray.100"}
+          boxShadow="lg"
+          as={motion.div}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Heading fontSize="lg" mb={2} color="teal.400">
+            API Request Details
+          </Heading>
+
+          <VStack align="start" spacing={2}>
+            <Text fontWeight="bold">Endpoint:</Text>
+            <Code p={2} borderRadius="md" w="100%" colorScheme="teal">
+              {apiInfo.url}
+            </Code>
+
+            <HStack spacing={6} mt={2}>
+              <Badge colorScheme="green" px={3} py={1} borderRadius="full">
+                Response Time: {apiInfo.responseTime} ms
+              </Badge>
+              <Badge colorScheme="purple" px={3} py={1} borderRadius="full">
+                Payload Size: {apiInfo.size} bytes
+              </Badge>
+            </HStack>
+          </VStack>
+        </Box>
+      )}
+
       {/* Project Title */}
       <Heading
         mb={4}
         fontSize={{ base: "3xl", md: "4xl" }}
         fontWeight="extrabold"
-        letterSpacing="tight"
         color={colorMode === "dark" ? "teal.300" : "teal.600"}
       >
         {project.title}
       </Heading>
 
-      <Divider mb={8} borderColor={colorMode === "dark" ? "gray.600" : "gray.300"} />
+      <Divider mb={8} />
 
-      <Stack
-        direction={{ base: "column", md: "row" }}
-        spacing={10}
-        align="start"
-      >
-        {/* LEFT: Video or Image */}
+      <Stack direction={{ base: "column", md: "row" }} spacing={10}>
+        {/* LEFT */}
         <Box
           flex="1"
           minW="300px"
@@ -103,17 +181,12 @@ const ProjectDetailPage = () => {
           overflow="hidden"
           boxShadow="2xl"
           as={motion.div}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
         >
           {project.video ? (
             <Box w="100%" h={{ base: "250px", md: "480px" }} position="relative">
               {videoLoading && (
                 <Box
                   position="absolute"
-                  top="0"
-                  left="0"
                   w="100%"
                   h="100%"
                   bg="gray.100"
@@ -148,87 +221,63 @@ const ProjectDetailPage = () => {
               h={{ base: "250px", md: "480px" }}
               objectFit="cover"
               borderRadius="xl"
-              boxShadow="lg"
-              as={motion.img}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
             />
           )}
         </Box>
 
-        {/* RIGHT: Details */}
-        <VStack
-          flex="1"
-          align="start"
-          spacing={6}
-          minW="300px"
-          textAlign="left"
-          as={motion.div}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {/* Description */}
-          <Heading fontSize="xl" mb={2} color={colorMode === "dark" ? "gray.300" : "gray.600"}>
+        {/* RIGHT */}
+        <VStack flex="1" align="start" spacing={6} minW="300px">
+          <Heading fontSize="xl" color="gray.600">
             Project Overview
           </Heading>
-          <Text
-            fontSize={{ base: "md", md: "lg" }}
-            lineHeight="tall"
-            color={colorMode === "dark" ? "gray.300" : "gray.700"}
-          >
-            {project.description}
-          </Text>
+          <Text fontSize="lg">{project.description}</Text>
 
-          {/* Tech Stack */}
-          <Heading fontSize="lg" mt={4} color={colorMode === "dark" ? "gray.300" : "gray.600"}>
+          <Heading fontSize="lg" mt={4} color="gray.600">
             Technologies Used
           </Heading>
-          <HStack wrap="wrap" spacing={2}>
-            {project.techStack?.map((tech, index) => (
-              <Badge
-                key={index}
-                colorScheme="teal"
-                px={3}
-                py={1}
-                fontSize="0.85rem"
-                borderRadius="full"
-                as={motion.div}
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.2 }}
-              >
-                {tech}
-              </Badge>
-            ))}
+
+          {/* 🔥 TECH STACK WITH LOGOS */}
+          <HStack wrap="wrap" spacing={3}>
+            {project.techStack?.map((tech, index) => {
+              const Icon = techIcons[tech.toLowerCase()];
+              return (
+                <Badge
+                  key={index}
+                  colorScheme="teal"
+                  px={3}
+                  py={2}
+                  borderRadius="md"
+                  display="flex"
+                  alignItems="center"
+                  gap={2}
+                >
+                  {Icon && <Icon size={18} />} {tech}
+                </Badge>
+              );
+            })}
           </HStack>
 
-          {/* Action Buttons */}
-          <Heading fontSize="lg" mt={4} color={colorMode === "dark" ? "gray.300" : "gray.600"}>
+          <Heading fontSize="lg" mt={4} color="gray.600">
             Explore Project
           </Heading>
-          <HStack spacing={4} mt={2}>
+
+          <HStack spacing={4}>
             <Button
               as="a"
               href={project.github}
               target="_blank"
               leftIcon={<FaGithub />}
               colorScheme="gray"
-              size="md"
-              _hover={{ transform: "scale(1.05)" }}
-              transition="0.2s"
             >
               GitHub
             </Button>
+
             <Button
               as="a"
               href={project.link}
               target="_blank"
               leftIcon={<FaLink />}
               colorScheme="green"
-              size="md"
-              _hover={{ transform: "scale(1.05)" }}
-              transition="0.2s"
             >
               Live Demo
             </Button>
