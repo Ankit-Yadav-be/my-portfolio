@@ -4,7 +4,6 @@ import {
   Text,
   Image,
   SimpleGrid,
-  IconButton,
   HStack,
   Heading,
   Badge,
@@ -17,7 +16,8 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  Button
+  Button,
+  IconButton,
 } from "@chakra-ui/react";
 import { FaGithub, FaLink, FaSun, FaMoon, FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -31,22 +31,31 @@ const ProjectsSection = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // ---------------------------
+  // ✔ Fetch Projects
+  // ---------------------------
   useEffect(() => {
     axios
       .get("https://my-portfolio-lw4x.vercel.app/api/get")
       .then((response) => {
-        setProjects(response.data);
+        setProjects(response.data.data || []); // IMPORTANT FIX
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
 
+  // ---------------------------
+  // ✔ Filter Projects
+  // ---------------------------
   const filterProjects = (category) => {
     return projects
       .filter((p) => p.category?.toLowerCase() === category)
       .filter((p) => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
   };
 
+  // ---------------------------
+  // ✔ Project Card Grid
+  // ---------------------------
   const ProjectGrid = ({ items }) => (
     <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6}>
       {loading
@@ -101,17 +110,16 @@ const ProjectsSection = () => {
                   />
                 )}
 
+                {/* ✔ techStack FIX */}
                 <HStack spacing={2} mt={3} wrap="wrap">
-                  {(project.technologies || "React, Node.js, MongoDB")
-                    .split(", ")
-                    .map((tech, index) => (
-                      <Badge
-                        key={index}
-                        colorScheme={colorMode === "dark" ? "cyan" : "blue"}
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
+                  {(project.techStack || []).map((tech, index) => (
+                    <Badge
+                      key={index}
+                      colorScheme={colorMode === "dark" ? "cyan" : "blue"}
+                    >
+                      {tech}
+                    </Badge>
+                  ))}
                 </HStack>
 
                 <Divider my={4} />
@@ -149,7 +157,10 @@ const ProjectsSection = () => {
     <Box py={10} px={6}>
       {/* Header */}
       <HStack justify="space-between" mb={4} flexWrap="wrap">
-        <Heading size="lg" color={colorMode === "dark" ? "teal.300" : "teal.600"}>
+        <Heading
+          size="lg"
+          color={colorMode === "dark" ? "teal.300" : "teal.600"}
+        >
           My Projects
         </Heading>
 

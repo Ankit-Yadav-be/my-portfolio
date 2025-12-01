@@ -152,7 +152,10 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
         {[
           { icon: FaPhone, text: user.phone || "+917830237144" },
           { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
-          { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
+          {
+            icon: FaMapMarkerAlt,
+            text: user.location || "Agra, Uttar Pradesh",
+          },
         ].map(({ icon, text }, index) => (
           <HStack key={index} spacing={3}>
             <Box as={icon} fontSize="1.2rem" color="teal.300" />
