@@ -12,6 +12,8 @@ import {
   Spinner,
   useColorMode,
   Stack,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -22,6 +24,7 @@ const ProjectDetailPage = () => {
   const { id } = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [videoLoading, setVideoLoading] = useState(true);
   const { colorMode } = useColorMode();
 
   useEffect(() => {
@@ -41,13 +44,19 @@ const ProjectDetailPage = () => {
     return (
       <Box textAlign="center" mt={20}>
         <Spinner size="xl" thickness="4px" color="teal.400" />
+        <Text mt={4} fontSize="lg" color="gray.500">
+          Loading project details...
+        </Text>
       </Box>
     );
 
   if (!project)
     return (
-      <Box textAlign="center" mt={20} fontSize="xl" color="red.500">
-        Project Not Found
+      <Box textAlign="center" mt={20}>
+        <Alert status="error" maxW="400px" mx="auto">
+          <AlertIcon />
+          Project Not Found
+        </Alert>
       </Box>
     );
 
@@ -94,11 +103,32 @@ const ProjectDetailPage = () => {
           overflow="hidden"
           boxShadow="2xl"
           as={motion.div}
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
           {project.video ? (
-            <Box w="100%" h={{ base: "250px", md: "450px" }}>
+            <Box w="100%" h={{ base: "250px", md: "480px" }} position="relative">
+              {videoLoading && (
+                <Box
+                  position="absolute"
+                  top="0"
+                  left="0"
+                  w="100%"
+                  h="100%"
+                  bg="gray.100"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  borderRadius="12px"
+                  zIndex="10"
+                >
+                  <Spinner size="xl" color="teal.400" />
+                  <Text ml={3} fontWeight="bold" color="gray.600">
+                    Loading Video...
+                  </Text>
+                </Box>
+              )}
               <iframe
                 src={getEmbedUrl(project.video)}
                 title="Project Video"
@@ -107,6 +137,7 @@ const ProjectDetailPage = () => {
                 allow="autoplay"
                 allowFullScreen
                 style={{ borderRadius: "12px" }}
+                onLoad={() => setVideoLoading(false)}
               ></iframe>
             </Box>
           ) : (
@@ -114,10 +145,14 @@ const ProjectDetailPage = () => {
               src={project.image}
               alt={project.title}
               w="100%"
-              h={{ base: "250px", md: "450px" }}
+              h={{ base: "250px", md: "480px" }}
               objectFit="cover"
               borderRadius="xl"
               boxShadow="lg"
+              as={motion.img}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
             />
           )}
         </Box>
@@ -129,7 +164,15 @@ const ProjectDetailPage = () => {
           spacing={6}
           minW="300px"
           textAlign="left"
+          as={motion.div}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
+          {/* Description */}
+          <Heading fontSize="xl" mb={2} color={colorMode === "dark" ? "gray.300" : "gray.600"}>
+            Project Overview
+          </Heading>
           <Text
             fontSize={{ base: "md", md: "lg" }}
             lineHeight="tall"
@@ -139,6 +182,9 @@ const ProjectDetailPage = () => {
           </Text>
 
           {/* Tech Stack */}
+          <Heading fontSize="lg" mt={4} color={colorMode === "dark" ? "gray.300" : "gray.600"}>
+            Technologies Used
+          </Heading>
           <HStack wrap="wrap" spacing={2}>
             {project.techStack?.map((tech, index) => (
               <Badge
@@ -146,16 +192,22 @@ const ProjectDetailPage = () => {
                 colorScheme="teal"
                 px={3}
                 py={1}
-                fontSize="0.8rem"
+                fontSize="0.85rem"
                 borderRadius="full"
+                as={motion.div}
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.2 }}
               >
                 {tech}
               </Badge>
             ))}
           </HStack>
 
-          {/* Buttons */}
-          <HStack spacing={4} mt={4}>
+          {/* Action Buttons */}
+          <Heading fontSize="lg" mt={4} color={colorMode === "dark" ? "gray.300" : "gray.600"}>
+            Explore Project
+          </Heading>
+          <HStack spacing={4} mt={2}>
             <Button
               as="a"
               href={project.github}
