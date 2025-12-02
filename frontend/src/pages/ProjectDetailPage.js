@@ -116,17 +116,31 @@ const ProjectDetailPage = () => {
     );
 
   const getEmbedUrl = (url) => {
-    if (!url) return null;
-    if (url.includes("youtube.com") || url.includes("youtu.be"))
-      return url.replace("watch?v=", "embed/");
-    if (url.includes("drive.google.com")) {
-      const fileId = url.match(/[-\w]{25,}/);
-      return fileId
-        ? `https://drive.google.com/file/d/${fileId}/preview`
-        : null;
-    }
-    return null;
-  };
+  if (!url) return null;
+
+  // For youtu.be short links
+  if (url.includes("youtu.be")) {
+    const videoId = url.split("youtu.be/")[1];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // For standard YouTube links
+  if (url.includes("youtube.com/watch?v=")) {
+    const videoId = url.split("v=")[1];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // For Google Drive preview
+  if (url.includes("drive.google.com")) {
+    const fileId = url.match(/[-\w]{25,}/);
+    return fileId
+      ? `https://drive.google.com/file/d/${fileId}/preview`
+      : null;
+  }
+
+  return null;
+};
+
 
   return (
     <Box
