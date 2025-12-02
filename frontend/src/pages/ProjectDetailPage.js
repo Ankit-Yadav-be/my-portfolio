@@ -15,10 +15,13 @@ import {
   Alert,
   AlertIcon,
   Code,
+  Icon,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaGithub, FaLink } from "react-icons/fa";
+import { motion } from "framer-motion";
+
 import {
   SiReact,
   SiNodedotjs,
@@ -34,7 +37,9 @@ import {
   SiHtml5,
   SiCss3,
 } from "react-icons/si";
-import { motion } from "framer-motion";
+
+const MotionBox = motion(Box);
+const MotionImage = motion(Image);
 
 const techIcons = {
   react: SiReact,
@@ -42,7 +47,6 @@ const techIcons = {
   javascript: SiJavascript,
   js: SiJavascript,
   typescript: SiTypescript,
-  ts: SiTypescript,
   node: SiNodedotjs,
   "node.js": SiNodedotjs,
   express: SiExpress,
@@ -125,163 +129,185 @@ const ProjectDetailPage = () => {
   };
 
   return (
-    <Box p={{ base: 4, md: 12 }} maxW="7xl" mx="auto">
-      {/* ----------- API INFO SECTION ----------- */}
+    <Box
+      p={{ base: 4, md: 12 }}
+      maxW="7xl"
+      mx="auto"
+      bg={colorMode === "dark" ? "gray.900" : "gray.50"}
+    >
+
+      {/* API INFO BOX - Glassmorphic */}
       {apiInfo && (
-        <Box
+        <MotionBox
           p={5}
           mb={10}
-          borderRadius="xl"
-          bg={colorMode === "dark" ? "gray.700" : "gray.100"}
-          boxShadow="lg"
-          as={motion.div}
-          initial={{ opacity: 0, y: -10 }}
+          borderRadius="2xl"
+          bg={colorMode === "dark" ? "rgba(255,255,255,0.05)" : "white"}
+          backdropFilter="blur(12px)"
+          border="1px solid"
+          borderColor={colorMode === "dark" ? "whiteAlpha.200" : "gray.200"}
+          boxShadow="0 8px 30px rgba(0,0,0,0.12)"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <Heading fontSize="lg" mb={2} color="teal.400">
             API Request Details
           </Heading>
 
-          <VStack align="start" spacing={2}>
+          <VStack align="start">
             <Text fontWeight="bold">Endpoint:</Text>
-            <Code p={2} borderRadius="md" w="100%" colorScheme="teal">
+            <Code
+              p={3}
+              borderRadius="lg"
+              w="100%"
+              colorScheme="teal"
+              fontSize="sm"
+            >
               {apiInfo.url}
             </Code>
 
             <HStack spacing={6} mt={2}>
-              <Badge colorScheme="green" px={3} py={1} borderRadius="full">
-                Response Time: {apiInfo.responseTime} ms
+              <Badge colorScheme="green" px={4} py={2} borderRadius="full">
+                Response: {apiInfo.responseTime} ms
               </Badge>
-              <Badge colorScheme="purple" px={3} py={1} borderRadius="full">
-                Payload Size: {apiInfo.size} bytes
+              <Badge colorScheme="purple" px={4} py={2} borderRadius="full">
+                Size: {apiInfo.size} bytes
               </Badge>
             </HStack>
           </VStack>
-        </Box>
+        </MotionBox>
       )}
 
-      {/* Project Title */}
+      {/* TITLE */}
       <Heading
         mb={4}
         fontSize={{ base: "3xl", md: "4xl" }}
         fontWeight="extrabold"
-        color={colorMode === "dark" ? "teal.300" : "teal.600"}
+        color="teal.400"
+        letterSpacing="1px"
       >
         {project.title}
       </Heading>
 
-      <Divider mb={8} />
+      <Divider mb={10} />
 
-      <Stack direction={{ base: "column", md: "row" }} spacing={10}>
-        {/* LEFT */}
-        <Box
+      {/* Main Layout */}
+      <Stack direction={{ base: "column", md: "row" }} spacing={12}>
+        
+        {/* LEFT SIDE - Image / Video */}
+        <MotionBox
           flex="1"
-          minW="300px"
-          borderRadius="xl"
+          borderRadius="2xl"
           overflow="hidden"
-          boxShadow="2xl"
-          as={motion.div}
+          boxShadow="0 20px 40px rgba(0,0,0,0.2)"
+          whileHover={{ scale: 1.01 }}
         >
           {project.video ? (
-            <Box w="100%" h={{ base: "250px", md: "480px" }} position="relative">
+            <Box position="relative" w="100%" h={{ base: "240px", md: "500px" }}>
               {videoLoading && (
                 <Box
                   position="absolute"
                   w="100%"
                   h="100%"
-                  bg="gray.100"
+                  zIndex="10"
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
-                  borderRadius="12px"
-                  zIndex="10"
+                  bg="blackAlpha.300"
                 >
-                  <Spinner size="xl" color="teal.400" />
-                  <Text ml={3} fontWeight="bold" color="gray.600">
-                    Loading Video...
-                  </Text>
+                  <Spinner size="lg" color="teal.300" />
                 </Box>
               )}
               <iframe
                 src={getEmbedUrl(project.video)}
-                title="Project Video"
                 width="100%"
                 height="100%"
-                allow="autoplay"
+                style={{ borderRadius: "20px" }}
                 allowFullScreen
-                style={{ borderRadius: "12px" }}
                 onLoad={() => setVideoLoading(false)}
               ></iframe>
             </Box>
           ) : (
-            <Image
+            <MotionImage
               src={project.image}
-              alt={project.title}
+              alt="Project"
               w="100%"
-              h={{ base: "250px", md: "480px" }}
+              h={{ base: "240px", md: "500px" }}
               objectFit="cover"
-              borderRadius="xl"
+              borderRadius="2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             />
           )}
-        </Box>
+        </MotionBox>
 
-        {/* RIGHT */}
-        <VStack flex="1" align="start" spacing={6} minW="300px">
-          <Heading fontSize="xl" color="gray.600">
-            Project Overview
+        {/* RIGHT SIDE CONTENT */}
+        <VStack flex="1" align="start" spacing={6}>
+          
+          {/* OVERVIEW */}
+          <Heading fontSize="2xl" color="teal.300">
+            Overview
           </Heading>
-          <Text fontSize="lg">{project.description}</Text>
+          <Text fontSize="lg" color="gray.400">
+            {project.description}
+          </Text>
 
-          <Heading fontSize="lg" mt={4} color="gray.600">
-            Technologies Used
+          {/* TECH STACK */}
+          <Heading fontSize="2xl" mt={2} color="teal.300">
+            Tech Stack
           </Heading>
 
-          {/* 🔥 TECH STACK WITH LOGOS */}
           <HStack wrap="wrap" spacing={3}>
-            {project.techStack?.map((tech, index) => {
-              const Icon = techIcons[tech.toLowerCase()];
+            {project.techStack?.map((tech, idx) => {
+              const IconComp = techIcons[tech.toLowerCase()];
               return (
                 <Badge
-                  key={index}
-                  colorScheme="teal"
+                  key={idx}
                   px={3}
                   py={2}
-                  borderRadius="md"
+                  borderRadius="lg"
+                  colorScheme="teal"
                   display="flex"
                   alignItems="center"
                   gap={2}
+                  boxShadow="0 4px 12px rgba(0,0,0,0.2)"
                 >
-                  {Icon && <Icon size={18} />} {tech}
+                  {IconComp && <Icon as={IconComp} />}
+                  {tech}
                 </Badge>
               );
             })}
           </HStack>
 
-          <Heading fontSize="lg" mt={4} color="gray.600">
-            Explore Project
-          </Heading>
-
-          <HStack spacing={4}>
+          {/* BUTTONS */}
+          <HStack pt={4} spacing={5}>
             <Button
+              leftIcon={<FaGithub />}
               as="a"
               href={project.github}
               target="_blank"
-              leftIcon={<FaGithub />}
               colorScheme="gray"
+              size="lg"
+              borderRadius="lg"
+              boxShadow="0 6px 15px rgba(0,0,0,0.2)"
             >
               GitHub
             </Button>
 
             <Button
+              leftIcon={<FaLink />}
               as="a"
               href={project.link}
               target="_blank"
-              leftIcon={<FaLink />}
-              colorScheme="green"
+              size="lg"
+              colorScheme="teal"
+              borderRadius="lg"
+              boxShadow="0 6px 15px rgba(0,0,0,0.3)"
             >
               Live Demo
             </Button>
           </HStack>
+
         </VStack>
       </Stack>
     </Box>
