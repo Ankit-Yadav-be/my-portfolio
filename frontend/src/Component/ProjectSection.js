@@ -18,6 +18,7 @@ import {
   TabPanel,
   Button,
   IconButton,
+  VStack,
 } from "@chakra-ui/react";
 import { FaGithub, FaLink, FaSun, FaMoon, FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -31,14 +32,11 @@ const ProjectsSection = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  /* ================================
-        ✔ GET ALL PROJECTS
-  ================================= */
   useEffect(() => {
     axios
       .get("https://my-portfolio-lw4x.vercel.app/api/get")
-      .then((response) => {
-        setProjects(response.data?.data || []); // SAFE ARRAY
+      .then((res) => {
+        setProjects(res.data?.data || []);
         setLoading(false);
       })
       .catch((err) => {
@@ -47,9 +45,6 @@ const ProjectsSection = () => {
       });
   }, []);
 
-  /* ================================
-        ✔ FILTER PROJECTS
-  ================================= */
   const filterProjects = (category) => {
     return (projects || [])
       .filter(
@@ -60,98 +55,114 @@ const ProjectsSection = () => {
       );
   };
 
-  /* ================================
-        ✔ PROJECT GRID COMPONENT
-  ================================= */
+  /* =======================
+       PROJECT GRID
+  ======================== */
   const ProjectGrid = ({ items }) => (
-    <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6}>
+    <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={8}>
       {loading
-        ? [...Array(6)].map((_, index) => (
-            <Skeleton key={index} height="350px" borderRadius="lg" />
+        ? [...Array(6)].map((_, idx) => (
+            <Skeleton key={idx} height="350px" borderRadius="lg" />
           ))
-        : items.map((project) => (
+        : items.map((p) => (
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              key={project._id}
+              key={p._id}
+              whileHover={{ scale: 1.04 }}
+              transition={{ duration: 0.25 }}
             >
               <Box
-                p={6}
+                p={5}
+                shadow="lg"
                 borderRadius="lg"
-                boxShadow="lg"
                 bg={colorMode === "dark" ? "gray.800" : "white"}
                 color={colorMode === "dark" ? "gray.200" : "gray.700"}
-                height="400px"
+                cursor="pointer"
                 display="flex"
                 flexDirection="column"
-                justifyContent="space-between"
-                cursor="pointer"
+                transition="0.3s"
                 _hover={{
-                  boxShadow:
+                  shadow:
                     colorMode === "dark"
-                      ? "0px 0px 15px rgba(0, 255, 150, 0.7)"
-                      : "0px 0px 15px rgba(0, 150, 255, 0.5)",
+                      ? "0 0 15px rgba(0,255,180,0.6)"
+                      : "0 0 15px rgba(0,150,255,0.4)",
                   transform: "translateY(-5px)",
-                  transition: "0.3s ease-in-out",
                 }}
-                onClick={() => navigate(`/project/${project._id}`)}
+                onClick={() => navigate(`/project/${p._id}`)}
               >
-                <Text fontWeight="bold" fontSize="xl" noOfLines={1}>
-                  {project.title}
+                {/* TITLE */}
+                <Text fontWeight="bold" fontSize="xl" mb={2} noOfLines={1}>
+                  {p.title}
                 </Text>
 
                 <Divider my={2} />
 
-                <Text fontSize="sm" mt={2} noOfLines={3}>
-                  {project.description}
-                </Text>
-
-                {project.image && (
-                  <Image
-                    src={project.image}
-                    alt={project.title}
+                {/* IMAGE CLEAN & RESPONSIVE */}
+                {p.image && (
+                  <Box
+                    w="100%"
+                    h="180px"
+                    overflow="hidden"
                     borderRadius="md"
-                    mt={4}
-                    maxHeight="150px"
-                    objectFit="cover"
-                  />
+                    mb={3}
+                  >
+                    <Image
+                      src={p.image}
+                      alt={p.title}
+                      width="100%"
+                      height="100%"
+                      objectFit="cover"
+                      transition="0.3s"
+                      _hover={{ transform: "scale(1.05)" }}
+                    />
+                  </Box>
                 )}
 
-                {/* ✔ SAFE techStack */}
-                <HStack spacing={2} mt={3} wrap="wrap">
-                  {(project.techStack || []).map((tech, index) => (
+                {/* DESCRIPTION */}
+                <Text fontSize="sm" noOfLines={3} mb={3}>
+                  {p.description}
+                </Text>
+
+                {/* TECH STACK */}
+                <HStack spacing={2} wrap="wrap" mb={3}>
+                  {(p.techStack || []).map((tech, idx) => (
                     <Badge
-                      key={index}
+                      key={idx}
+                      px={2}
+                      py={1}
+                      borderRadius="md"
                       colorScheme={colorMode === "dark" ? "cyan" : "blue"}
+                      fontSize="0.7rem"
                     >
                       {tech}
                     </Badge>
                   ))}
                 </HStack>
 
-                <Divider my={4} />
+                <Divider my={3} />
 
-                <HStack spacing={4}>
+                {/* BUTTONS */}
+                <HStack justify="space-between">
                   <Button
                     as="a"
-                    href={project.github}
+                    href={p.github}
                     target="_blank"
                     leftIcon={<FaGithub />}
-                    colorScheme="gray"
                     size="sm"
+                    variant="outline"
+                    colorScheme="gray"
                   >
                     GitHub
                   </Button>
 
                   <Button
                     as="a"
-                    href={project.link}
+                    href={p.link}
                     target="_blank"
                     leftIcon={<FaLink />}
-                    colorScheme="green"
                     size="sm"
+                    colorScheme="teal"
                   >
-                    Live Demo
+                    Live
                   </Button>
                 </HStack>
               </Box>
@@ -161,9 +172,9 @@ const ProjectsSection = () => {
   );
 
   return (
-    <Box py={10} px={6}>
+    <Box py={10} px={{ base: 4, md: 10 }}>
       {/* HEADER */}
-      <HStack justify="space-between" mb={4} flexWrap="wrap">
+      <HStack justify="space-between" mb={6} flexWrap="wrap" gap={3}>
         <Heading
           size="lg"
           color={colorMode === "dark" ? "teal.300" : "teal.600"}
@@ -173,27 +184,32 @@ const ProjectsSection = () => {
 
         <HStack>
           <Input
-            placeholder="Search projects..."
+            placeholder="Search..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            width={{ base: "150px", md: "250px" }}
             borderRadius="md"
-            borderColor="gray.400"
-            focusBorderColor="teal.400"
           />
-          <IconButton icon={<FaSearch />} aria-label="Search" colorScheme="teal" />
+
+          <IconButton
+            icon={<FaSearch />}
+            colorScheme="teal"
+            aria-label="Search"
+          />
+
           <IconButton
             icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
-            aria-label="Toggle Dark Mode"
             onClick={toggleColorMode}
             colorScheme="teal"
+            aria-label="Toggle Theme"
           />
         </HStack>
       </HStack>
 
-      <Divider mb={4} />
+      <Divider mb={5} />
 
       {/* TABS */}
-      <Tabs variant="enclosed" colorScheme="teal">
+      <Tabs variant="soft-rounded" colorScheme="teal">
         <TabList>
           <Tab fontWeight="bold">Web Projects</Tab>
           <Tab fontWeight="bold">Android Projects</Tab>
