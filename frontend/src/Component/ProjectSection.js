@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Box,
   Text,
@@ -18,12 +18,13 @@ import {
   TabPanel,
   Button,
   IconButton,
-  VStack,
 } from "@chakra-ui/react";
 import { FaGithub, FaLink, FaSun, FaMoon, FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+const API_URL = "https://my-portfolio-lw4x.vercel.app/api/get";
 
 const ProjectsSection = () => {
   const [projects, setProjects] = useState([]);
@@ -32,9 +33,13 @@ const ProjectsSection = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  /* ========================================================
+     SAFE FETCH FUNCTION (Avoid stale state + back button bugs)
+  ========================================================== */
+  const fetchProjects = useCallback(() => {
+    setLoading(true);
     axios
-      .get("https://my-portfolio-lw4x.vercel.app/api/get")
+      .get(API_URL, { headers: { "Cache-Control": "no-cache" } })
       .then((res) => {
         setProjects(res.data?.data || []);
         setLoading(false);
@@ -45,19 +50,34 @@ const ProjectsSection = () => {
       });
   }, []);
 
+  /* =============================================
+     Fetch again when user comes BACK (BIG FIX)
+  ============================================== */
+  useEffect(() => {
+    fetchProjects();
+
+    const handleFocus = () => fetchProjects();
+    window.addEventListener("focus", handleFocus);
+
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [fetchProjects]);
+
+  /* ======================================
+       FIXED FILTER (loose matching)
+  ====================================== */
   const filterProjects = (category) => {
-    return (projects || [])
-      .filter(
-        (p) => p.category?.toLowerCase().trim() === category.toLowerCase()
+    return projects
+      .filter((p) =>
+        p.category?.toLowerCase().includes(category.toLowerCase())
       )
       .filter((p) =>
         p.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
   };
 
-  /* =======================
+  /* ======================================
        PROJECT GRID
-  ======================== */
+  ====================================== */
   const ProjectGrid = ({ items }) => (
     <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={8}>
       {loading
@@ -89,14 +109,12 @@ const ProjectsSection = () => {
                 }}
                 onClick={() => navigate(`/project/${p._id}`)}
               >
-                {/* TITLE */}
                 <Text fontWeight="bold" fontSize="xl" mb={2} noOfLines={1}>
                   {p.title}
                 </Text>
 
                 <Divider my={2} />
 
-                {/* IMAGE CLEAN & RESPONSIVE */}
                 {p.image && (
                   <Box
                     w="100%"
@@ -113,16 +131,15 @@ const ProjectsSection = () => {
                       objectFit="cover"
                       transition="0.3s"
                       _hover={{ transform: "scale(1.05)" }}
+                      loading="lazy"     /* 🔥 Lazy Load Image */
                     />
                   </Box>
                 )}
 
-                {/* DESCRIPTION */}
                 <Text fontSize="sm" noOfLines={3} mb={3}>
                   {p.description}
                 </Text>
 
-                {/* TECH STACK */}
                 <HStack spacing={2} wrap="wrap" mb={3}>
                   {(p.techStack || []).map((tech, idx) => (
                     <Badge
@@ -140,7 +157,6 @@ const ProjectsSection = () => {
 
                 <Divider my={3} />
 
-                {/* BUTTONS */}
                 <HStack justify="space-between">
                   <Button
                     as="a"
@@ -173,7 +189,6 @@ const ProjectsSection = () => {
 
   return (
     <Box py={10} px={{ base: 4, md: 10 }}>
-      {/* HEADER */}
       <HStack justify="space-between" mb={6} flexWrap="wrap" gap={3}>
         <Heading
           size="lg"
@@ -208,7 +223,6 @@ const ProjectsSection = () => {
 
       <Divider mb={5} />
 
-      {/* TABS */}
       <Tabs variant="soft-rounded" colorScheme="teal">
         <TabList>
           <Tab fontWeight="bold">Web Projects</Tab>
