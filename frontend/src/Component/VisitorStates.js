@@ -45,17 +45,15 @@ const VisitorStats = () => {
     return acc;
   }, {});
 
-  // UI Colors
   const glassBg = useColorModeValue(
     "rgba(255, 255, 255, 0.1)",
     "rgba(0, 0, 0, 0.3)"
   );
-
   const borderClr = useColorModeValue("cyan.400", "cyan.200");
 
   return (
     <Box textAlign="center" mt={10} px={4}>
-      {/* 🔵 Toggle Button */}
+      {/* Toggle Button */}
       <Flex justify="center">
         <Button
           leftIcon={<Icon as={FaUsers} />}
@@ -79,7 +77,7 @@ const VisitorStats = () => {
         </Button>
       </Flex>
 
-      {/* 🔽 MAIN SECTION */}
+      {/* MAIN SECTION */}
       <Collapse in={showStats} animateOpacity>
         <Box
           mt={8}
@@ -92,7 +90,6 @@ const VisitorStats = () => {
           boxShadow="0px 0px 30px rgba(0,255,255,0.2)"
           maxW="950px"
           mx="auto"
-          transition="all 0.3s"
         >
           {/* Header */}
           <Text
@@ -105,13 +102,8 @@ const VisitorStats = () => {
             🌍 Visitors Analytics Dashboard
           </Text>
 
-          {/* 🔹 CITY GRID STATS */}
-          <Text
-            fontSize="xl"
-            fontWeight="bold"
-            mb={3}
-            color="purple.300"
-          >
+          {/* City Grid */}
+          <Text fontSize="xl" fontWeight="bold" mb={3} color="purple.300">
             City Wise Breakdown
           </Text>
 
@@ -158,7 +150,7 @@ const VisitorStats = () => {
 
           <Divider my={6} borderColor="cyan.500" />
 
-          {/* 🔹 INDIVIDUAL VISITOR LIST */}
+          {/* Visitors List */}
           <Text
             fontSize="xl"
             fontWeight="bold"
@@ -168,48 +160,56 @@ const VisitorStats = () => {
             👥 Recent Visitors
           </Text>
 
-          <VStack spacing={4} align="stretch">
-            {visitors.map((v) => (
-              <Flex
-                key={v._id}
-                p={4}
-                borderRadius="lg"
-                bg={glassBg}
-                border="1px solid"
-                borderColor="cyan.300"
-                align="center"
-                justify="space-between"
-                boxShadow="0px 0px 20px rgba(0,255,255,0.1)"
-                transition="0.2s"
-                _hover={{
-                  transform: "scale(1.03)",
-                  boxShadow: "0px 0px 30px cyan",
-                }}
-              >
-                <HStack>
-                  <Avatar
-                    name={v.city}
-                    bg="cyan.600"
-                    color="white"
-                  />
+          {/* 🔥 SCROLLABLE VISITOR LIST BOX */}
+          <Box
+            maxHeight="350px"
+            overflowY="scroll"
+            pr={3}
+            css={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+            sx={{
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
+            }}
+          >
+            <VStack spacing={4} align="stretch">
+              {visitors.map((v) => (
+                <Flex
+                  key={v._id}
+                  p={4}
+                  borderRadius="lg"
+                  bg={glassBg}
+                  border="1px solid"
+                  borderColor="cyan.300"
+                  align="center"
+                  justify="space-between"
+                  boxShadow="0px 0px 20px rgba(0,255,255,0.1)"
+                  transition="0.2s"
+                  _hover={{
+                    transform: "scale(1.03)",
+                    boxShadow: "0px 0px 30px cyan",
+                  }}
+                >
+                  <HStack>
+                    <Avatar name={v.city} bg="cyan.600" color="white" />
+                    <Box>
+                      <Text fontWeight="bold" fontSize="lg">
+                        {v.city}
+                      </Text>
+                      <Text fontSize="sm" opacity={0.7}>
+                        {new Date(v.createdAt).toLocaleString()}
+                      </Text>
+                    </Box>
+                  </HStack>
 
-                  <Box textAlign="left">
-                    <Text fontWeight="bold" fontSize="lg">
-                      {v.city}
-                    </Text>
-
-                    <Text fontSize="sm" opacity={0.7}>
-                      {new Date(v.createdAt).toLocaleString()}
-                    </Text>
-                  </Box>
-                </HStack>
-
-                <HStack>
                   <Icon as={FaGlobe} boxSize={6} color="cyan.300" />
-                </HStack>
-              </Flex>
-            ))}
-          </VStack>
+                </Flex>
+              ))}
+            </VStack>
+          </Box>
         </Box>
       </Collapse>
     </Box>
