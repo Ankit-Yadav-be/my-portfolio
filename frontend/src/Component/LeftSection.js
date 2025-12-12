@@ -23,7 +23,6 @@ import {
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const MotionBox = motion(Box);
 const MotionDiv = motion.div;
 
 // BACKLIGHT ANIMATION
@@ -41,10 +40,7 @@ const AnimatedGradient = () => (
       zIndex: -1,
       opacity: 0.6,
     }}
-    animate={{
-      scale: [1, 1.2, 1],
-      opacity: [0.5, 0.7, 0.5],
-    }}
+    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.7, 0.5] }}
     transition={{ repeat: Infinity, duration: 8 }}
   />
 );
@@ -153,13 +149,8 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
 
       <Divider opacity={0.3} />
 
-      {/* ⭐ PERFECTLY ALIGNED CONTACT INFO ⭐ */}
-      <VStack
-        align="start"
-        w="100%"
-        spacing={4}
-        px={2}
-      >
+      {/* ⭐ FIXED & PERFECT CONTACT SECTION ⭐ */}
+      <VStack w="100%" spacing={4} align="stretch">
         {[
           { icon: FaPhone, text: user.phone || "+91 7830237144" },
           { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
@@ -167,27 +158,23 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
         ].map(({ icon, text }, i) => (
           <HStack
             key={i}
-            spacing={3}
-            w="100%"
-            p={2}
+            spacing={4}
+            p={3}
             borderRadius="lg"
+            align="center"
+            bg={isDarkMode ? "whiteAlpha.100" : "gray.50"}
             _hover={{
-              bg: isDarkMode ? "whiteAlpha.200" : "gray.100",
               transform: "scale(1.02)",
               transition: "0.2s",
             }}
           >
-            <Box
-              as={icon}
-              fontSize="1.3rem"
-              color="cyan.400"
-              minW="28px"
-            />
+            <Box as={icon} fontSize="1.5rem" color="cyan.400" flexShrink={0} />
+
             <Text
               fontSize="md"
               color={isDarkMode ? "gray.300" : "gray.700"}
               fontWeight="medium"
-              wordBreak="break-word"
+              noOfLines={1}
             >
               {text}
             </Text>
