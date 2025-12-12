@@ -98,57 +98,61 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
       </motion.div>
 
       {/* Social Links */}
-      <HStack spacing={4}>
-        {[
-          {
-            icon: FaLinkedin,
-            color: "blue.500",
-            link: "https://www.linkedin.com/in/ankit-yadav-1a7023298/",
-          },
-          {
-            icon: FaGithub,
-            color: "gray.500",
-            link: "https://github.com/Ankit-Yadav-be",
-          },
-          {
-            icon: FaTwitter,
-            color: "cyan.500",
-            link: "https://twitter.com/",
-          },
-        ].map(({ icon, color, link }, index) => (
-          <motion.div key={index} whileHover={{ scale: 1.2, rotate: 10 }}>
-            <IconButton
-              as="a"
-              href={link}
-              target="_blank"
-              icon={React.createElement(icon)}
-              colorScheme="gray"
-              _hover={{ bg: color, color: "white" }}
-            />
-          </motion.div>
-        ))}
-      </HStack>
+    {/* SOCIAL ICONS */}
+<HStack spacing={4} w="full" justify="center" align="center">
+  {[
+    {
+      icon: FaLinkedin,
+      color: "blue.500",
+      link: "https://www.linkedin.com/in/ankit-yadav-1a7023298/",
+    },
+    {
+      icon: FaGithub,
+      color: "gray.500",
+      link: "https://github.com/Ankit-Yadav-be",
+    },
+    {
+      icon: FaTwitter,
+      color: "cyan.500",
+      link: "https://twitter.com/",
+    },
+  ].map(({ icon, color, link }, index) => (
+    <motion.div key={index} whileHover={{ scale: 1.2, rotate: 10 }}>
+      <IconButton
+        as="a"
+        href={link}
+        target="_blank"
+        icon={React.createElement(icon)}
+        colorScheme="gray"
+        _hover={{ bg: color, color: "white" }}
+      />
+    </motion.div>
+  ))}
+</HStack>
+
+{/* CONTACT INFO – FULL ALIGNED TO CENTER */}
+<VStack w="full" spacing={3} align="center">
+  {[
+    { icon: FaPhone, text: user.phone || "+917830237144" },
+    { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
+    { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
+  ].map(({ icon, text }, idx) => (
+    <HStack
+      key={idx}
+      spacing={3}
+      align="center"
+      justify="center"
+      w="full"
+    >
+      <Box as={icon} fontSize="1.2rem" color="teal.300" />
+      <Text _hover={{ color: "teal.300" }}>{text}</Text>
+    </HStack>
+  ))}
+</VStack>
+
 
       {/* Contact Info – PERFECT ALIGNMENT */}
-      <VStack align="start" w="full" spacing={3}>
-        {[
-          { icon: FaPhone, text: user.phone || "+917830237144" },
-          { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
-          { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
-        ].map(({ icon, text }, idx) => (
-          <HStack
-            key={idx}
-            spacing={3}
-            align="center"
-            w="100%"
-            justify="flex-start"
-            height="28px"
-          >
-            <Box as={icon} fontSize="1.2rem" color="teal.300" minW="24px" />
-            <Text _hover={{ color: "teal.300" }}>{text}</Text>
-          </HStack>
-        ))}
-      </VStack>
+      
 
       {/* Resume Button */}
       <motion.div whileHover={{ scale: 1.05 }}>
