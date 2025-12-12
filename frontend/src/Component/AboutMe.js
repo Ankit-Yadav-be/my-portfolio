@@ -8,17 +8,11 @@ import {
   SimpleGrid,
   useColorModeValue,
   Badge,
-  Divider,
   Avatar,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
-import {
-  FaRobot,
-  FaBrain,
-  FaBriefcase,
-  FaCalendarAlt,
-} from "react-icons/fa";
+import { FaRobot, FaBrain, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 
 import LeetCodeWidget from "./LeetcodeWidgets";
 import HackerRankWidget from "./HakerRankWidgets";
@@ -28,8 +22,22 @@ const MotionBox = motion(Box);
 const AboutMeSection = () => {
   const [leet] = useState("codersourya123");
   const [hack] = useState("ay870421");
-
   const glow = useColorModeValue("rgba(0,255,255,0.3)", "rgba(0,255,255,0.6)");
+
+  // Sample experience data
+  const experiences = [
+    {
+      role: "Android Developer Intern",
+      company: "LitAmor",
+      duration: "Jul 2025 – Present",
+      tech: ["React Native", "Firebase", "Firestore"],
+      points: [
+        "Developed cross-platform mobile apps with real-time updates & secure architecture.",
+        "Optimized Cloud Functions improving performance by 40% & responsiveness by 25%."
+      ]
+    },
+    // Add more experiences here
+  ];
 
   return (
     <Box p={{ base: 6, md: 10 }} maxW="1200px" mx="auto" mt={20}>
@@ -89,7 +97,7 @@ const AboutMeSection = () => {
         </Box>
       </SimpleGrid>
 
-      {/* ---------------- WORK EXPERIENCE ---------------- */}
+      {/* ---------------- EXPERIENCE TIMELINE ---------------- */}
       <Text
         fontSize="3xl"
         fontWeight="bold"
@@ -101,49 +109,61 @@ const AboutMeSection = () => {
         Work Experience
       </Text>
 
-      <VStack spacing={8}>
-        <MotionBox
-          p={6}
-          bg="rgba(255,255,255,0.05)"
-          backdropFilter="blur(12px)"
-          borderRadius="2xl"
-          border="1px solid rgba(0,255,255,0.2)"
-          boxShadow={`0 0 20px ${glow}`}
-          whileHover={{ scale: 1.03 }}
-          transition="0.3s"
-          w="100%"
-          maxW="800px"
-        >
-          <HStack spacing={4} mb={3}>
-            <Icon as={FaBriefcase} color="yellow.300" boxSize={7} />
-            <Text fontSize="2xl" fontWeight="bold" color="white">
-              Android Developer Intern — LitAmor
-            </Text>
-          </HStack>
+      <VStack spacing={12} position="relative" px={4}>
+        {/* CENTRAL TIMELINE LINE */}
+        <Box
+          position="absolute"
+          left="50%"
+          top={0}
+          bottom={0}
+          w="3px"
+          bg="cyan.500"
+          transform="translateX(-50%)"
+        />
 
-          <HStack spacing={3} mb={3}>
-            <Icon as={FaCalendarAlt} color="cyan.300" />
-            <Text color="cyan.200">Jul 2025 – Present</Text>
-          </HStack>
+        {experiences.map((exp, index) => (
+          <MotionBox
+            key={index}
+            position="relative"
+            w={{ base: "100%", md: "45%" }}
+            alignSelf={index % 2 === 0 ? "flex-start" : "flex-end"}
+            p={6}
+            bg="rgba(255,255,255,0.05)"
+            borderRadius="2xl"
+            backdropFilter="blur(12px)"
+            border="1px solid rgba(0,255,255,0.2)"
+            boxShadow={`0 0 20px ${glow}`}
+            whileHover={{ scale: 1.03 }}
+            transition="0.3s"
+          >
+            {/* Circle marker */}
+            <Box
+              position="absolute"
+              left={index % 2 === 0 ? "100%" : "-10px"}
+              top="20px"
+              w="18px"
+              h="18px"
+              bg="cyan.400"
+              borderRadius="50%"
+              transform="translateX(-50%)"
+            />
 
-          <HStack spacing={3} mb={3}>
-            <Badge colorScheme="cyan">React Native</Badge>
-            <Badge colorScheme="yellow">Firebase</Badge>
-            <Badge colorScheme="purple">Firestore</Badge>
-          </HStack>
-
-          <VStack align="start" spacing={2}>
-            <Text color="cyan.100" fontSize="md">
-              • Developed cross-platform mobile apps with real-time updates
-              and scalable architecture.
+            <Text fontSize="xl" fontWeight="bold" color="white" mb={2}>
+              {exp.role} — {exp.company}
             </Text>
-            <Text color="cyan.100" fontSize="md">
-              • Optimized Cloud Functions improving performance by{" "}
-              <b style={{ color: "#FFE082" }}>40%</b> and app responsiveness
-              by <b style={{ color: "#FFE082" }}>25%</b>.
-            </Text>
-          </VStack>
-        </MotionBox>
+            <Text color="cyan.300" mb={2}>{exp.duration}</Text>
+            <HStack spacing={2} mb={2}>
+              {exp.tech.map((t, i) => (
+                <Badge key={i} colorScheme="cyan">{t}</Badge>
+              ))}
+            </HStack>
+            <VStack align="start" spacing={1}>
+              {exp.points.map((p, i) => (
+                <Text key={i} color="cyan.100" fontSize="sm">• {p}</Text>
+              ))}
+            </VStack>
+          </MotionBox>
+        ))}
       </VStack>
 
       {/* ---------------- CODING PROFILES ---------------- */}
@@ -157,20 +177,14 @@ const AboutMeSection = () => {
         My Coding Profiles
       </Text>
 
-      <SimpleGrid
-        columns={{ base: 1, md: 2 }}
-        spacing={8}
-        mt={8}
-        px={{ base: 4, md: 10 }}
-      >
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} mt={8} px={{ base: 4, md: 10 }}>
         <MotionBox
           p={6}
           borderRadius="2xl"
-          bg="rgba(255,255,255,0.06)"
-          border="1px solid rgba(0,255,255,0.2)"
-          backdropFilter="blur(12px)"
-          boxShadow={`0 0 22px ${glow}`}
+          bgGradient="linear(to-br, rgba(0,255,255,0.1), rgba(0,120,255,0.1))"
+          backdropFilter="blur(10px)"
           whileHover={{ scale: 1.05 }}
+          boxShadow={`0 0 25px rgba(0,255,255,0.3)`}
         >
           <LeetCodeWidget usernamel={leet} />
         </MotionBox>
@@ -178,11 +192,10 @@ const AboutMeSection = () => {
         <MotionBox
           p={6}
           borderRadius="2xl"
-          bg="rgba(255,255,255,0.06)"
-          border="1px solid rgba(0,255,255,0.2)"
-          backdropFilter="blur(12px)"
-          boxShadow={`0 0 22px ${glow}`}
+          bgGradient="linear(to-br, rgba(0,255,255,0.1), rgba(0,120,255,0.1))"
+          backdropFilter="blur(10px)"
           whileHover={{ scale: 1.05 }}
+          boxShadow={`0 0 25px rgba(0,255,255,0.3)`}
         >
           <HackerRankWidget usernameh={hack} />
         </MotionBox>
