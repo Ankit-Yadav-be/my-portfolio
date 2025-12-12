@@ -24,13 +24,22 @@ const AboutMeSection = () => {
   const [leet] = useState("codersourya123");
 
   // Dynamic colors
-  const glow = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.55)");
+  const glow = useColorModeValue(
+    "rgba(0,255,255,0.25)",
+    "rgba(0,255,255,0.55)"
+  );
   const boxBg = useColorModeValue("rgba(255,255,255,0.08)", "rgba(0,0,0,0.4)");
-  const boxShadowColor = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.55)");
+  const boxShadowColor = useColorModeValue(
+    "rgba(0,255,255,0.25)",
+    "rgba(0,255,255,0.55)"
+  );
   const textPrimary = useColorModeValue("gray.800", "gray.100");
   const textSecondary = useColorModeValue("gray.600", "gray.300");
   const cyanLight = useColorModeValue("cyan.300", "cyan.400");
-  const borderCyan = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.45)");
+  const borderCyan = useColorModeValue(
+    "rgba(0,255,255,0.25)",
+    "rgba(0,255,255,0.45)"
+  );
 
   const experiences = [
     {
@@ -46,7 +55,13 @@ const AboutMeSection = () => {
   ];
 
   return (
-    <Box p={{ base: 6, md: 10 }} maxW="1200px" mx="auto" mt={20} position="relative">
+    <Box
+      p={{ base: 6, md: 10 }}
+      maxW="1200px"
+      mx="auto"
+      mt={20}
+      position="relative"
+    >
       {/* 🔥 Background Glow */}
       <Box
         position="absolute"
@@ -63,7 +78,12 @@ const AboutMeSection = () => {
       />
 
       {/* HERO */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={14} mb={20} alignItems="center">
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={14}
+        mb={20}
+        alignItems="center"
+      >
         <VStack align="start" spacing={5}>
           <MotionText
             fontSize={{ base: "3xl", md: "4xl" }}
@@ -108,7 +128,8 @@ const AboutMeSection = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
           >
-            Passionate developer creating high-quality apps, AI solutions, and real-world products with modern tech.
+            Passionate developer creating high-quality apps, AI solutions, and
+            real-world products with modern tech.
           </MotionText>
         </VStack>
 
@@ -128,7 +149,7 @@ const AboutMeSection = () => {
           <iframe
             width="100%"
             height="100%"
-            src="https://www.youtube.com/embed/W4ce2UyNOzY"
+            src="https://www.youtube.com/embed/YlSr3Ypl6UE"
             title="Introduction Video"
             allowFullScreen
             style={{ borderRadius: "1rem" }}
@@ -165,7 +186,11 @@ const AboutMeSection = () => {
             borderRadius: "full",
           }}
           animate={{
-            boxShadow: [`0 0 10px ${cyanLight}`, `0 0 25px ${cyanLight}`, `0 0 10px ${cyanLight}`],
+            boxShadow: [
+              `0 0 10px ${cyanLight}`,
+              `0 0 25px ${cyanLight}`,
+              `0 0 10px ${cyanLight}`,
+            ],
           }}
           transition={{ repeat: Infinity, duration: 2 }}
         />
@@ -196,7 +221,9 @@ const AboutMeSection = () => {
                 borderRadius: "50%",
                 background: cyanLight,
               }}
-              animate={{ boxShadow: [`0 0 12px ${cyanLight}`, `0 0 22px ${cyanLight}`] }}
+              animate={{
+                boxShadow: [`0 0 12px ${cyanLight}`, `0 0 22px ${cyanLight}`],
+              }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             />
 
@@ -227,11 +254,23 @@ const AboutMeSection = () => {
       </VStack>
 
       {/* CODING PROFILES */}
-      <Text fontSize="3xl" fontWeight="bold" mt={16} textAlign="center" color={cyanLight}>
+      <Text
+        fontSize="3xl"
+        fontWeight="bold"
+        mt={16}
+        textAlign="center"
+        color={cyanLight}
+      >
         My Coding Profiles
       </Text>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={8} px={{ base: 4, md: 10 }} alignItems="center">
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={10}
+        mt={8}
+        px={{ base: 4, md: 10 }}
+        alignItems="center"
+      >
         <MotionBox
           p={6}
           borderRadius="2xl"
@@ -244,13 +283,20 @@ const AboutMeSection = () => {
         </MotionBox>
 
         <VStack spacing={4} textAlign="left">
-          <Text fontSize="3xl" fontWeight="bold" bgGradient={`linear(to-r, ${cyanLight}, white)`} bgClip="text">
+          <Text
+            fontSize="3xl"
+            fontWeight="bold"
+            bgGradient={`linear(to-r, ${cyanLight}, white)`}
+            bgClip="text"
+          >
             500+ Problems Solved
           </Text>
           <HStack spacing={3}>
             <Icon as={FaProblem} color={cyanLight} boxSize={8} />
             <Text fontSize="lg" color={textSecondary}>
-              Solving 500+ coding problems across platforms strengthened my <b>problem-solving skills</b> and <b>logical thinking</b>, helping me tackle complex challenges efficiently.
+              Solving 500+ coding problems across platforms strengthened my{" "}
+              <b>problem-solving skills</b> and <b>logical thinking</b>, helping
+              me tackle complex challenges efficiently.
             </Text>
           </HStack>
           <Box w="100%" h="2px" bg={cyanLight} opacity={0.4} rounded="full" />
