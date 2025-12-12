@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Text,
@@ -14,16 +14,16 @@ import { ReactTyped } from "react-typed";
 import { FaRobot, FaBrain } from "react-icons/fa";
 import { FaBrain as FaProblem } from "react-icons/fa";
 
-import LeetCodeWidget from "./LeetcodeWidgets";
-
 // Motion Components
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
 const MotionHStack = motion(HStack);
 
 const AboutMeSection = () => {
-  const [leet] = useState("codersourya123");
-  const glow = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.55)");
+  const glow = useColorModeValue(
+    "rgba(0,255,255,0.25)",
+    "rgba(0,255,255,0.55)"
+  );
 
   const experiences = [
     {
@@ -62,7 +62,12 @@ const AboutMeSection = () => {
       />
 
       {/* ============= HERO SECTION ================= */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={14} mb={20} alignItems="center">
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={14}
+        mb={20}
+        alignItems="center"
+      >
         <VStack align="start" spacing={5}>
           <MotionText
             fontSize={{ base: "3xl", md: "4xl" }}
@@ -234,20 +239,17 @@ const AboutMeSection = () => {
         My Coding Profiles
       </Text>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={8} px={{ base: 4, md: 10 }}>
-        {/* LEETCODE CARD */}
-        <MotionBox
-          p={6}
-          borderRadius="2xl"
-          bg="rgba(0,255,255,0.08)"
-          backdropFilter="blur(10px)"
-          whileHover={{ scale: 1.05 }}
-          boxShadow={`0 0 30px rgba(0,255,255,0.35)`}
-        >
-          <LeetCodeWidget usernamel={leet} />
-        </MotionBox>
+      <VStack spacing={6} mt={6} px={{ base: 4, md: 10 }} textAlign="center">
+        {/* Simple LeetCode Info */}
+        <Text fontSize="2xl" fontWeight="semibold" color="cyan.100">
+          I have solved 500+ coding problems across platforms like LeetCode.
+        </Text>
+        <Text fontSize="lg" color="gray.300" maxW="700px" mx="auto">
+          Regular practice in coding challenges has strengthened my 
+          <b> problem-solving skills</b> and <b>logical thinking</b>, allowing me to tackle complex problems efficiently.
+        </Text>
 
-        {/* CUSTOM PROBLEM SOLVING CARD */}
+        {/* Problem Solving Card */}
         <MotionBox
           p={8}
           borderRadius="2xl"
@@ -268,17 +270,15 @@ const AboutMeSection = () => {
             </Text>
             <Box fontSize="50px" color="cyan.300" as={FaProblem} animation="pulse 2s infinite" />
             <Text fontSize="lg" color="cyan.100" px={4}>
-              Solving 500+ coding problems across platforms helped me build 
-              strong <b>problem-solving skills</b>, <b>logical thinking</b>, 
-              and the ability to break down complex challenges efficiently.
+              Solving these problems enhanced my <b>logical thinking</b> and ability to break down complex challenges efficiently.
             </Text>
             <Box w="80%" h="3px" bg="cyan.400" opacity={0.4} rounded="full" />
             <Text color="gray.300" fontSize="md">
-              I practice DSA daily to sharpen my brain like an engineer. 
+              I practice DSA daily to sharpen my brain like an engineer. 🚀
             </Text>
           </VStack>
         </MotionBox>
-      </SimpleGrid>
+      </VStack>
     </Box>
   );
 };
