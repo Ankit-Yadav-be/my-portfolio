@@ -1,16 +1,20 @@
+// LeftSectionNeon.jsx
 import React from "react";
 import {
   Box,
   VStack,
+  HStack,
   Image,
   Text,
-  HStack,
-  IconButton,
   Button,
+  IconButton,
+  Badge,
   Switch,
   Divider,
-  Badge,
+  useColorModeValue,
+  Tooltip,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import {
   FaLinkedin,
   FaGithub,
@@ -20,224 +24,290 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const MotionDiv = motion.div;
+const MotionBox = motion(Box);
+const MotionHStack = motion(HStack);
 
-// BACKLIGHT ANIMATION
-const AnimatedGradient = () => (
-  <MotionDiv
-    style={{
-      position: "absolute",
-      top: "-20%",
-      left: "-20%",
-      width: "140%",
-      height: "140%",
-      background:
-        "radial-gradient(circle at center, rgba(0,255,255,0.25), rgba(0,0,0,0))",
-      filter: "blur(70px)",
-      zIndex: -1,
-      opacity: 0.6,
-    }}
-    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.7, 0.5] }}
-    transition={{ repeat: Infinity, duration: 8 }}
-  />
-);
+const defaultUser = {
+  name: "Ankit Yadav",
+  title: "Fullstack Developer",
+  photo: "/Ankit.jpeg",
+  phone: "+91 7830237144",
+  email: "ay870421@gmail.com",
+  location: "Agra, Uttar Pradesh",
+  resumeLink: "/RESUMEE.pdf",
+  linkedin: "https://www.linkedin.com/in/ankit-yadav-1a7023298/",
+  github: "https://github.com/Ankit-Yadav-be",
+  twitter: "https://twitter.com/",
+};
 
-const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
+export default function LeftSectionNeon({
+  user = defaultUser,
+  isDarkMode,
+  setIsDarkMode,
+}) {
   const navigate = useNavigate();
+  const bg = useColorModeValue("rgba(255,255,255,0.6)", "rgba(20,20,20,0.6)");
+  const frosted = useColorModeValue("rgba(255,255,255,0.06)", "rgba(255,255,255,0.02)");
+  const textColor = useColorModeValue("gray.800", "gray.100");
 
   return (
     <VStack
-      w={{ base: "100%", md: "28%" }}
-      bg={isDarkMode ? "gray.900" : "white"}
-      borderRadius="2xl"
-      p={{ base: 5, md: 7 }}
-      spacing={7}
+      w={{ base: "100%", md: "320px" }}
+      spacing={6}
       align="center"
-      boxShadow="0px 5px 35px rgba(0,0,0,0.2)"
+      p={{ base: 5, md: 6 }}
       position="relative"
+      borderRadius="2xl"
       overflow="hidden"
+      boxShadow="0 10px 40px rgba(8,14,25,0.45)"
+      bg={useColorModeValue("linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3))", "transparent")}
     >
-      <AnimatedGradient />
-
-      {/* PROFILE IMAGE */}
-      <MotionDiv
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
+      {/* Subtle animated ambient glow */}
+      <MotionBox
+        pointerEvents="none"
+        position="absolute"
+        inset="-25%"
+        zIndex={0}
         style={{
-          width: "180px",
-          height: "220px",
-          borderRadius: "20px",
-          overflow: "hidden",
-          boxShadow:
-            "0px 10px 30px rgba(0, 255, 255, 0.3), inset 0px 0px 30px rgba(255,255,255,0.1)",
+          background:
+            "radial-gradient(circle at 20% 30%, rgba(0,255,255,0.10), transparent 12%), radial-gradient(circle at 80% 70%, rgba(130,90,255,0.06), transparent 15%)",
+          filter: "blur(60px)",
         }}
+        animate={{ scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+
+      {/* PROFILE with Neon Ring */}
+      <MotionBox
+        zIndex={2}
+        initial={{ y: 12, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7 }}
       >
-        <Image
-          src={user.photo || "/Ankit.jpeg"}
-          alt="Profile"
-          objectFit="cover"
-          h="100%"
-          w="100%"
-          _hover={{ transform: "scale(1.08)", transition: "0.4s" }}
-        />
-      </MotionDiv>
-
-      {/* NAME & TAGLINE */}
-      <VStack spacing={1} textAlign="center">
-        <Text
-          fontSize="2xl"
-          fontWeight="bold"
-          bgGradient="linear(to-r, teal.300, cyan.400)"
-          bgClip="text"
-          letterSpacing="0.5px"
+        <Box
+          position="relative"
+          w="170px"
+          h="210px"
+          borderRadius="18px"
+          overflow="hidden"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          boxShadow="inset 0 0 40px rgba(255,255,255,0.03), 0 8px 30px rgba(6,22,50,0.6)"
         >
-          {user.name || "Ankit Yadav"}
-        </Text>
+          {/* Neon outer ring */}
+          <MotionBox
+            position="absolute"
+            top="-6%"
+            left="-6%"
+            w="112%"
+            h="112%"
+            borderRadius="22px"
+            zIndex={-1}
+            style={{
+              background:
+                "conic-gradient(from 120deg, rgba(0,255,255,0.12), rgba(0,180,255,0.08), rgba(170,80,255,0.06))",
+              filter: "blur(18px)",
+            }}
+            animate={{ rotate: [0, 6, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            opacity={0.95}
+          />
 
-        <Badge
-          colorScheme="teal"
-          px={3}
-          py={1}
-          borderRadius="lg"
-          fontSize="0.85rem"
-          boxShadow="0 0 10px rgba(0,255,255,0.4)"
+          {/* Profile image */}
+          <Image
+            src={user.photo || defaultUser.photo}
+            alt={user.name || defaultUser.name}
+            objectFit="cover"
+            w="100%"
+            h="100%"
+            borderRadius="16px"
+            _hover={{ transform: "scale(1.03)", transition: "0.4s" }}
+          />
+        </Box>
+      </MotionBox>
+
+      {/* Name & Title */}
+      <VStack spacing={1} zIndex={2}>
+        <MotionBox
+          initial={{ y: 8, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.08 }}
+          textAlign="center"
         >
-          {user.title || "FullStack Developer"}
-        </Badge>
+          <Text
+            fontSize="xl"
+            fontWeight="700"
+            bgClip="text"
+            bgGradient="linear(to-r, teal.300, cyan.400, purple.300)"
+            letterSpacing="0.3px"
+          >
+            {user.name || defaultUser.name}
+          </Text>
+
+          <Badge
+            mt={2}
+            px={3}
+            py={1}
+            borderRadius="full"
+            fontSize="0.8rem"
+            boxShadow="0 4px 20px rgba(50,200,200,0.08)"
+            bg={frosted}
+            color={textColor}
+          >
+            {user.title || defaultUser.title}
+          </Badge>
+        </MotionBox>
       </VStack>
 
-      <Divider opacity={0.3} />
+      <Divider opacity={0.12} />
 
-      {/* SOCIAL LINKS */}
-      <HStack spacing={5}>
+      {/* Social icons - magnetic hover */}
+      <MotionHStack
+        spacing={4}
+        zIndex={2}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+      >
         {[
-          {
-            icon: FaLinkedin,
-            color: "#0e76a8",
-            link: "https://www.linkedin.com/in/ankit-yadav-1a7023298/",
-          },
-          {
-            icon: FaGithub,
-            color: "#333",
-            link: "https://github.com/Ankit-Yadav-be",
-          },
-          { icon: FaTwitter, color: "#1DA1F2", link: "https://twitter.com/" },
-        ].map(({ icon, color, link }, i) => (
-          <MotionDiv key={i} whileHover={{ scale: 1.2 }}>
-            <IconButton
-              as="a"
-              href={link}
-              target="_blank"
-              icon={React.createElement(icon)}
-              aria-label="Social"
-              bg="whiteAlpha.200"
-              color={color}
-              _hover={{
-                bg: color,
-                color: "white",
-                transition: "0.3s",
-              }}
-              boxShadow="lg"
-            />
-          </MotionDiv>
-        ))}
-      </HStack>
-
-      <Divider opacity={0.3} />
-
-      {/* ⭐ FIXED & PERFECT CONTACT SECTION ⭐ */}
-      <VStack w="100%" spacing={4} align="stretch">
-        {[
-          { icon: FaPhone, text: user.phone || "+91 7830237144" },
-          { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
-          { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
-        ].map(({ icon, text }, i) => (
-          <HStack
-            key={i}
-            spacing={4}
-            p={3}
-            borderRadius="lg"
-            align="center"
-            bg={isDarkMode ? "whiteAlpha.100" : "gray.50"}
-            _hover={{
-              transform: "scale(1.02)",
-              transition: "0.2s",
-            }}
-          >
-            <Box as={icon} fontSize="1.5rem" color="cyan.400" flexShrink={0} />
-
-            <Text
-              fontSize="md"
-              color={isDarkMode ? "gray.300" : "gray.700"}
-              fontWeight="medium"
-              noOfLines={1}
+          { icon: FaLinkedin, href: user.linkedin, label: "LinkedIn" },
+          { icon: FaGithub, href: user.github, label: "Github" },
+          { icon: FaTwitter, href: user.twitter, label: "Twitter" },
+        ].map(({ icon: IconComp, href, label }, i) => (
+          <Tooltip key={i} label={label} hasArrow>
+            <MotionBox
+              whileHover={{ scale: 1.14, rotate: [0, -6, 0], y: -4 }}
+              whileTap={{ scale: 0.96 }}
             >
-              {text}
-            </Text>
-          </HStack>
+              <IconButton
+                as="a"
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                icon={<IconComp />}
+                size="md"
+                borderRadius="xl"
+                boxShadow="0 6px 18px rgba(2,12,27,0.5)"
+                bg={bg}
+                _hover={{
+                  bg: "linear-gradient(90deg, rgba(0,230,255,0.08), rgba(170,80,255,0.06))",
+                  color: "cyan.300",
+                }}
+              />
+            </MotionBox>
+          </Tooltip>
+        ))}
+      </MotionHStack>
+
+      <Divider opacity={0.12} />
+
+      {/* Contact tiles - glass cards */}
+      <VStack spacing={3} w="100%" zIndex={2}>
+        {[
+          { icon: FaPhone, text: user.phone || defaultUser.phone },
+          { icon: FaEnvelope, text: user.email || defaultUser.email },
+          { icon: FaMapMarkerAlt, text: user.location || defaultUser.location },
+        ].map(({ icon: IconComp, text }, i) => (
+          <MotionBox
+            key={i}
+            w="100%"
+            initial={{ scale: 0.995, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.18 + i * 0.04 }}
+          >
+            <HStack
+              spacing={3}
+              p={3}
+              borderRadius="lg"
+              align="center"
+              bg={useColorModeValue("rgba(255,255,255,0.06)", "rgba(255,255,255,0.02)")}
+              boxShadow="0 6px 20px rgba(2,12,27,0.45)"
+              _hover={{ transform: "translateY(-4px)", transition: "0.25s" }}
+            >
+              <Box as={IconComp} fontSize="1.25rem" color="cyan.300" />
+              <Text fontSize="sm" color={textColor} noOfLines={1} fontWeight="600">
+                {text}
+              </Text>
+            </HStack>
+          </MotionBox>
         ))}
       </VStack>
 
-      <Divider opacity={0.3} />
+      <Divider opacity={0.12} />
 
-      {/* BUTTONS */}
-      <VStack w="100%" spacing={3}>
-        <MotionDiv whileHover={{ scale: 1.04 }}>
+      {/* Buttons */}
+      <VStack spacing={3} w="100%" zIndex={2}>
+        <MotionBox whileHover={{ scale: 1.02 }}>
           <Button
-            w="full"
+            w="100%"
             leftIcon={<FaDownload />}
-            colorScheme="red"
-            size="md"
             borderRadius="xl"
-            onClick={() =>
-              (window.location.href = user.resumeLink || "/RESUMEE.pdf")
-            }
+            py={6}
+            onClick={() => (window.location.href = user.resumeLink || defaultUser.resumeLink)}
+            sx={{
+              background:
+                "linear-gradient(90deg, rgba(0,230,255,0.12), rgba(170,80,255,0.08))",
+              boxShadow: "0 10px 30px rgba(0,180,255,0.06), inset 0 -2px 8px rgba(0,0,0,0.12)",
+              color: textColor,
+              fontWeight: 700,
+            }}
             _hover={{
-              bgGradient: "linear(to-r, red.400, orange.400)",
+              transform: "translateY(-3px)",
+              boxShadow: "0 14px 38px rgba(0,200,255,0.12)",
             }}
           >
-            Download Resume
+            Download Résumé
           </Button>
-        </MotionDiv>
+        </MotionBox>
 
-        <MotionDiv whileHover={{ scale: 1.04 }}>
+        <MotionBox whileHover={{ scale: 1.02 }}>
           <Button
-            w="full"
-            colorScheme="cyan"
+            w="100%"
             variant="outline"
             borderRadius="xl"
-            _hover={{
-              bgGradient: "linear(to-r, teal.300, cyan.400)",
-              color: "white",
-              border: "none",
-            }}
+            py={6}
             onClick={() => navigate("/skill")}
+            sx={{
+              border: "1px solid rgba(0,200,255,0.12)",
+              backdropFilter: "blur(6px)",
+              color: textColor,
+              fontWeight: 700,
+            }}
+            _hover={{
+              bg: "linear-gradient(90deg, rgba(0,230,255,0.06), rgba(170,80,255,0.04))",
+            }}
           >
             View All Skills
           </Button>
-        </MotionDiv>
+        </MotionBox>
       </VStack>
 
-      {/* DARK MODE SWITCH */}
-      <HStack pt={3}>
-        <Text fontWeight="bold" fontSize="sm">
-          Dark Mode
-        </Text>
-        <MotionDiv whileTap={{ scale: 1.2 }}>
-          <Switch
-            size="lg"
-            isChecked={isDarkMode}
-            onChange={() => setIsDarkMode(!isDarkMode)}
-            colorScheme="cyan"
-          />
-        </MotionDiv>
+      <Divider opacity={0.12} />
+
+      {/* Dark mode toggle */}
+      <HStack w="100%" justify="space-between" zIndex={2} pt={2}>
+        <HStack>
+          <Text fontWeight="700" fontSize="sm" color={textColor}>
+            Dark Mode
+          </Text>
+        </HStack>
+
+        <Switch
+          isChecked={!!isDarkMode}
+          onChange={() => setIsDarkMode && setIsDarkMode((v) => !v)}
+          size="lg"
+          colorScheme="cyan"
+        />
       </HStack>
+
+      {/* Tiny footer hint */}
+      <Text fontSize="xs" color="gray.400" pt={2} zIndex={2}>
+        Designed with ♥ — Clean, modern & recruiter-ready
+      </Text>
     </VStack>
   );
-};
-
-export default LeftSection;
+}
