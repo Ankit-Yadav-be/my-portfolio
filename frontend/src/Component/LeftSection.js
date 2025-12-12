@@ -8,8 +8,6 @@ import {
   IconButton,
   Button,
   Switch,
-  Divider,
-  Badge,
 } from "@chakra-ui/react";
 import {
   FaLinkedin,
@@ -23,24 +21,22 @@ import {
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const MotionDiv = motion.div;
-
-// ✨ Subtle Floating Glow Background
-const AnimatedBackground = () => (
-  <MotionDiv
+const AnimatedGradient = () => (
+  <motion.div
     style={{
       position: "absolute",
-      inset: 0,
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
       background:
-        "radial-gradient(circle at 30% 20%, rgba(0,255,255,0.10), transparent 60%), radial-gradient(circle at 80% 70%, rgba(255,0,150,0.10), transparent 60%)",
-      zIndex: -1,
+        "linear-gradient(135deg, rgba(255,0,150,0.3), rgba(0,204,255,0.3))",
       filter: "blur(40px)",
+      opacity: 0.5,
+      zIndex: -1,
     }}
-    animate={{
-      opacity: [0.5, 0.9, 0.5],
-      scale: [1, 1.1, 1],
-    }}
-    transition={{ duration: 10, repeat: Infinity }}
+    animate={{ x: [0, 20, -20, 0], y: [0, 20, -20, 0] }}
+    transition={{ repeat: Infinity, duration: 5, ease: "linear" }}
   />
 );
 
@@ -49,187 +45,147 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
 
   return (
     <VStack
-      w={{ base: "100%", md: "28%" }}
-      bg={isDarkMode ? "rgba(20,20,25,0.7)" : "rgba(255,255,255,0.7)"}
-      backdropFilter="blur(12px)"
-      border="1px solid"
-      borderColor={isDarkMode ? "whiteAlpha.200" : "blackAlpha.100"}
-      borderRadius="2xl"
-      p={{ base: 6, md: 7 }}
-      spacing={7}
+      w={{ base: "100%", md: "25%" }}
+      bg={isDarkMode ? "gray.900" : "gray.100"}
+      borderRadius="xl"
+      p={6}
+      boxShadow="2xl"
+      spacing={6}
       align="center"
-      boxShadow="0 8px 40px rgba(0,0,0,0.25)"
       position="relative"
       overflow="hidden"
     >
-      <AnimatedBackground />
+      <AnimatedGradient />
 
-      {/* PROFILE IMAGE */}
-      <MotionDiv
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+      {/* Profile Image */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.05 }}
+        transition={{ duration: 1 }}
         style={{
           width: "180px",
           height: "220px",
-          borderRadius: "22px",
+          borderRadius: "20px",
           overflow: "hidden",
-          boxShadow:
-            "0 20px 40px rgba(0, 255, 255, 0.25), inset 0 0 20px rgba(255,255,255,0.1)",
+          position: "relative",
+          boxShadow: "0px 10px 20px rgba(255, 255, 255, 0.2)",
         }}
       >
         <Image
           src={user.photo || "/Ankit.jpeg"}
           alt="Profile"
           objectFit="cover"
-          h="100%"
           w="100%"
-          _hover={{ transform: "scale(1.06)", transition: "0.4s" }}
+          h="100%"
         />
-      </MotionDiv>
+      </motion.div>
 
-      {/* NAME & TITLE */}
-      <VStack spacing={1} textAlign="center">
+      {/* Name + Title */}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5 }}>
         <Text
           fontSize="2xl"
-          fontWeight="700"
-          bgGradient="linear(to-r, cyan.300, pink.400)"
+          fontWeight="bold"
+          textAlign="center"
+          bgGradient="linear(to-r, teal.300, cyan.400)"
           bgClip="text"
         >
           {user.name || "Ankit Yadav"}
         </Text>
-
-        <Badge
-          colorScheme="cyan"
-          px={4}
-          py={1}
-          borderRadius="lg"
-          fontSize="0.9rem"
-          fontWeight="600"
-          boxShadow="0 0 10px rgba(0,255,255,0.4)"
-        >
+        <Text fontSize="md" color="gray.500" textAlign="center">
           {user.title || "FullStack Developer"}
-        </Badge>
-      </VStack>
+        </Text>
+      </motion.div>
 
-      <Divider opacity={0.25} />
-
-      {/* SOCIAL LINKS */}
+      {/* Social Links */}
       <HStack spacing={4}>
         {[
           {
             icon: FaLinkedin,
-            color: "#0e76a8",
+            color: "blue.500",
             link: "https://www.linkedin.com/in/ankit-yadav-1a7023298/",
           },
           {
             icon: FaGithub,
-            color: "#333",
+            color: "gray.500",
             link: "https://github.com/Ankit-Yadav-be",
           },
-          { icon: FaTwitter, color: "#1DA1F2", link: "https://twitter.com/" },
-        ].map(({ icon, color, link }, i) => (
-          <MotionDiv key={i} whileHover={{ scale: 1.2, y: -3 }}>
+          {
+            icon: FaTwitter,
+            color: "cyan.500",
+            link: "https://twitter.com/",
+          },
+        ].map(({ icon, color, link }, index) => (
+          <motion.div key={index} whileHover={{ scale: 1.2, rotate: 10 }}>
             <IconButton
               as="a"
               href={link}
               target="_blank"
               icon={React.createElement(icon)}
-              aria-label="Social"
-              bg="whiteAlpha.200"
-              color={color}
-              borderRadius="full"
-              p={3}
-              _hover={{
-                bg: color,
-                color: "white",
-                transition: "0.3s",
-              }}
-              boxShadow="0 4px 15px rgba(0,0,0,0.3)"
+              colorScheme="gray"
+              _hover={{ bg: color, color: "white" }}
             />
-          </MotionDiv>
+          </motion.div>
         ))}
       </HStack>
 
-      <Divider opacity={0.25} />
-
-      {/* CONTACT INFO */}
-      <VStack w="100%" spacing={4} align="stretch">
+      {/* Contact Info – PERFECT ALIGNMENT */}
+      <VStack align="start" w="full" spacing={3}>
         {[
-          { icon: FaPhone, text: user.phone || "+91 7830237144" },
+          { icon: FaPhone, text: user.phone || "+917830237144" },
           { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
           { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
-        ].map(({ icon, text }, i) => (
-          <MotionDiv key={i} whileHover={{ scale: 1.02 }}>
-            <HStack
-              spacing={4}
-              p={3}
-              borderRadius="xl"
-              bg={isDarkMode ? "whiteAlpha.100" : "blackAlpha.100"}
-            >
-              <Box as={icon} fontSize="1.4rem" color="cyan.300" />
-
-              <Text fontSize="md" fontWeight="500">
-                {text}
-              </Text>
-            </HStack>
-          </MotionDiv>
+        ].map(({ icon, text }, idx) => (
+          <HStack
+            key={idx}
+            spacing={3}
+            align="center"
+            w="100%"
+            justify="flex-start"
+            height="28px"
+          >
+            <Box as={icon} fontSize="1.2rem" color="teal.300" minW="24px" />
+            <Text _hover={{ color: "teal.300" }}>{text}</Text>
+          </HStack>
         ))}
       </VStack>
 
-      <Divider opacity={0.25} />
+      {/* Resume Button */}
+      <motion.div whileHover={{ scale: 1.05 }}>
+        <Button
+          w="full"
+          leftIcon={<FaDownload />}
+          colorScheme="red"
+          onClick={() => (window.location.href = user.resumeLink || "/RESUMEE.pdf")}
+        >
+          Download Resume
+        </Button>
+      </motion.div>
 
-      {/* BUTTONS */}
-      <VStack w="100%" spacing={3}>
-        <MotionDiv whileHover={{ scale: 1.05 }}>
-          <Button
-            w="full"
-            leftIcon={<FaDownload />}
-            colorScheme="pink"
-            borderRadius="xl"
-            bg="pink.400"
-            _hover={{
-              bgGradient: "linear(to-r, pink.400, orange.400)",
-            }}
-            onClick={() =>
-              (window.location.href = user.resumeLink || "/RESUMEE.pdf")
-            }
-          >
-            Download Resume
-          </Button>
-        </MotionDiv>
+      {/* Skills Button */}
+      <motion.div whileHover={{ scale: 1.05 }}>
+        <Button
+          mt={3}
+          w="full"
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => navigate("/skill")}
+        >
+          View All Skills
+        </Button>
+      </motion.div>
 
-        <MotionDiv whileHover={{ scale: 1.05 }}>
-          <Button
-            w="full"
-            variant="outline"
-            colorScheme="cyan"
-            borderRadius="xl"
-            _hover={{
-              bgGradient: "linear(to-r, cyan.300, teal.400)",
-              color: "white",
-              border: "none",
-            }}
-            onClick={() => navigate("/skill")}
-          >
-            View All Skills
-          </Button>
-        </MotionDiv>
-      </VStack>
-
-      {/* DARK MODE SWITCH */}
-      <HStack pt={2}>
-        <Text fontWeight="600" fontSize="sm">
-          Dark Mode
-        </Text>
-        <MotionDiv whileTap={{ scale: 1.2 }}>
+      {/* Dark Mode Toggle */}
+      <HStack>
+        <Text fontWeight="bold">Dark Mode</Text>
+        <motion.div whileTap={{ scale: 1.2 }}>
           <Switch
-            size="lg"
             isChecked={isDarkMode}
             onChange={() => setIsDarkMode(!isDarkMode)}
-            colorScheme="cyan"
+            size="lg"
+            colorScheme="teal"
           />
-        </MotionDiv>
+        </motion.div>
       </HStack>
     </VStack>
   );
