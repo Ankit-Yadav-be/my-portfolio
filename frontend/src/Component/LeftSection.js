@@ -26,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 const MotionBox = motion(Box);
 const MotionDiv = motion.div;
 
-// Animated Floating Gradient Backlight
+// BACKLIGHT ANIMATION
 const AnimatedGradient = () => (
   <MotionDiv
     style={{
@@ -66,7 +66,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
     >
       <AnimatedGradient />
 
-      {/* PROFILE IMAGE + INFO */}
+      {/* PROFILE IMAGE */}
       <MotionDiv
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -90,7 +90,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
         />
       </MotionDiv>
 
-      {/* NAME + TAGLINE */}
+      {/* NAME & TAGLINE */}
       <VStack spacing={1} textAlign="center">
         <Text
           fontSize="2xl"
@@ -116,7 +116,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
 
       <Divider opacity={0.3} />
 
-      {/* SOCIAL MEDIA */}
+      {/* SOCIAL LINKS */}
       <HStack spacing={5}>
         {[
           {
@@ -129,11 +129,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
             color: "#333",
             link: "https://github.com/Ankit-Yadav-be",
           },
-          {
-            icon: FaTwitter,
-            color: "#1DA1F2",
-            link: "https://twitter.com/",
-          },
+          { icon: FaTwitter, color: "#1DA1F2", link: "https://twitter.com/" },
         ].map(({ icon, color, link }, i) => (
           <MotionDiv key={i} whileHover={{ scale: 1.2 }}>
             <IconButton
@@ -157,28 +153,41 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
 
       <Divider opacity={0.3} />
 
-      {/* CONTACT INFORMATION */}
-      <VStack align="start" w="100%" spacing={3}>
+      {/* ⭐ PERFECTLY ALIGNED CONTACT INFO ⭐ */}
+      <VStack
+        align="start"
+        w="100%"
+        spacing={4}
+        px={2}
+      >
         {[
           { icon: FaPhone, text: user.phone || "+91 7830237144" },
           { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
-          {
-            icon: FaMapMarkerAlt,
-            text: user.location || "Agra, Uttar Pradesh",
-          },
+          { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
         ].map(({ icon, text }, i) => (
-          <HStack key={i} spacing={4}>
+          <HStack
+            key={i}
+            spacing={3}
+            w="100%"
+            p={2}
+            borderRadius="lg"
+            _hover={{
+              bg: isDarkMode ? "whiteAlpha.200" : "gray.100",
+              transform: "scale(1.02)",
+              transition: "0.2s",
+            }}
+          >
             <Box
               as={icon}
-              fontSize="1.2rem"
+              fontSize="1.3rem"
               color="cyan.400"
-              filter="drop-shadow(0px 0px 5px cyan)"
+              minW="28px"
             />
             <Text
-              fontSize="sm"
+              fontSize="md"
               color={isDarkMode ? "gray.300" : "gray.700"}
               fontWeight="medium"
-              _hover={{ color: "cyan.400", transition: "0.3s" }}
+              wordBreak="break-word"
             >
               {text}
             </Text>

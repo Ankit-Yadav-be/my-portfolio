@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
-import { FaRobot, FaBrain, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import { FaRobot, FaBrain } from "react-icons/fa";
 
 import LeetCodeWidget from "./LeetcodeWidgets";
 import HackerRankWidget from "./HakerRankWidgets";
@@ -21,7 +21,7 @@ const MotionBox = motion(Box);
 const AboutMeSection = () => {
   const [leet] = useState("codersourya123");
   const [hack] = useState("ay870421");
-  const glow = useColorModeValue("rgba(0,255,255,0.3)", "rgba(0,255,255,0.6)");
+  const glow = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.55)");
 
   const experiences = [
     {
@@ -34,15 +34,14 @@ const AboutMeSection = () => {
         "Optimized Cloud Functions improving performance by 40% & responsiveness by 25%."
       ]
     },
-    // Add more experiences here
   ];
 
   return (
     <Box p={{ base: 6, md: 10 }} maxW="1200px" mx="auto" mt={20}>
-      
-      {/* ---------------- HERO SECTION WITH VIDEO ---------------- */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mb={20} alignItems="center">
-        
+
+      {/* ---------------- HERO SECTION WITH BIG VIDEO ---------------- */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={14} mb={20} alignItems="center">
+
         {/* LEFT TEXT */}
         <VStack align="start" spacing={5}>
           <Text
@@ -78,22 +77,23 @@ const AboutMeSection = () => {
           </Text>
         </VStack>
 
-        {/* RIGHT VIDEO */}
+        {/* RIGHT BIG VIDEO */}
         <MotionBox
           position="relative"
           w="100%"
-          h={{ base: "200px", md: "300px" }}
+          maxW="900px"
+          h={{ base: "240px", md: "430px" }}   // BIGGER HEIGHT
+          mx="auto"
           borderRadius="2xl"
           overflow="hidden"
-          boxShadow={`0 0 35px ${glow}`}
+          boxShadow={`0 0 40px ${glow}`}
           whileHover={{ scale: 1.02 }}
-          transition="0.3s"
+          transition="0.35s"
         >
-          {/* Video Embed */}
           <iframe
             width="100%"
             height="100%"
-            src="https://youtu.be/W4ce2UyNOzY?si=eCEHba7V4nubfP-f" // <-- Replace with your YouTube video link
+            src="https://www.youtube.com/embed/W4ce2UyNOzY" 
             title="Introduction Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -156,11 +156,13 @@ const AboutMeSection = () => {
               {exp.role} — {exp.company}
             </Text>
             <Text color="cyan.300" mb={2}>{exp.duration}</Text>
+
             <HStack spacing={2} mb={2}>
               {exp.tech.map((t, i) => (
                 <Badge key={i} colorScheme="cyan">{t}</Badge>
               ))}
             </HStack>
+
             <VStack align="start" spacing={1}>
               {exp.points.map((p, i) => (
                 <Text key={i} color="cyan.100" fontSize="sm">• {p}</Text>
@@ -204,6 +206,7 @@ const AboutMeSection = () => {
           <HackerRankWidget usernameh={hack} />
         </MotionBox>
       </SimpleGrid>
+
     </Box>
   );
 };
