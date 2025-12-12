@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Text,
@@ -7,12 +7,13 @@ import {
   Icon,
   SimpleGrid,
   useColorModeValue,
-  Badge,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
 import { FaRobot, FaBrain } from "react-icons/fa";
 import { FaBrain as FaProblem } from "react-icons/fa";
+
+import LeetCodeWidget from "./LeetcodeWidgets";
 
 // Motion Components
 const MotionBox = motion(Box);
@@ -20,6 +21,7 @@ const MotionText = motion(Text);
 const MotionHStack = motion(HStack);
 
 const AboutMeSection = () => {
+  const [leet] = useState("codersourya123");
   const glow = useColorModeValue(
     "rgba(0,255,255,0.25)",
     "rgba(0,255,255,0.55)"
@@ -62,12 +64,7 @@ const AboutMeSection = () => {
       />
 
       {/* ============= HERO SECTION ================= */}
-      <SimpleGrid
-        columns={{ base: 1, md: 2 }}
-        spacing={14}
-        mb={20}
-        alignItems="center"
-      >
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={14} mb={20} alignItems="center">
         <VStack align="start" spacing={5}>
           <MotionText
             fontSize={{ base: "3xl", md: "4xl" }}
@@ -239,46 +236,41 @@ const AboutMeSection = () => {
         My Coding Profiles
       </Text>
 
-      <VStack spacing={6} mt={6} px={{ base: 4, md: 10 }} textAlign="center">
-        {/* Simple LeetCode Info */}
-        <Text fontSize="2xl" fontWeight="semibold" color="cyan.100">
-          I have solved 500+ coding problems across platforms like LeetCode.
-        </Text>
-        <Text fontSize="lg" color="gray.300" maxW="700px" mx="auto">
-          Regular practice in coding challenges has strengthened my 
-          <b> problem-solving skills</b> and <b>logical thinking</b>, allowing me to tackle complex problems efficiently.
-        </Text>
-
-        {/* Problem Solving Card */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={8} px={{ base: 4, md: 10 }} alignItems="center">
+        {/* LEETCODE WIDGET */}
         <MotionBox
-          p={8}
+          p={6}
           borderRadius="2xl"
           bg="rgba(0,255,255,0.08)"
-          backdropFilter="blur(12px)"
-          whileHover={{ scale: 1.05, rotate: 1 }}
-          transition="0.3s ease"
-          boxShadow={`0 0 35px rgba(0,255,255,0.45)`}
+          backdropFilter="blur(10px)"
+          whileHover={{ scale: 1.05 }}
+          boxShadow={`0 0 30px rgba(0,255,255,0.35)`}
         >
-          <VStack spacing={4} textAlign="center">
-            <Text
-              fontSize="4xl"
-              fontWeight="extrabold"
-              bgGradient="linear(to-r, cyan.300, white)"
-              bgClip="text"
-            >
-              500+ Problems Solved
-            </Text>
-            <Box fontSize="50px" color="cyan.300" as={FaProblem} animation="pulse 2s infinite" />
-            <Text fontSize="lg" color="cyan.100" px={4}>
-              Solving these problems enhanced my <b>logical thinking</b> and ability to break down complex challenges efficiently.
-            </Text>
-            <Box w="80%" h="3px" bg="cyan.400" opacity={0.4} rounded="full" />
-            <Text color="gray.300" fontSize="md">
-              I practice DSA daily to sharpen my brain like an engineer. 🚀
-            </Text>
-          </VStack>
+          <LeetCodeWidget usernamel={leet} />
         </MotionBox>
-      </VStack>
+
+        {/* SIMPLE CONTENT RIGHT TO LEETCODE */}
+        <VStack spacing={4} textAlign="left">
+          <Text
+            fontSize="3xl"
+            fontWeight="bold"
+            bgGradient="linear(to-r, cyan.300, white)"
+            bgClip="text"
+          >
+            500+ Problems Solved
+          </Text>
+          <HStack spacing={3}>
+            <Icon as={FaProblem} color="cyan.300" boxSize={8} />
+            <Text fontSize="lg" color="cyan.100">
+              Solving 500+ coding problems across platforms strengthened my <b>problem-solving skills</b> and <b>logical thinking</b>, helping me tackle complex challenges efficiently.
+            </Text>
+          </HStack>
+          <Box w="100%" h="2px" bg="cyan.400" opacity={0.4} rounded="full" />
+          <Text fontSize="md" color="gray.300">
+            I practice DSA daily to sharpen my brain like an engineer.
+          </Text>
+        </VStack>
+      </SimpleGrid>
     </Box>
   );
 };
