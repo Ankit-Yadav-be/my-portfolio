@@ -6,8 +6,8 @@ import {
   HStack,
   Icon,
   SimpleGrid,
+  Badge,
   useColorModeValue,
-  Badge
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
@@ -16,7 +16,6 @@ import { FaBrain as FaProblem } from "react-icons/fa";
 
 import LeetCodeWidget from "./LeetcodeWidgets";
 
-// Motion Components
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
 const MotionHStack = motion(HStack);
@@ -24,12 +23,13 @@ const MotionHStack = motion(HStack);
 const AboutMeSection = () => {
   const [leet] = useState("codersourya123");
 
-  // Dynamic colors for light/dark mode
+  // Dynamic colors
   const glow = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.55)");
+  const boxBg = useColorModeValue("rgba(255,255,255,0.08)", "rgba(0,0,0,0.4)");
+  const boxShadowColor = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.55)");
   const textPrimary = useColorModeValue("gray.800", "gray.100");
   const textSecondary = useColorModeValue("gray.600", "gray.300");
   const cyanLight = useColorModeValue("cyan.300", "cyan.400");
-  const cyanBg = useColorModeValue("rgba(0,255,255,0.08)", "rgba(0,255,255,0.12)");
   const borderCyan = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.45)");
 
   const experiences = [
@@ -47,7 +47,7 @@ const AboutMeSection = () => {
 
   return (
     <Box p={{ base: 6, md: 10 }} maxW="1200px" mx="auto" mt={20} position="relative">
-      {/* 🔥 BACKGROUND AURA GLOW */}
+      {/* 🔥 Background Glow */}
       <Box
         position="absolute"
         top="-100px"
@@ -62,7 +62,7 @@ const AboutMeSection = () => {
         zIndex={-1}
       />
 
-      {/* HERO SECTION */}
+      {/* HERO */}
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={14} mb={20} alignItems="center">
         <VStack align="start" spacing={5}>
           <MotionText
@@ -120,7 +120,7 @@ const AboutMeSection = () => {
           mx="auto"
           borderRadius="2xl"
           overflow="hidden"
-          boxShadow={`0 0 40px ${glow}`}
+          boxShadow={`0 0 40px ${boxShadowColor}`}
           whileHover={{ scale: 1.03, rotateY: 4, rotateX: 2 }}
           transition="0.35s"
           style={{ transformStyle: "preserve-3d" }}
@@ -136,13 +136,13 @@ const AboutMeSection = () => {
         </MotionBox>
       </SimpleGrid>
 
-      {/* EXPERIENCE SECTION */}
+      {/* EXPERIENCE */}
       <MotionText
         fontSize="3xl"
         fontWeight="bold"
         textAlign="center"
         mb={10}
-        bgGradient={`linear(to-r, ${cyanLight}, ${cyanBg})`}
+        bgGradient={`linear(to-r, ${cyanLight}, ${boxBg})`}
         bgClip="text"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -152,18 +152,20 @@ const AboutMeSection = () => {
       </MotionText>
 
       <VStack spacing={12} position="relative" px={4}>
+        {/* Timeline Line */}
         <motion.div
           style={{
             position: "absolute",
             left: "50%",
             top: 0,
             bottom: 0,
-            width: "3px",
+            width: "4px",
             background: cyanLight,
             transform: "translateX(-50%)",
+            borderRadius: "full",
           }}
           animate={{
-            boxShadow: ["0 0 10px cyan", "0 0 25px cyan", "0 0 10px cyan"],
+            boxShadow: [`0 0 10px ${cyanLight}`, `0 0 25px ${cyanLight}`, `0 0 10px ${cyanLight}`],
           }}
           transition={{ repeat: Infinity, duration: 2 }}
         />
@@ -175,32 +177,33 @@ const AboutMeSection = () => {
             w={{ base: "100%", md: "46%" }}
             alignSelf={index % 2 === 0 ? "flex-start" : "flex-end"}
             p={6}
-            bg={cyanBg}
+            bg={boxBg}
             borderRadius="2xl"
-            backdropFilter="blur(12px)"
+            backdropFilter="blur(16px)"
             border={`1px solid ${borderCyan}`}
-            boxShadow={`0 0 22px ${glow}`}
-            whileHover={{ scale: 1.04 }}
-            transition="0.25s"
+            boxShadow={`0 4px 25px ${boxShadowColor}`}
+            whileHover={{ scale: 1.05, y: -3 }}
+            transition="0.3s"
           >
+            {/* Timeline Dot */}
             <motion.div
               style={{
                 position: "absolute",
                 left: index % 2 === 0 ? "100%" : "-10px",
                 top: "20px",
-                width: "18px",
-                height: "18px",
+                width: "20px",
+                height: "20px",
                 borderRadius: "50%",
                 background: cyanLight,
               }}
-              animate={{ boxShadow: ["0 0 8px cyan", "0 0 20px cyan"] }}
+              animate={{ boxShadow: [`0 0 12px ${cyanLight}`, `0 0 22px ${cyanLight}`] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             />
 
             <Text fontSize="xl" fontWeight="bold" color={textPrimary} mb={2}>
               {exp.role} — {exp.company}
             </Text>
-            <Text color={cyanLight} mb={2}>
+            <Text color={cyanLight} mb={2} fontWeight="semibold">
               {exp.duration}
             </Text>
 
@@ -212,7 +215,7 @@ const AboutMeSection = () => {
               ))}
             </HStack>
 
-            <VStack align="start" spacing={1}>
+            <VStack align="start" spacing={2}>
               {exp.points.map((p, i) => (
                 <Text key={i} color={textSecondary} fontSize="sm">
                   • {p}
@@ -229,21 +232,19 @@ const AboutMeSection = () => {
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={8} px={{ base: 4, md: 10 }} alignItems="center">
-        {/* LEETCODE WIDGET */}
         <MotionBox
           p={6}
           borderRadius="2xl"
-          bg={cyanBg}
-          backdropFilter="blur(10px)"
+          bg={boxBg}
+          backdropFilter="blur(12px)"
           whileHover={{ scale: 1.05 }}
-          boxShadow={`0 0 30px ${glow}`}
+          boxShadow={`0 0 30px ${boxShadowColor}`}
         >
           <LeetCodeWidget usernamel={leet} />
         </MotionBox>
 
-        {/* SIMPLE CONTENT RIGHT TO LEETCODE */}
         <VStack spacing={4} textAlign="left">
-          <Text fontSize="3xl" fontWeight="bold" bgGradient={`linear(to-r, ${cyanLight}, white)` } bgClip="text">
+          <Text fontSize="3xl" fontWeight="bold" bgGradient={`linear(to-r, ${cyanLight}, white)`} bgClip="text">
             500+ Problems Solved
           </Text>
           <HStack spacing={3}>
