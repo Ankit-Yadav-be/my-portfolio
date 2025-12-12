@@ -7,6 +7,7 @@ import {
   Icon,
   SimpleGrid,
   useColorModeValue,
+  Badge
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
