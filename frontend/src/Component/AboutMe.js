@@ -4,13 +4,16 @@ import {
   Text,
   VStack,
   HStack,
-  Divider,
   Icon,
+  SimpleGrid,
   useColorModeValue,
   Badge,
+  Divider,
+  Avatar,
 } from "@chakra-ui/react";
-import { ReactTyped } from "react-typed";
 import { motion } from "framer-motion";
+import { ReactTyped } from "react-typed";
+
 import {
   FaRobot,
   FaBrain,
@@ -18,6 +21,7 @@ import {
   FaCalendarAlt,
   FaTools,
 } from "react-icons/fa";
+
 import LeetCodeWidget from "./LeetcodeWidgets";
 import HackerRankWidget from "./HakerRankWidgets";
 
@@ -25,231 +29,232 @@ const MotionBox = motion(Box);
 const MotionDiv = motion.div;
 
 const AboutMeSection = () => {
-  const [usernamel] = useState("codersourya123");
-  const [usernameh] = useState("ay870421");
+  const [leet] = useState("codersourya123");
+  const [hack] = useState("ay870421");
 
-  const glow = useColorModeValue(
-    "rgba(0,255,255,0.5)",
-    "rgba(0,255,255,0.65)"
-  );
+  const glow = useColorModeValue("rgba(0,255,255,0.4)", "rgba(0,255,255,0.55)");
 
   return (
     <Box
-      position="relative"
-      p={10}
-      my={14}
-      maxW="1000px"
+      p={{ base: 6, md: 10 }}
+      maxW="1200px"
       mx="auto"
-      borderRadius="2xl"
-      bg="linear-gradient(135deg, #00111f, #002c49)"
-      boxShadow="0px 0px 40px rgba(0,255,255,0.25)"
-      overflow="hidden"
+      mt={20}
+      position="relative"
     >
-      {/* ⚡ GRID BACKGROUND */}
-      <Box
-        position="absolute"
-        inset={0}
-        backgroundImage="radial-gradient(circle at center, rgba(0,120,255,0.12), transparent 70%)"
-        zIndex={0}
-      />
-      <MotionDiv
-        animate={{ opacity: [0.3, 0.7, 0.3], scale: [1, 1.05, 1] }}
-        transition={{ duration: 6, repeat: Infinity }}
-        style={{
-          position: "absolute",
-          top: "-20%",
-          right: "-20%",
-          width: "350px",
-          height: "350px",
-          background: "radial-gradient(circle, rgba(0,200,255,0.25), transparent)",
-          borderRadius: "50%",
-          filter: "blur(60px)",
-          zIndex: 0,
-        }}
-      />
-
-      {/* ------------------------------------------------------------------ */}
-      {/*                     ⭐ EXPERIENCE — PREMIUM FIRST ⭐                 */}
-      {/* ------------------------------------------------------------------ */}
-
-      <MotionBox
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        textAlign="center"
-        zIndex={2}
-        position="relative"
-      >
-        <Text
-          fontSize="3xl"
-          fontWeight="bold"
-          bgGradient="linear(to-r, cyan.300, cyan.100)"
-          bgClip="text"
-          textShadow={`0 0 20px ${glow}`}
+      {/* ----------------------------------------------------- */}
+      {/*                   HERO SPLIT SECTION                 */}
+      {/* ----------------------------------------------------- */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mb={20}>
+        
+        {/* LEFT TEXT SECTION */}
+        <VStack
+          align="start"
+          spacing={5}
+          position="relative"
+          zIndex={2}
+          justify="center"
         >
-          Work Experience
-        </Text>
+          <Text
+            fontSize={{ base: "3xl", md: "4xl" }}
+            fontWeight="extrabold"
+            bgGradient="linear(to-r, cyan.300, white)"
+            bgClip="text"
+          >
+            Hi, I'm <span style={{ color: "#FFE082" }}>Ankit Yadav</span>
+          </Text>
 
-        {/* Card */}
+          <HStack spacing={3}>
+            <Icon as={FaRobot} color="cyan.300" />
+            <Text fontSize="xl" color="cyan.100">
+              <ReactTyped
+                strings={[
+                  "AI Engineer 🤖",
+                  "MERN Stack Developer 💻",
+                  "Solving Real Problems 🚀",
+                  "Building AI Agents 🔥",
+                ]}
+                typeSpeed={45}
+                backSpeed={25}
+                loop
+              />
+            </Text>
+            <Icon as={FaBrain} color="cyan.300" />
+          </HStack>
+
+          <Text color="gray.300" fontSize="lg" maxW="80%">
+            A passionate developer focused on building real-world products,
+            AI-powered systems & highly scalable applications.
+          </Text>
+        </VStack>
+
+        {/* RIGHT AVATAR SECTION */}
+        <MotionDiv
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          style={{
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          {/* Glowing Blob */}
+          <Box
+            position="absolute"
+            w="280px"
+            h="280px"
+            bg="radial-gradient(circle, rgba(0,200,255,0.4), transparent)"
+            filter="blur(70px)"
+            borderRadius="50%"
+            top="10%"
+          />
+
+          <Avatar
+            size="2xl"
+            name="Ankit Yadav"
+            src="https://i.ibb.co/4p2d9nM/profile.png"
+            border="4px solid rgba(0,255,255,0.5)"
+            zIndex={3}
+          />
+        </MotionDiv>
+      </SimpleGrid>
+
+      {/* ----------------------------------------------------- */}
+      {/*                 EXPERIENCE TIMELINE UI               */}
+      {/* ----------------------------------------------------- */}
+
+      <Text
+        fontSize="3xl"
+        fontWeight="bold"
+        textAlign="center"
+        mb={10}
+        bgGradient="linear(to-r, cyan.300, cyan.100)"
+        bgClip="text"
+      >
+        Work Experience
+      </Text>
+
+      <VStack spacing={10} position="relative" px={4}>
+        {/* Timeline Vertical Line */}
+        <Box
+          position="absolute"
+          left="50%"
+          top={0}
+          bottom={0}
+          width="3px"
+          bg="cyan.600"
+          boxShadow={`0 0 15px ${glow}`}
+        />
+
+        {/* TIMELINE ITEM */}
         <MotionBox
-          mt={6}
-          p={6}
-          bg="rgba(255,255,255,0.05)"
-          backdropFilter="blur(12px)"
-          border="1px solid rgba(0,255,255,0.3)"
-          borderRadius="xl"
-          boxShadow="0px 0px 25px rgba(0,255,255,0.2)"
           whileHover={{ scale: 1.03 }}
           transition="0.3s"
+          p={8}
+          w="100%"
+          maxW="700px"
+          bg="rgba(255,255,255,0.05)"
+          backdropFilter="blur(15px)"
+          borderRadius="2xl"
+          border="1px solid rgba(0,255,255,0.3)"
+          boxShadow={`0 0 20px ${glow}`}
+          position="relative"
         >
-          <HStack spacing={4} justify="center">
-            <Icon as={FaBriefcase} boxSize={7} color="yellow.300" />
-            <Text fontSize="2xl" fontWeight="bold" color="white">
+          <Box
+            position="absolute"
+            left="50%"
+            top="-10px"
+            transform="translateX(-50%)"
+            w="18px"
+            h="18px"
+            bg="cyan.300"
+            borderRadius="50%"
+            boxShadow={`0 0 18px ${glow}`}
+          />
+
+          <HStack spacing={4} mb={4}>
+            <Icon as={FaBriefcase} color="yellow.300" boxSize={7} />
+            <Text fontSize="2xl" color="white" fontWeight="bold">
               Android Developer Intern — LitAmor
             </Text>
           </HStack>
 
-          {/* Time */}
-          <HStack justify="center" mt={2}>
+          <HStack spacing={3} mb={4}>
             <Icon as={FaCalendarAlt} color="cyan.300" />
-            <Text fontSize="md" color="cyan.200">
-              Jul 2025 – Present
-            </Text>
+            <Text color="cyan.200">Jul 2025 – Present</Text>
           </HStack>
 
-          {/* Tech */}
-          <HStack justify="center" spacing={3} mt={4}>
+          <HStack spacing={3} mb={4}>
             <Badge colorScheme="cyan">React Native</Badge>
             <Badge colorScheme="yellow">Firebase</Badge>
             <Badge colorScheme="purple">Firestore</Badge>
           </HStack>
 
-          {/* Details */}
-          <VStack align="start" mt={4} spacing={3}>
+          <VStack align="start" spacing={3}>
             <HStack align="start">
               <Icon as={FaTools} color="yellow.300" mt={1} />
-              <Text color="cyan.100" fontSize="md">
-                Built cross-platform mobile app with secure auth, state
-                management & real-time features.
+              <Text color="cyan.100">
+                Built cross-platform app with real-time features and secure
+                architecture.
               </Text>
             </HStack>
 
             <HStack align="start">
               <Icon as={FaTools} color="yellow.300" mt={1} />
-              <Text color="cyan.100" fontSize="md">
-                Optimized backend + Cloud Functions improving performance by{" "}
-                <Text as="span" color="yellow.200" fontWeight="bold">
-                  40%
-                </Text>{" "}
-                & app responsiveness by{" "}
-                <Text as="span" color="yellow.200" fontWeight="bold">
-                  25%
-                </Text>
-                .
+              <Text color="cyan.100">
+                Optimized Cloud Functions, boosting performance by{" "}
+                <b style={{ color: "#FFE082" }}>40%</b>.
               </Text>
             </HStack>
           </VStack>
         </MotionBox>
+      </VStack>
 
-        <Divider
-          my={10}
-          borderColor="cyan.600"
-          borderWidth="2px"
-          boxShadow={`0px 0px 20px ${glow}`}
-        />
-      </MotionBox>
+      {/* ----------------------------------------------------- */}
+      {/*             CODING PROFILES GRID CARDS UI            */}
+      {/* ----------------------------------------------------- */}
 
-      {/* ------------------------------------------------------------------ */}
-      {/*                        ⭐ PROFILE INTRO SECTION ⭐                   */}
-      {/* ------------------------------------------------------------------ */}
-
-      <MotionBox
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+      <Text
+        fontSize="3xl"
+        fontWeight="bold"
+        mt={16}
         textAlign="center"
-        position="relative"
-        zIndex={2}
+        color="cyan.200"
       >
-        <Text
-          fontSize="4xl"
-          fontWeight="bold"
-          bgGradient="linear(to-r, cyan.300, white)"
-          bgClip="text"
-          textShadow={`0 0 18px ${glow}`}
+        My Coding Profiles
+      </Text>
+
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={10}
+        mt={10}
+        px={{ base: 4, md: 10 }}
+      >
+        <MotionBox
+          p={6}
+          borderRadius="xl"
+          bg="rgba(255,255,255,0.06)"
+          border="1px solid rgba(0,255,255,0.3)"
+          backdropFilter="blur(12px)"
+          whileHover={{ scale: 1.05, rotate: 1 }}
+          boxShadow={`0 0 25px ${glow}`}
         >
-          Hi, I'm{" "}
-          <Text as="span" color="yellow.300">
-            Ankit Yadav
-          </Text>
-        </Text>
+          <LeetCodeWidget usernamel={leet} />
+        </MotionBox>
 
-        {/* Typing */}
-        <HStack justify="center" mt={3}>
-          <Icon as={FaRobot} color="cyan.300" boxSize={5} />
-          <Text fontSize="2xl" color="cyan.100">
-            <ReactTyped
-              strings={[
-                "Exploring Generative AI 🤖",
-                "Building AI Agents 🚀",
-                "MERN Stack Developer 💻",
-                "Solving Real-World Problems 🌍",
-              ]}
-              typeSpeed={50}
-              backSpeed={30}
-              loop
-            />
-          </Text>
-          <Icon as={FaBrain} color="cyan.300" boxSize={5} />
-        </HStack>
-
-        <Divider
-          my={8}
-          borderColor="cyan.600"
-          borderWidth="2px"
-          boxShadow={`0px 0px 20px ${glow}`}
-        />
-
-        {/* Coding Profiles */}
-        <Text fontSize="2xl" fontWeight="bold" color="cyan.100">
-          My Coding Profiles
-        </Text>
-
-        <HStack
-          justify="center"
-          spacing={8}
-          mt={6}
-          flexWrap="wrap"
-          zIndex={3}
-          position="relative"
+        <MotionBox
+          p={6}
+          borderRadius="xl"
+          bg="rgba(255,255,255,0.06)"
+          border="1px solid rgba(0,255,255,0.3)"
+          backdropFilter="blur(12px)"
+          whileHover={{ scale: 1.05, rotate: -1 }}
+          boxShadow={`0 0 25px ${glow}`}
         >
-          <MotionBox
-            p={5}
-            bg="rgba(255,255,255,0.06)"
-            backdropFilter="blur(10px)"
-            borderRadius="lg"
-            border="1px solid rgba(0,255,255,0.2)"
-            boxShadow="0px 0px 25px rgba(0,200,255,0.4)"
-            whileHover={{ scale: 1.07 }}
-            transition="0.3s"
-          >
-            <LeetCodeWidget usernamel={usernamel} />
-          </MotionBox>
-
-          <MotionBox
-            p={5}
-            bg="rgba(255,255,255,0.06)"
-            backdropFilter="blur(10px)"
-            borderRadius="lg"
-            border="1px solid rgba(0,255,255,0.2)"
-            boxShadow="0px 0px 25px rgba(0,200,255,0.4)"
-            whileHover={{ scale: 1.07 }}
-            transition="0.3s"
-          >
-            <HackerRankWidget usernameh={usernameh} />
-          </MotionBox>
-        </HStack>
-      </MotionBox>
+          <HackerRankWidget usernameh={hack} />
+        </MotionBox>
+      </SimpleGrid>
     </Box>
   );
 };
