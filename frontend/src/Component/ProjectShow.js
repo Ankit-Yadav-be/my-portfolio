@@ -14,14 +14,14 @@ import Certifications from "./certifications";
 import LeftSection from "./LeftSection";
 import CTASection from "./CTASection";
 import TestimonialList from "./TestimonialsList";
-import VisitorStats from "./VisitorStates";
+// import VisitorStats from "./VisitorStates";   // ✅ Already Commented
 import AboutMeSection from "./AboutMe";
 import { FaChartBar } from "react-icons/fa";
 
 const Portfolio = () => {
   const [user, setUser] = useState({});
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [showVisitorStats, setShowVisitorStats] = useState(false);
+  // const [showVisitorStats, setShowVisitorStats] = useState(false);  // ✅ Commented
   const [highlightButton, setHighlightButton] = useState(true);
   const [showIntro, setShowIntro] = useState(true);
   const { toggleColorMode } = useColorMode();
@@ -43,7 +43,7 @@ const Portfolio = () => {
       minHeight="100vh"
       bg={isDarkMode ? "gray.900" : "white"}
       color={isDarkMode ? "white" : "black"}
-      pt={{ base: 20, md: 24 }} // Give space for fixed Navbar
+      pt={{ base: 20, md: 24 }}
       position="relative"
     >
       {/* Left Sidebar */}
@@ -53,15 +53,16 @@ const Portfolio = () => {
         setIsDarkMode={setIsDarkMode}
       />
 
-      {/* Visitor Stats Icon */}
+      {/* Visitor Stats Icon — Completely Disabled */}
+      {/* 
       <Tooltip label="Check website visitor analytics" placement="left">
         <IconButton
           icon={<FaChartBar />}
           colorScheme="blue"
           position="fixed"
-          top={{ base: "90px", md: "80px" }} // Adjust for Navbar height
+          top={{ base: "90px", md: "80px" }}
           right="20px"
-          zIndex="150" // Higher than Navbar & Sidebar
+          zIndex="150"
           size="lg"
           onClick={() => setShowVisitorStats(!showVisitorStats)}
           boxShadow={highlightButton ? "0 0 15px #00A3FF" : "none"}
@@ -72,6 +73,7 @@ const Portfolio = () => {
           }}
         />
       </Tooltip>
+      */}
 
       {/* Right Section */}
       <Box
@@ -82,7 +84,8 @@ const Portfolio = () => {
         borderRadius="lg"
         boxShadow="xl"
       >
-        {showVisitorStats && <VisitorStats />}
+        {/* Visitor Stats Component — Disabled */}
+        {/* {showVisitorStats && <VisitorStats />} */}
 
         <AboutMeSection />
         <ProjectsSection />

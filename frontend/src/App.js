@@ -15,9 +15,7 @@ const ProblemsExplorer = lazy(() => import("./Component/ProblemExplorer"));
 const Navbar = lazy(() => import("./Component/Navbar"));
 
 // ⭐ Detail Page
-const ProjectDetailPage = lazy(() =>
-  import("./pages/ProjectDetailPage")
-);
+const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 
 function App() {
   return (
@@ -51,10 +49,7 @@ function App() {
               <Route path="/admin" element={<VisitorDashboard />} />
 
               {/* ⭐ Lazy-loaded project detail */}
-              <Route
-                path="/project/:id"
-                element={<ProjectDetailPage />}
-              />
+              <Route path="/project/:id" element={<ProjectDetailPage />} />
             </Routes>
           </Box>
         </Suspense>

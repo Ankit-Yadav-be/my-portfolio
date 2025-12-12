@@ -8,6 +8,14 @@ import {
   Icon,
   useColorModeValue,
   Badge,
+  SimpleGrid,
+  Image,
+  Button,
+  Stack,
+  Stat,
+  StatLabel,
+  StatNumber,
+  Tooltip,
 } from "@chakra-ui/react";
 import { ReactTyped } from "react-typed";
 import { motion } from "framer-motion";
@@ -17,231 +25,364 @@ import {
   FaBriefcase,
   FaCalendarAlt,
   FaTools,
+  FaStar,
+  FaDownload,
 } from "react-icons/fa";
 import LeetCodeWidget from "./LeetcodeWidgets";
 import HackerRankWidget from "./HakerRankWidgets";
 
 const MotionBox = motion(Box);
+const MotionStack = motion(Stack);
 
 const AboutMeSection = () => {
-  const [usernamel] = useState("codersourya123");
-  const [usernameh] = useState("ay870421");
-  const glowColor = useColorModeValue(
-    "rgba(0, 255, 255, 0.9)",
-    "rgba(0, 255, 255, 1)"
+  // kept your usernames; change if needed
+  const [leUsername] = useState("codersourya123");
+  const [hrUsername] = useState("ay870421");
+
+  // colors that adapt to light/dark
+  const cardBg = useColorModeValue("whiteAlpha.800", "blackAlpha.500");
+  const accent = useColorModeValue("cyan.600", "cyan.300");
+  const subtle = useColorModeValue("gray.700", "gray.200");
+  const glow = useColorModeValue(
+    "rgba(0,255,255,0.08)",
+    "rgba(0,255,255,0.12)"
   );
 
   return (
     <Box
-      textAlign="center"
-      my={10}
-      p={10}
-      bgGradient="linear(to-r, #000428, #004e92)"
-      borderRadius="2xl"
-      boxShadow="0px 4px 25px rgba(0, 200, 255, 0.4)"
-      color="cyan.200"
-      maxW={{ base: "95%", md: "900px" }}
+      w="100%"
+      maxW="1200px"
       mx="auto"
-      position="relative"
-      overflow="hidden"
+      my={{ base: 8, md: 12 }}
+      px={{ base: 4, md: 6 }}
     >
-      {/* Floating Glow Background */}
-      <motion.div
-        animate={{ opacity: [0.4, 0.8, 0.4], scale: [1, 1.05, 1] }}
-        transition={{ duration: 4, repeat: Infinity }}
-        style={{
-          position: "absolute",
-          top: "-15%",
-          left: "-15%",
-          width: "130%",
-          height: "130%",
-          background:
-            "radial-gradient(circle, rgba(0, 150, 255, 0.25), transparent)",
-          zIndex: 0,
-        }}
-      />
-
-      {/* ----------------------------- */}
-      {/* ⭐ EXPERIENCE SECTION FIRST ⭐ */}
-      {/* ----------------------------- */}
-
-      <MotionBox
-        initial={{ opacity: 0, y: -25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1 }}
-        zIndex={2}
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={{ base: 6, md: 8 }}
+        alignItems="start"
       >
-        <Text
-          fontSize="3xl"
-          fontWeight="bold"
-          bgGradient="linear(to-r, cyan.300, yellow.300)"
-          bgClip="text"
-          mb={6}
-          textShadow={`0 0 18px ${glowColor}`}
-        >
-          Work Experience
-        </Text>
-
+        {/* ----------------------------- */}
+        {/* HERO / PROFILE */}
+        {/* ----------------------------- */}
         <MotionBox
-          p={6}
-          borderRadius="xl"
-          bg="rgba(0,0,0,0.4)"
-          border="1px solid rgba(0,255,255,0.4)"
-          boxShadow="0px 0px 25px rgba(0,255,255,0.3)"
-          whileHover={{ scale: 1.03 }}
-          transition="0.3s"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          borderRadius="2xl"
+          p={{ base: 6, md: 8 }}
+          bg={cardBg}
+          boxShadow="0 10px 30px rgba(0,0,0,0.12)"
+          position="relative"
+          overflow="hidden"
         >
-          <HStack spacing={3} justify="center">
-            <Icon as={FaBriefcase} boxSize={6} color="yellow.300" />
-            <Text fontSize="2xl" fontWeight="bold" color="white">
-              Android Developer Intern — LitAmor
-            </Text>
-          </HStack>
+          {/* soft accent glow */}
+          <Box
+            position="absolute"
+            top="-10%"
+            right="-10%"
+            width="260px"
+            height="260px"
+            borderRadius="full"
+            bg={glow}
+            filter="blur(42px)"
+            zIndex={0}
+          />
 
-          {/* Time */}
-          <HStack justify="center" mt={2}>
-            <Icon as={FaCalendarAlt} color="cyan.300" />
-            <Text fontSize="md" color="cyan.200">
-              Jul 2025 – Present
-            </Text>
-          </HStack>
-
-          {/* Tech Stack */}
-          <HStack spacing={3} mt={3} justify="center">
-            <Badge colorScheme="cyan" variant="solid">
-              React Native
-            </Badge>
-            <Badge colorScheme="yellow" variant="subtle">
-              Firebase
-            </Badge>
-            <Badge colorScheme="purple" variant="subtle">
-              Firestore
-            </Badge>
-          </HStack>
-
-          {/* Work Details */}
-          <VStack mt={4} spacing={3} px={4}>
-            <HStack align="start">
-              <Icon as={FaTools} color="yellow.300" mt={1} />
-              <Text textAlign="left" fontSize="md">
-                Built a cross-platform mobile app with secure authentication,
-                state management & event tracking.
-              </Text>
-            </HStack>
-
-            <HStack align="start">
-              <Icon as={FaTools} color="yellow.300" mt={1} />
-              <Text textAlign="left" fontSize="md">
-                Migrated REST APIs to Cloud Functions and optimized queries,
-                boosting backend efficiency by{" "}
-                <Text as="span" color="yellow.200" fontWeight="bold">
-                  40%
-                </Text>{" "}
-                and improving real-time app performance by{" "}
-                <Text as="span" color="yellow.200" fontWeight="bold">
-                  25%
+          <VStack align="start" spacing={6} zIndex={1}>
+            {/* name + role */}
+            <HStack align="center" spacing={4} w="100%">
+              <Image
+                src="/Ankit.jpeg"
+                alt="Ankit Yadav"
+                boxSize={{ base: "72px", md: "96px" }}
+                borderRadius="xl"
+                objectFit="cover"
+                border="2px solid"
+                borderColor={accent}
+                boxShadow="sm"
+              />
+              <VStack align="start" spacing={0}>
+                <Text
+                  as="h2"
+                  fontSize={{ base: "xl", md: "2xl" }}
+                  fontWeight="extrabold"
+                  letterSpacing="tight"
+                >
+                  Ankit Yadav
                 </Text>
-                .
-              </Text>
+                <Text fontSize="sm" color={subtle}>
+                  Full-Stack • MERN • React Native • Generative AI
+                </Text>
+              </VStack>
             </HStack>
+
+            {/* tagline + typed */}
+            <VStack align="start" spacing={2}>
+              <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
+                Building thoughtful products & clever AI agents
+              </Text>
+
+              <HStack spacing={3} align="center">
+                <Icon as={FaRobot} boxSize={5} color={accent} />
+                <Text fontSize={{ base: "sm", md: "md" }} color={subtle}>
+                  <ReactTyped
+                    strings={[
+                      "Exploring Generative AI 🤖",
+                      "Building AI Agents 🚀",
+                      "MERN Stack Developer 💻",
+                      "Solving Real-World Problems 🌍",
+                    ]}
+                    typeSpeed={45}
+                    backSpeed={30}
+                    loop
+                  />
+                </Text>
+                <Icon as={FaBrain} boxSize={5} color={accent} />
+              </HStack>
+            </VStack>
+
+            {/* quick stats */}
+            <HStack spacing={{ base: 3, md: 6 }} w="100%" flexWrap="wrap">
+              <Stat p={3} borderRadius="lg" bg="transparent" minW="120px">
+                <StatLabel fontSize="xs" color="gray.500">
+                  Projects
+                </StatLabel>
+                <StatNumber fontSize="lg" color={accent}>
+                  18+
+                </StatNumber>
+              </Stat>
+
+              <Stat p={3} borderRadius="lg" minW="120px">
+                <StatLabel fontSize="xs" color="gray.500">
+                  Experience
+                </StatLabel>
+                <StatNumber fontSize="lg" color={accent}>
+                  2 yrs
+                </StatNumber>
+              </Stat>
+
+              <Stat p={3} borderRadius="lg" minW="120px">
+                <StatLabel fontSize="xs" color="gray.500">
+                  DSA Solved
+                </StatLabel>
+                <StatNumber fontSize="lg" color={accent}>
+                  300+
+                </StatNumber>
+              </Stat>
+            </HStack>
+
+            {/* CTA row */}
+            <HStack spacing={3} w="100%" flexWrap="wrap">
+              <MotionStack
+                direction="row"
+                spacing={3}
+                initial={{ scale: 1 }}
+                whileHover={{ scale: 1.03 }}
+              >
+                <Button
+                  leftIcon={<FaDownload />}
+                  colorScheme="cyan"
+                  variant="solid"
+                  borderRadius="xl"
+                  onClick={() => (window.location.href = "/RESUMEE.pdf")}
+                >
+                  Download CV
+                </Button>
+
+                <Tooltip label="Open skills section">
+                  <Button
+                    variant="outline"
+                    borderRadius="xl"
+                    onClick={() =>
+                      document
+                        .getElementById("skills")
+                        ?.scrollIntoView({ behavior: "smooth" })
+                    }
+                  >
+                    View Skills
+                  </Button>
+                </Tooltip>
+              </MotionStack>
+
+              <Badge colorScheme="yellow" borderRadius="md" px={3} py={1}>
+                Open to Opportunities
+              </Badge>
+            </HStack>
+
+            <Divider />
+
+            {/* Coding widgets - responsive cards */}
+            <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} w="100%">
+              <MotionBox
+                p={4}
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.700")}
+                boxShadow="sm"
+                whileHover={{ y: -6 }}
+                transition="0.25s"
+              >
+                <Text fontSize="sm" fontWeight="semibold" mb={2}>
+                  LeetCode
+                </Text>
+                <LeetCodeWidget usernamel={leUsername} />
+              </MotionBox>
+
+              <MotionBox
+                p={4}
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.700")}
+                boxShadow="sm"
+                whileHover={{ y: -6 }}
+                transition="0.25s"
+              >
+                <Text fontSize="sm" fontWeight="semibold" mb={2}>
+                  HackerRank
+                </Text>
+                <HackerRankWidget usernameh={hrUsername} />
+              </MotionBox>
+            </SimpleGrid>
           </VStack>
         </MotionBox>
 
-        {/* Divider */}
-        <Divider
-          my={8}
-          borderColor="cyan.600"
-          borderWidth="2px"
-          boxShadow={`0px 0px 15px ${glowColor}`}
-        />
-      </MotionBox>
-
-      {/* ----------------------------- */}
-      {/*  PROFILE INTRO SECTION BELOW  */}
-      {/* ----------------------------- */}
-
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        style={{ position: "relative", zIndex: 2 }}
-      >
-        <Text
-          fontSize={{ base: "3xl", md: "4xl" }}
-          fontWeight="bold"
-          bgClip="text"
-          bgGradient="linear(to-r, cyan.300, white)"
-          textShadow={`0px 0px 15px ${glowColor}`}
+        {/* ----------------------------- */}
+        {/* EXPERIENCE TIMELINE / DETAILS */}
+        {/* ----------------------------- */}
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.12 }}
+          p={{ base: 4, md: 6 }}
+          borderRadius="2xl"
+          bgGradient="linear(to-b, rgba(0,0,0,0.04), transparent)"
+          boxShadow="0 8px 30px rgba(0,0,0,0.06)"
         >
-          Hi, I'm{" "}
-          <Text as="span" color="yellow.300">
-            Ankit Yadav
+          <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold" mb={4}>
+            Work Experience
           </Text>
-        </Text>
 
-        {/* Typing Text */}
-        <HStack justify="center" mt={2} spacing={3}>
-          <Icon as={FaRobot} boxSize={5} color="cyan.300" />
-          <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="medium">
-            <ReactTyped
-              strings={[
-                "Exploring Generative AI 🤖",
-                "Building AI Agents 🚀",
-                "MERN Stack Developer 💻",
-                "Solving Real-World Problems 🌍",
-              ]}
-              typeSpeed={50}
-              backSpeed={30}
-              loop
-            />
-          </Text>
-          <Icon as={FaBrain} boxSize={5} color="cyan.300" />
-        </HStack>
+          <VStack spacing={6} align="stretch">
+            {/* Experience item */}
+            <MotionBox
+              p={4}
+              borderRadius="lg"
+              bg={useColorModeValue("white", "blackAlpha.400")}
+              boxShadow="0 6px 20px rgba(0,0,0,0.06)"
+              whileHover={{ scale: 1.02 }}
+              transition="0.25s"
+            >
+              <HStack justify="space-between" align="start">
+                <HStack spacing={3} align="center">
+                  <Box
+                    w="12"
+                    h="12"
+                    borderRadius="lg"
+                    bg={accent}
+                    display="grid"
+                    placeItems="center"
+                    color="white"
+                    boxShadow="sm"
+                  >
+                    <FaBriefcase />
+                  </Box>
+                  <VStack align="start" spacing={0}>
+                    <Text fontWeight="bold">Android Developer Intern</Text>
+                    <Text fontSize="sm" color="gray.500">
+                      LitAmor • Jul 2025 – Present
+                    </Text>
+                  </VStack>
+                </HStack>
 
-        <Divider
-          my={6}
-          borderColor="cyan.600"
-          borderWidth="2px"
-          boxShadow={`0px 0px 15px ${glowColor}`}
-        />
+                <Badge colorScheme="green" variant="subtle">
+                  Full-time
+                </Badge>
+              </HStack>
 
-        {/* Coding Profiles */}
-        <Text fontSize="xl" fontWeight="bold" color="cyan.100">
-          My Coding Profiles
-        </Text>
+              <Divider my={3} />
 
-        <HStack spacing={6} mt={6} justify="center" flexWrap="wrap" px={4}>
-          <Box
-            p={4}
-            bg="gray.800"
-            borderRadius="lg"
-            boxShadow="0px 4px 25px rgba(0, 200, 255, 0.6)"
-            _hover={{
-              transform: "scale(1.06)",
-              bg: "cyan.700",
-              boxShadow: "0px 0px 45px rgba(0, 255, 255, 0.9)",
-            }}
-            transition="0.3s"
-          >
-            <LeetCodeWidget usernamel={usernamel} />
-          </Box>
+              <VStack spacing={3} align="start">
+                <HStack align="start">
+                  <Icon as={FaTools} mt={1} color="yellow.400" />
+                  <Text fontSize="sm">
+                    Built a cross-platform mobile app with secure
+                    authentication, state management & event tracking.
+                  </Text>
+                </HStack>
 
-          <Box
-            p={4}
-            bg="gray.800"
-            borderRadius="lg"
-            boxShadow="0px 4px 25px rgba(0, 200, 255, 0.6)"
-            _hover={{
-              transform: "scale(1.06)",
-              bg: "cyan.700",
-              boxShadow: "0px 0px 45px rgba(0, 255, 255, 0.9)",
-            }}
-            transition="0.3s"
-          >
-            <HackerRankWidget usernameh={usernameh} />
-          </Box>
-        </HStack>
-      </motion.div>
+                <HStack align="start">
+                  <Icon as={FaTools} mt={1} color="yellow.400" />
+                  <Text fontSize="sm">
+                    Migrated REST APIs to Cloud Functions and optimized queries,
+                    improving backend efficiency by{" "}
+                    <Text as="span" fontWeight="bold" color="yellow.400">
+                      40%
+                    </Text>
+                    .
+                  </Text>
+                </HStack>
+
+                <HStack spacing={2} mt={2} wrap="wrap">
+                  <Badge colorScheme="cyan">React Native</Badge>
+                  <Badge colorScheme="yellow">Firebase</Badge>
+                  <Badge colorScheme="purple">Firestore</Badge>
+                </HStack>
+              </VStack>
+            </MotionBox>
+
+            {/* Another example item (duplicate style for more experiences) */}
+            <MotionBox
+              p={4}
+              borderRadius="lg"
+              bg={useColorModeValue("white", "blackAlpha.400")}
+              boxShadow="0 6px 20px rgba(0,0,0,0.06)"
+              whileHover={{ scale: 1.02 }}
+              transition="0.25s"
+            >
+              <HStack justify="space-between" align="start">
+                <HStack spacing={3} align="center">
+                  <Box
+                    w="12"
+                    h="12"
+                    borderRadius="lg"
+                    bg="gray.600"
+                    display="grid"
+                    placeItems="center"
+                    color="white"
+                    boxShadow="sm"
+                  >
+                    <FaStar />
+                  </Box>
+                  <VStack align="start" spacing={0}>
+                    <Text fontWeight="bold">Freelance • Various Projects</Text>
+                    <Text fontSize="sm" color="gray.500">
+                      2023 – 2025
+                    </Text>
+                  </VStack>
+                </HStack>
+
+                <Badge colorScheme="purple" variant="subtle">
+                  Contract
+                </Badge>
+              </HStack>
+
+              <Divider my={3} />
+
+              <VStack spacing={3} align="start">
+                <Text fontSize="sm">
+                  Delivered multiple production-ready features for clients:
+                  payment integrations, performance tuning, and UI/UX
+                  improvements.
+                </Text>
+
+                <HStack spacing={2} mt={2} wrap="wrap">
+                  <Badge colorScheme="teal">Node.js</Badge>
+                  <Badge colorScheme="cyan">React</Badge>
+                  <Badge colorScheme="orange">Performance</Badge>
+                </HStack>
+              </VStack>
+            </MotionBox>
+          </VStack>
+        </MotionBox>
+      </SimpleGrid>
     </Box>
   );
 };

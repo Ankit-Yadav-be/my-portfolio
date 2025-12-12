@@ -67,12 +67,8 @@ const ProjectsSection = () => {
   ====================================== */
   const filterProjects = (category) => {
     return projects
-      .filter((p) =>
-        p.category?.toLowerCase().includes(category.toLowerCase())
-      )
-      .filter((p) =>
-        p.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      .filter((p) => p.category?.toLowerCase().includes(category.toLowerCase()))
+      .filter((p) => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
   };
 
   /* ======================================
@@ -131,7 +127,7 @@ const ProjectsSection = () => {
                       objectFit="cover"
                       transition="0.3s"
                       _hover={{ transform: "scale(1.05)" }}
-                      loading="lazy"     /* 🔥 Lazy Load Image */
+                      loading="lazy" /* 🔥 Lazy Load Image */
                     />
                   </Box>
                 )}
