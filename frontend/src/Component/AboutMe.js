@@ -274,7 +274,7 @@ const AboutMeSection = () => {
             </Text>
             <Box w="80%" h="3px" bg="cyan.400" opacity={0.4} rounded="full" />
             <Text color="gray.300" fontSize="md">
-              I practice DSA daily to sharpen my brain like an engineer. 🚀
+              I practice DSA daily to sharpen my brain like an engineer. 
             </Text>
           </VStack>
         </MotionBox>
