@@ -8,7 +8,6 @@ import {
   SimpleGrid,
   useColorModeValue,
   Badge,
-  Avatar,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
@@ -24,7 +23,6 @@ const AboutMeSection = () => {
   const [hack] = useState("ay870421");
   const glow = useColorModeValue("rgba(0,255,255,0.3)", "rgba(0,255,255,0.6)");
 
-  // Sample experience data
   const experiences = [
     {
       role: "Android Developer Intern",
@@ -41,9 +39,10 @@ const AboutMeSection = () => {
 
   return (
     <Box p={{ base: 6, md: 10 }} maxW="1200px" mx="auto" mt={20}>
-
-      {/* ---------------- HERO SECTION ---------------- */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mb={20}>
+      
+      {/* ---------------- HERO SECTION WITH VIDEO ---------------- */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mb={20} alignItems="center">
+        
         {/* LEFT TEXT */}
         <VStack align="start" spacing={5}>
           <Text
@@ -54,6 +53,7 @@ const AboutMeSection = () => {
           >
             Hi, I'm <span style={{ color: "#FFE082" }}>Ankit Yadav</span>
           </Text>
+
           <HStack spacing={3}>
             <Icon as={FaRobot} color="cyan.300" />
             <Text fontSize="xl" color="cyan.100">
@@ -71,30 +71,36 @@ const AboutMeSection = () => {
             </Text>
             <Icon as={FaBrain} color="cyan.300" />
           </HStack>
+
           <Text color="gray.300" fontSize="lg" maxW="80%">
             Passionate developer creating high-quality apps, AI solutions, and
             real-world products with modern tech.
           </Text>
         </VStack>
 
-        {/* RIGHT AVATAR */}
-        <Box position="relative" display="flex" justifyContent="center">
-          <Box
-            position="absolute"
-            w="280px"
-            h="280px"
-            bg="radial-gradient(circle, rgba(0,200,255,0.3), transparent)"
-            filter="blur(70px)"
-            borderRadius="50%"
-            top="10%"
+        {/* RIGHT VIDEO */}
+        <MotionBox
+          position="relative"
+          w="100%"
+          h={{ base: "200px", md: "300px" }}
+          borderRadius="2xl"
+          overflow="hidden"
+          boxShadow={`0 0 35px ${glow}`}
+          whileHover={{ scale: 1.02 }}
+          transition="0.3s"
+        >
+          {/* Video Embed */}
+          <iframe
+            width="100%"
+            height="100%"
+            src="https://youtu.be/W4ce2UyNOzY?si=eCEHba7V4nubfP-f" // <-- Replace with your YouTube video link
+            title="Introduction Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ borderRadius: "1rem" }}
           />
-          <Avatar
-            size="2xl"
-            name="Ankit Yadav"
-            src="https://i.ibb.co/4p2d9nM/profile.png"
-            border="4px solid rgba(0,255,255,0.5)"
-          />
-        </Box>
+        </MotionBox>
       </SimpleGrid>
 
       {/* ---------------- EXPERIENCE TIMELINE ---------------- */}
@@ -110,7 +116,6 @@ const AboutMeSection = () => {
       </Text>
 
       <VStack spacing={12} position="relative" px={4}>
-        {/* CENTRAL TIMELINE LINE */}
         <Box
           position="absolute"
           left="50%"
@@ -136,7 +141,6 @@ const AboutMeSection = () => {
             whileHover={{ scale: 1.03 }}
             transition="0.3s"
           >
-            {/* Circle marker */}
             <Box
               position="absolute"
               left={index % 2 === 0 ? "100%" : "-10px"}
