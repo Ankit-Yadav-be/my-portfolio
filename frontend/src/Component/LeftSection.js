@@ -21,7 +21,7 @@ import {
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const AnimatedGradient = () => (
+const AnimatedGradient = ({ isDarkMode }) => (
   <motion.div
     style={{
       position: "absolute",
@@ -29,8 +29,9 @@ const AnimatedGradient = () => (
       left: 0,
       width: "100%",
       height: "100%",
-      background:
-        "linear-gradient(135deg, rgba(255,0,150,0.3), rgba(0,204,255,0.3))",
+      background: isDarkMode
+        ? "linear-gradient(135deg, rgba(0,204,255,0.3), rgba(255,0,150,0.3))"
+        : "linear-gradient(135deg, rgba(255,0,150,0.3), rgba(0,204,255,0.3))",
       filter: "blur(40px)",
       opacity: 0.5,
       zIndex: -1,
@@ -43,10 +44,17 @@ const AnimatedGradient = () => (
 const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
   const navigate = useNavigate();
 
+  // Colors based on dark mode
+  const bgColor = isDarkMode ? "gray.900" : "gray.100";
+  const textPrimary = isDarkMode ? "white" : "gray.800";
+  const textSecondary = isDarkMode ? "gray.300" : "gray.600";
+  const iconBg = isDarkMode ? "gray.700" : "gray.200";
+  const iconHover = isDarkMode ? "cyan.400" : "teal.500";
+
   return (
     <VStack
       w={{ base: "100%", md: "25%" }}
-      bg={isDarkMode ? "gray.900" : "gray.100"}
+      bg={bgColor}
       borderRadius="xl"
       p={6}
       boxShadow="2xl"
@@ -55,7 +63,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
       position="relative"
       overflow="hidden"
     >
-      <AnimatedGradient />
+      <AnimatedGradient isDarkMode={isDarkMode} />
 
       {/* Profile Image */}
       <motion.div
@@ -92,74 +100,65 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
         >
           {user.name || "Ankit Yadav"}
         </Text>
-        <Text fontSize="md" color="gray.500" textAlign="center">
+        <Text fontSize="md" color={textSecondary} textAlign="center">
           {user.title || "FullStack Developer"}
         </Text>
       </motion.div>
 
       {/* Social Links */}
-    {/* SOCIAL ICONS */}
-<HStack spacing={4} w="full" justify="center" align="center">
-  {[
-    {
-      icon: FaLinkedin,
-      color: "blue.500",
-      link: "https://www.linkedin.com/in/ankit-yadav-1a7023298/",
-    },
-    {
-      icon: FaGithub,
-      color: "gray.500",
-      link: "https://github.com/Ankit-Yadav-be",
-    },
-    {
-      icon: FaTwitter,
-      color: "cyan.500",
-      link: "https://twitter.com/",
-    },
-  ].map(({ icon, color, link }, index) => (
-    <motion.div key={index} whileHover={{ scale: 1.2, rotate: 10 }}>
-      <IconButton
-        as="a"
-        href={link}
-        target="_blank"
-        icon={React.createElement(icon)}
-        colorScheme="gray"
-        _hover={{ bg: color, color: "white" }}
-      />
-    </motion.div>
-  ))}
-</HStack>
+      <HStack spacing={4} w="full" justify="center" align="center">
+        {[
+          {
+            icon: FaLinkedin,
+            color: "blue.500",
+            link: "https://www.linkedin.com/in/ankit-yadav-1a7023298/",
+          },
+          {
+            icon: FaGithub,
+            color: "gray.500",
+            link: "https://github.com/Ankit-Yadav-be",
+          },
+          {
+            icon: FaTwitter,
+            color: "cyan.500",
+            link: "https://twitter.com/",
+          },
+        ].map(({ icon, color, link }, index) => (
+          <motion.div key={index} whileHover={{ scale: 1.2, rotate: 10 }}>
+            <IconButton
+              as="a"
+              href={link}
+              target="_blank"
+              icon={React.createElement(icon)}
+              bg={iconBg}
+              _hover={{ bg: color, color: "white" }}
+            />
+          </motion.div>
+        ))}
+      </HStack>
 
-{/* CONTACT INFO – FULL ALIGNED TO CENTER */}
-<VStack w="full" spacing={3} align="center">
-  {[
-    { icon: FaPhone, text: user.phone || "+917830237144" },
-    { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
-    { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
-  ].map(({ icon, text }, idx) => (
-    <HStack
-      key={idx}
-      spacing={3}
-      align="center"
-      justify="center"
-      w="full"
-    >
-      <Box as={icon} fontSize="1.2rem" color="teal.300" />
-      <Text _hover={{ color: "teal.300" }}>{text}</Text>
-    </HStack>
-  ))}
-</VStack>
-
-
-      {/* Contact Info – PERFECT ALIGNMENT */}
-      
+      {/* Contact Info */}
+      <VStack w="full" spacing={3} align="center">
+        {[
+          { icon: FaPhone, text: user.phone || "+917830237144" },
+          { icon: FaEnvelope, text: user.email || "ay870421@gmail.com" },
+          { icon: FaMapMarkerAlt, text: user.location || "Agra, Uttar Pradesh" },
+        ].map(({ icon, text }, idx) => (
+          <HStack key={idx} spacing={3} align="center" justify="center" w="full">
+            <Box as={icon} fontSize="1.2rem" color={iconHover} />
+            <Text _hover={{ color: iconHover }} color={textPrimary}>
+              {text}
+            </Text>
+          </HStack>
+        ))}
+      </VStack>
 
       {/* Resume Button */}
       <motion.div whileHover={{ scale: 1.05 }}>
         <Button
           w="full"
           leftIcon={<FaDownload />}
-          colorScheme="red"
+          colorScheme={isDarkMode ? "cyan" : "red"}
           onClick={() => (window.location.href = user.resumeLink || "/RESUMEE.pdf")}
         >
           Download Resume
@@ -181,7 +180,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
 
       {/* Dark Mode Toggle */}
       <HStack>
-        <Text fontWeight="bold">Dark Mode</Text>
+        <Text fontWeight="bold" color={textPrimary}>Dark Mode</Text>
         <motion.div whileTap={{ scale: 1.2 }}>
           <Switch
             isChecked={isDarkMode}

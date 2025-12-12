@@ -23,10 +23,14 @@ const MotionHStack = motion(HStack);
 
 const AboutMeSection = () => {
   const [leet] = useState("codersourya123");
-  const glow = useColorModeValue(
-    "rgba(0,255,255,0.25)",
-    "rgba(0,255,255,0.55)"
-  );
+
+  // Dynamic colors for light/dark mode
+  const glow = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.55)");
+  const textPrimary = useColorModeValue("gray.800", "gray.100");
+  const textSecondary = useColorModeValue("gray.600", "gray.300");
+  const cyanLight = useColorModeValue("cyan.300", "cyan.400");
+  const cyanBg = useColorModeValue("rgba(0,255,255,0.08)", "rgba(0,255,255,0.12)");
+  const borderCyan = useColorModeValue("rgba(0,255,255,0.25)", "rgba(0,255,255,0.45)");
 
   const experiences = [
     {
@@ -42,13 +46,7 @@ const AboutMeSection = () => {
   ];
 
   return (
-    <Box
-      p={{ base: 6, md: 10 }}
-      maxW="1200px"
-      mx="auto"
-      mt={20}
-      position="relative"
-    >
+    <Box p={{ base: 6, md: 10 }} maxW="1200px" mx="auto" mt={20} position="relative">
       {/* 🔥 BACKGROUND AURA GLOW */}
       <Box
         position="absolute"
@@ -57,20 +55,20 @@ const AboutMeSection = () => {
         transform="translateX(-50%)"
         w="600px"
         h="600px"
-        bg="cyan.500"
+        bg={cyanLight}
         filter="blur(180px)"
         opacity={0.15}
         rounded="full"
         zIndex={-1}
       />
 
-      {/* ============= HERO SECTION ================= */}
+      {/* HERO SECTION */}
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={14} mb={20} alignItems="center">
         <VStack align="start" spacing={5}>
           <MotionText
             fontSize={{ base: "3xl", md: "4xl" }}
             fontWeight="extrabold"
-            bgGradient="linear(to-r, cyan.300, white)"
+            bgGradient={`linear(to-r, ${cyanLight}, white)`}
             bgClip="text"
             initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}
@@ -85,8 +83,8 @@ const AboutMeSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <Icon as={FaRobot} color="cyan.300" />
-            <Text fontSize="xl" color="cyan.100">
+            <Icon as={FaRobot} color={cyanLight} />
+            <Text fontSize="xl" color={textSecondary}>
               <ReactTyped
                 strings={[
                   "AI Engineer 🤖",
@@ -99,19 +97,18 @@ const AboutMeSection = () => {
                 loop
               />
             </Text>
-            <Icon as={FaBrain} color="cyan.300" />
+            <Icon as={FaBrain} color={cyanLight} />
           </MotionHStack>
 
           <MotionText
-            color="gray.300"
+            color={textSecondary}
             fontSize="lg"
             maxW="80%"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
           >
-            Passionate developer creating high-quality apps, AI solutions, and
-            real-world products with modern tech.
+            Passionate developer creating high-quality apps, AI solutions, and real-world products with modern tech.
           </MotionText>
         </VStack>
 
@@ -139,13 +136,13 @@ const AboutMeSection = () => {
         </MotionBox>
       </SimpleGrid>
 
-      {/* ============= EXPERIENCE SECTION ================= */}
+      {/* EXPERIENCE SECTION */}
       <MotionText
         fontSize="3xl"
         fontWeight="bold"
         textAlign="center"
         mb={10}
-        bgGradient="linear(to-r, cyan.300, cyan.100)"
+        bgGradient={`linear(to-r, ${cyanLight}, ${cyanBg})`}
         bgClip="text"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -162,7 +159,7 @@ const AboutMeSection = () => {
             top: 0,
             bottom: 0,
             width: "3px",
-            background: "cyan",
+            background: cyanLight,
             transform: "translateX(-50%)",
           }}
           animate={{
@@ -178,10 +175,10 @@ const AboutMeSection = () => {
             w={{ base: "100%", md: "46%" }}
             alignSelf={index % 2 === 0 ? "flex-start" : "flex-end"}
             p={6}
-            bg="rgba(255,255,255,0.07)"
+            bg={cyanBg}
             borderRadius="2xl"
             backdropFilter="blur(12px)"
-            border="1px solid rgba(0,255,255,0.25)"
+            border={`1px solid ${borderCyan}`}
             boxShadow={`0 0 22px ${glow}`}
             whileHover={{ scale: 1.04 }}
             transition="0.25s"
@@ -194,16 +191,16 @@ const AboutMeSection = () => {
                 width: "18px",
                 height: "18px",
                 borderRadius: "50%",
-                background: "cyan",
+                background: cyanLight,
               }}
               animate={{ boxShadow: ["0 0 8px cyan", "0 0 20px cyan"] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             />
 
-            <Text fontSize="xl" fontWeight="bold" color="white" mb={2}>
+            <Text fontSize="xl" fontWeight="bold" color={textPrimary} mb={2}>
               {exp.role} — {exp.company}
             </Text>
-            <Text color="cyan.300" mb={2}>
+            <Text color={cyanLight} mb={2}>
               {exp.duration}
             </Text>
 
@@ -217,7 +214,7 @@ const AboutMeSection = () => {
 
             <VStack align="start" spacing={1}>
               {exp.points.map((p, i) => (
-                <Text key={i} color="cyan.100" fontSize="sm">
+                <Text key={i} color={textSecondary} fontSize="sm">
                   • {p}
                 </Text>
               ))}
@@ -226,14 +223,8 @@ const AboutMeSection = () => {
         ))}
       </VStack>
 
-      {/* ============= CODING PROFILES ================= */}
-      <Text
-        fontSize="3xl"
-        fontWeight="bold"
-        mt={16}
-        textAlign="center"
-        color="cyan.200"
-      >
+      {/* CODING PROFILES */}
+      <Text fontSize="3xl" fontWeight="bold" mt={16} textAlign="center" color={cyanLight}>
         My Coding Profiles
       </Text>
 
@@ -242,32 +233,27 @@ const AboutMeSection = () => {
         <MotionBox
           p={6}
           borderRadius="2xl"
-          bg="rgba(0,255,255,0.08)"
+          bg={cyanBg}
           backdropFilter="blur(10px)"
           whileHover={{ scale: 1.05 }}
-          boxShadow={`0 0 30px rgba(0,255,255,0.35)`}
+          boxShadow={`0 0 30px ${glow}`}
         >
           <LeetCodeWidget usernamel={leet} />
         </MotionBox>
 
         {/* SIMPLE CONTENT RIGHT TO LEETCODE */}
         <VStack spacing={4} textAlign="left">
-          <Text
-            fontSize="3xl"
-            fontWeight="bold"
-            bgGradient="linear(to-r, cyan.300, white)"
-            bgClip="text"
-          >
+          <Text fontSize="3xl" fontWeight="bold" bgGradient={`linear(to-r, ${cyanLight}, white)` } bgClip="text">
             500+ Problems Solved
           </Text>
           <HStack spacing={3}>
-            <Icon as={FaProblem} color="cyan.300" boxSize={8} />
-            <Text fontSize="lg" color="cyan.100">
+            <Icon as={FaProblem} color={cyanLight} boxSize={8} />
+            <Text fontSize="lg" color={textSecondary}>
               Solving 500+ coding problems across platforms strengthened my <b>problem-solving skills</b> and <b>logical thinking</b>, helping me tackle complex challenges efficiently.
             </Text>
           </HStack>
-          <Box w="100%" h="2px" bg="cyan.400" opacity={0.4} rounded="full" />
-          <Text fontSize="md" color="gray.300">
+          <Box w="100%" h="2px" bg={cyanLight} opacity={0.4} rounded="full" />
+          <Text fontSize="md" color={textSecondary}>
             I practice DSA daily to sharpen my brain like an engineer.
           </Text>
         </VStack>
