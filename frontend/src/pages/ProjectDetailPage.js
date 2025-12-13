@@ -19,9 +19,8 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { FaGithub, FaLink } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
-
 import {
   SiReact,
   SiNodedotjs,
@@ -33,295 +32,200 @@ import {
   SiTypescript,
   SiRedux,
   SiTailwindcss,
-  SiGit,
-  SiHtml5,
-  SiCss3,
 } from "react-icons/si";
 
 const MotionBox = motion(Box);
-const MotionImage = motion(Image);
 
 const techIcons = {
   react: SiReact,
-  "react.js": SiReact,
   javascript: SiJavascript,
-  js: SiJavascript,
   typescript: SiTypescript,
   node: SiNodedotjs,
-  "node.js": SiNodedotjs,
   express: SiExpress,
   mongodb: SiMongodb,
   chakra: SiChakraui,
-  "chakra ui": SiChakraui,
   firebase: SiFirebase,
   redux: SiRedux,
   tailwind: SiTailwindcss,
-  git: SiGit,
-  html: SiHtml5,
-  css: SiCss3,
 };
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
+  const { colorMode } = useColorMode();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [videoLoading, setVideoLoading] = useState(true);
   const [apiInfo, setApiInfo] = useState(null);
-  const { colorMode } = useColorMode();
 
   const endpoint = `https://my-portfolio-lw4x.vercel.app/api/get/${id}`;
 
   useEffect(() => {
     const fetchProject = async () => {
       const start = performance.now();
-
       try {
         const res = await axios.get(endpoint);
         const end = performance.now();
-
         setProject(res.data.data);
         setApiInfo({
           url: endpoint,
-          responseTime: (end - start).toFixed(2),
+          responseTime: (end - start).toFixed(1),
           size: JSON.stringify(res.data).length,
         });
       } catch (err) {
-        console.error("Error:", err);
+        console.error(err);
       }
-
       setLoading(false);
     };
-
     fetchProject();
-  }, [id]);
+  }, [endpoint]);
 
   if (loading)
     return (
-      <Box textAlign="center" mt={20}>
-        <Spinner size="xl" thickness="4px" color="teal.400" />
-        <Text mt={4} fontSize="lg" color="gray.500">
-          Loading project details...
+      <Box textAlign="center" mt={24}>
+        <Spinner size="xl" color="teal.400" />
+        <Text mt={4} color="gray.500">
+          Loading case study...
         </Text>
       </Box>
     );
 
   if (!project)
     return (
-      <Box textAlign="center" mt={20}>
-        <Alert status="error" maxW="400px" mx="auto">
-          <AlertIcon />
-          Project Not Found
-        </Alert>
-      </Box>
+      <Alert status="error" maxW="lg" mx="auto" mt={20}>
+        <AlertIcon /> Project not found
+      </Alert>
     );
 
-  const getEmbedUrl = (url) => {
-  if (!url) return null;
-
-  // For youtu.be short links
-  if (url.includes("youtu.be")) {
-    const videoId = url.split("youtu.be/")[1];
-    return `https://www.youtube.com/embed/${videoId}`;
-  }
-
-  // For standard YouTube links
-  if (url.includes("youtube.com/watch?v=")) {
-    const videoId = url.split("v=")[1];
-    return `https://www.youtube.com/embed/${videoId}`;
-  }
-
-  // For Google Drive preview
-  if (url.includes("drive.google.com")) {
-    const fileId = url.match(/[-\w]{25,}/);
-    return fileId
-      ? `https://drive.google.com/file/d/${fileId}/preview`
-      : null;
-  }
-
-  return null;
-};
-
-
   return (
-    <Box
-      p={{ base: 4, md: 12 }}
-      maxW="7xl"
-      mx="auto"
-      bg={colorMode === "dark" ? "gray.900" : "gray.50"}
-    >
-
-      {/* API INFO BOX - Glassmorphic */}
-      {apiInfo && (
-        <MotionBox
-          p={5}
-          mb={10}
-          borderRadius="2xl"
-          bg={colorMode === "dark" ? "rgba(255,255,255,0.05)" : "white"}
-          backdropFilter="blur(12px)"
-          border="1px solid"
-          borderColor={colorMode === "dark" ? "whiteAlpha.200" : "gray.200"}
-          boxShadow="0 8px 30px rgba(0,0,0,0.12)"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 10 }} py={12}>
+      {/* HERO */}
+      <MotionBox
+        mb={16}
+        p={{ base: 6, md: 10 }}
+        borderRadius="3xl"
+        bg={colorMode === "dark" ? "gray.900" : "white"}
+        boxShadow="0 30px 80px rgba(0,0,0,0.25)"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <Heading
+          fontSize={{ base: "3xl", md: "4xl" }}
+          bgGradient="linear(to-r, teal.300, cyan.400)"
+          bgClip="text"
+          mb={3}
         >
-          <Heading fontSize="lg" mb={2} color="teal.400">
-            API Request Details
-          </Heading>
+          {project.title}
+        </Heading>
+        <Text fontSize="lg" color="gray.500" maxW="3xl">
+          {project.description}
+        </Text>
+      </MotionBox>
 
-          <VStack align="start">
-            <Text fontWeight="bold">Endpoint:</Text>
-            <Code
-              p={3}
-              borderRadius="lg"
-              w="100%"
-              colorScheme="teal"
-              fontSize="sm"
-            >
-              {apiInfo.url}
-            </Code>
-
-            <HStack spacing={6} mt={2}>
-              <Badge colorScheme="green" px={4} py={2} borderRadius="full">
-                Response: {apiInfo.responseTime} ms
-              </Badge>
-              <Badge colorScheme="purple" px={4} py={2} borderRadius="full">
-                Size: {apiInfo.size} bytes
-              </Badge>
-            </HStack>
-          </VStack>
-        </MotionBox>
+      {/* API METRICS */}
+      {apiInfo && (
+        <HStack spacing={6} mb={14} wrap="wrap">
+          <Badge px={5} py={2} borderRadius="full" colorScheme="teal">
+            API: {apiInfo.responseTime} ms
+          </Badge>
+          <Badge px={5} py={2} borderRadius="full" colorScheme="purple">
+            Payload: {apiInfo.size} bytes
+          </Badge>
+          <Code px={4} py={2} borderRadius="lg" fontSize="sm">
+            {apiInfo.url}
+          </Code>
+        </HStack>
       )}
 
-      {/* TITLE */}
-      <Heading
-        mb={4}
-        fontSize={{ base: "3xl", md: "4xl" }}
-        fontWeight="extrabold"
-        color="teal.400"
-        letterSpacing="1px"
-      >
-        {project.title}
-      </Heading>
-
-      <Divider mb={10} />
-
-      {/* Main Layout */}
-      <Stack direction={{ base: "column", md: "row" }} spacing={12}>
-        
-        {/* LEFT SIDE - Image / Video */}
+      {/* CONTENT */}
+      <Stack direction={{ base: "column", md: "row" }} spacing={14}>
+        {/* MEDIA */}
         <MotionBox
           flex="1"
-          borderRadius="2xl"
+          borderRadius="3xl"
           overflow="hidden"
-          boxShadow="0 20px 40px rgba(0,0,0,0.2)"
-          whileHover={{ scale: 1.01 }}
+          boxShadow="0 25px 60px rgba(0,0,0,0.35)"
+          whileHover={{ scale: 1.02 }}
         >
-          {project.video ? (
-            <Box position="relative" w="100%" h={{ base: "240px", md: "500px" }}>
-              {videoLoading && (
-                <Box
-                  position="absolute"
-                  w="100%"
-                  h="100%"
-                  zIndex="10"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  bg="blackAlpha.300"
-                >
-                  <Spinner size="lg" color="teal.300" />
-                </Box>
-              )}
-              <iframe
-                src={getEmbedUrl(project.video)}
-                width="100%"
-                height="100%"
-                style={{ borderRadius: "20px" }}
-                allowFullScreen
-                onLoad={() => setVideoLoading(false)}
-              ></iframe>
-            </Box>
-          ) : (
-            <MotionImage
+          {project.image && (
+            <Image
               src={project.image}
-              alt="Project"
+              alt={project.title}
               w="100%"
-              h={{ base: "240px", md: "500px" }}
+              h={{ base: "260px", md: "520px" }}
               objectFit="cover"
-              borderRadius="2xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
             />
           )}
         </MotionBox>
 
-        {/* RIGHT SIDE CONTENT */}
-        <VStack flex="1" align="start" spacing={6}>
-          
-          {/* OVERVIEW */}
-          <Heading fontSize="2xl" color="teal.300">
-            Overview
-          </Heading>
-          <Text fontSize="lg" color="gray.400">
-            {project.description}
-          </Text>
+        {/* DETAILS */}
+        <VStack flex="1" align="start" spacing={8}>
+          <Box>
+            <Heading size="md" mb={2}>
+              Problem Statement
+            </Heading>
+            <Text color="gray.500">
+              {project.problem || project.description}
+            </Text>
+          </Box>
 
-          {/* TECH STACK */}
-          <Heading fontSize="2xl" mt={2} color="teal.300">
-            Tech Stack
-          </Heading>
+          <Box>
+            <Heading size="md" mb={2}>
+              Solution & Approach
+            </Heading>
+            <Text color="gray.500">
+              {project.solution || "Designed a scalable, production-ready solution with modern best practices."}
+            </Text>
+          </Box>
 
-          <HStack wrap="wrap" spacing={3}>
-            {project.techStack?.map((tech, idx) => {
-              const IconComp = techIcons[tech.toLowerCase()];
-              return (
-                <Badge
-                  key={idx}
-                  px={3}
-                  py={2}
-                  borderRadius="lg"
-                  colorScheme="teal"
-                  display="flex"
-                  alignItems="center"
-                  gap={2}
-                  boxShadow="0 4px 12px rgba(0,0,0,0.2)"
-                >
-                  {IconComp && <Icon as={IconComp} />}
-                  {tech}
-                </Badge>
-              );
-            })}
-          </HStack>
+          <Box>
+            <Heading size="md" mb={3}>
+              Tech Stack
+            </Heading>
+            <HStack wrap="wrap" spacing={3}>
+              {project.techStack?.map((tech, i) => {
+                const IconComp = techIcons[tech.toLowerCase()];
+                return (
+                  <Badge
+                    key={i}
+                    px={4}
+                    py={2}
+                    borderRadius="lg"
+                    colorScheme="teal"
+                    display="flex"
+                    alignItems="center"
+                    gap={2}
+                  >
+                    {IconComp && <Icon as={IconComp} />}
+                    {tech}
+                  </Badge>
+                );
+              })}
+            </HStack>
+          </Box>
 
-          {/* BUTTONS */}
-          <HStack pt={4} spacing={5}>
+          <Divider />
+
+          <HStack spacing={5}>
             <Button
               leftIcon={<FaGithub />}
               as="a"
               href={project.github}
               target="_blank"
-              colorScheme="gray"
               size="lg"
-              borderRadius="lg"
-              boxShadow="0 6px 15px rgba(0,0,0,0.2)"
+              variant="outline"
             >
-              GitHub
+              Source Code
             </Button>
-
             <Button
-              leftIcon={<FaLink />}
+              leftIcon={<FaExternalLinkAlt />}
               as="a"
               href={project.link}
               target="_blank"
               size="lg"
               colorScheme="teal"
-              borderRadius="lg"
-              boxShadow="0 6px 15px rgba(0,0,0,0.3)"
             >
               Live Demo
             </Button>
           </HStack>
-
         </VStack>
       </Stack>
     </Box>
