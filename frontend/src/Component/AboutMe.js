@@ -96,37 +96,91 @@ const AboutMeSection = () => {
         </VStack>
 
         {/* ================= VIDEO ================= */}
-        <MotionBox
-          position="relative"
-          h={{ base: "240px", md: "420px" }}
-          rounded="2xl"
-          overflow="hidden"
-          border={`1px solid ${border}`}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <Box
-            position="absolute"
-            top="12px"
-            left="12px"
-            px={3}
-            py={1}
-            bg="blackAlpha.700"
-            color="white"
-            fontSize="sm"
-            rounded="full"
-            zIndex={1}
-          >
-            Introduction Video
-          </Box>
-          <iframe
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/YlSr3Ypl6UE"
-            title="Introduction Video"
-            allowFullScreen
-          />
-        </MotionBox>
+<MotionBox
+  position="relative"
+  h={{ base: "260px", md: "460px" }}
+  rounded="3xl"
+  overflow="hidden"
+  border={`1px solid ${border}`}
+  bg={useColorModeValue("white", "gray.900")}
+  boxShadow="0 30px 70px rgba(0,0,0,0.35)"
+  whileHover={{ scale: 1.015 }}
+  transition={{ type: "spring", stiffness: 160, damping: 22 }}
+>
+  {/* Premium Label */}
+  <HStack
+    position="absolute"
+    top="16px"
+    left="16px"
+    spacing={2}
+    px={4}
+    py={2}
+    bg="blackAlpha.800"
+    backdropFilter="blur(10px)"
+    rounded="full"
+    zIndex={3}
+    boxShadow="lg"
+  >
+    <Icon as={FaRobot} color={cyan} />
+    <Text
+      fontSize="xs"
+      fontWeight="bold"
+      letterSpacing="wide"
+      color="white"
+    >
+      INTRODUCTION VIDEO
+    </Text>
+  </HStack>
+
+  {/* Subtle Gradient Overlay */}
+  <Box
+    position="absolute"
+    inset={0}
+    bgGradient="linear(to-t, blackAlpha.700, transparent 60%)"
+    zIndex={1}
+  />
+
+  {/* VIDEO (UNCHANGED) */}
+  <Box position="relative" w="100%" h="100%" zIndex={0}>
+    <iframe
+      width="100%"
+      height="100%"
+      src="https://www.youtube.com/embed/YlSr3Ypl6UE"
+      title="Introduction Video"
+      style={{
+        border: "none",
+        borderRadius: "24px",
+      }}
+      allowFullScreen
+    />
+  </Box>
+
+  {/* Bottom Caption – Professional Touch */}
+  <VStack
+    position="absolute"
+    bottom="0"
+    w="100%"
+    px={{ base: 4, md: 8 }}
+    py={{ base: 3, md: 5 }}
+    spacing={1}
+    align="start"
+    zIndex={2}
+  >
+    <Text fontSize="sm" color="gray.300">
+      Founder’s Introduction
+    </Text>
+    <Text
+      fontSize={{ base: "sm", md: "md" }}
+      fontWeight="semibold"
+      color="white"
+      maxW="90%"
+    >
+      My background, mindset, and approach to building scalable real-world
+      products.
+    </Text>
+  </VStack>
+</MotionBox>
+
       </SimpleGrid>
 
       {/* ================= EXPERIENCE ================= */}
