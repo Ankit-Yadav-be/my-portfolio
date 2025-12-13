@@ -15,7 +15,11 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
- 
+  FaRocket,
+  FaPlayCircle,
+  FaUsers,
+  FaCode,
+  FaChartLine,
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
