@@ -8,6 +8,7 @@ import {
   SimpleGrid,
   Badge,
   useColorModeValue,
+  Divider,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
@@ -23,23 +24,13 @@ const MotionHStack = motion(HStack);
 const AboutMeSection = () => {
   const [leet] = useState("codersourya123");
 
-  // Dynamic colors
-  const glow = useColorModeValue(
-    "rgba(0,255,255,0.25)",
-    "rgba(0,255,255,0.55)"
-  );
-  const boxBg = useColorModeValue("rgba(255,255,255,0.08)", "rgba(0,0,0,0.4)");
-  const boxShadowColor = useColorModeValue(
-    "rgba(0,255,255,0.25)",
-    "rgba(0,255,255,0.55)"
-  );
+  /* ================= DESIGN TOKENS ================= */
+  const bgCard = useColorModeValue("whiteAlpha.800", "blackAlpha.400");
   const textPrimary = useColorModeValue("gray.800", "gray.100");
-  const textSecondary = useColorModeValue("gray.600", "gray.300");
-  const cyanLight = useColorModeValue("cyan.300", "cyan.400");
-  const borderCyan = useColorModeValue(
-    "rgba(0,255,255,0.25)",
-    "rgba(0,255,255,0.45)"
-  );
+  const textSecondary = useColorModeValue("gray.600", "gray.400");
+  const cyan = useColorModeValue("cyan.400", "cyan.300");
+  const accent = "#FFE082";
+  const border = useColorModeValue("gray.200", "whiteAlpha.200");
 
   const experiences = [
     {
@@ -48,203 +39,137 @@ const AboutMeSection = () => {
       duration: "Jul 2025 – Present",
       tech: ["React Native", "Firebase", "Firestore"],
       points: [
-        "Developed cross-platform mobile apps with real-time updates & secure architecture.",
-        "Optimized Cloud Functions improving performance by 40% & responsiveness by 25%.",
+        "Designed and developed scalable cross-platform mobile applications.",
+        "Improved backend efficiency and reduced response latency by ~40%.",
+        "Collaborated closely with product teams to deliver production-ready features.",
       ],
     },
   ];
 
   return (
-    <Box
-      p={{ base: 6, md: 10 }}
-      maxW="1200px"
-      mx="auto"
-      mt={20}
-      position="relative"
-    >
-      {/* 🔥 Background Glow */}
-      <Box
-        position="absolute"
-        top="-100px"
-        left="50%"
-        transform="translateX(-50%)"
-        w="600px"
-        h="600px"
-        bg={cyanLight}
-        filter="blur(180px)"
-        opacity={0.15}
-        rounded="full"
-        zIndex={-1}
-      />
-
-      {/* HERO */}
-      <SimpleGrid
-        columns={{ base: 1, md: 2 }}
-        spacing={14}
-        mb={20}
-        alignItems="center"
-      >
-        <VStack align="start" spacing={5}>
-          <MotionText
-            fontSize={{ base: "3xl", md: "4xl" }}
-            fontWeight="extrabold"
-            bgGradient={`linear(to-r, ${cyanLight}, white)`}
-            bgClip="text"
-            initial={{ opacity: 0, y: -25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+    <Box maxW="1280px" mx="auto" px={{ base: 6, md: 12 }} mt={{ base: 12, md: 24 }}>
+      {/* ================= HERO ================= */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 12, md: 20 }}>
+        <VStack align="start" spacing={6}>
+          <Text
+            fontSize="xs"
+            letterSpacing="wider"
+            textTransform="uppercase"
+            color={textSecondary}
           >
-            Hi, I'm <span style={{ color: "#FFE082" }}>Ankit Yadav</span>
+            Full Stack • AI • Product Engineering
+          </Text>
+
+          <MotionText
+            fontSize={{ base: "3xl", md: "5xl" }}
+            fontWeight="extrabold"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Hi, I’m <span style={{ color: accent }}>Ankit Yadav</span>
           </MotionText>
 
-          <MotionHStack
-            spacing={3}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            <Icon as={FaRobot} color={cyanLight} />
-            <Text fontSize="xl" color={textSecondary}>
+          <MotionHStack spacing={3}>
+            <Icon as={FaRobot} color={cyan} />
+            <Text fontSize="xl" color={cyan} fontWeight="semibold">
               <ReactTyped
                 strings={[
-                  "AI Engineer 🤖",
-                  "MERN Stack Developer 💻",
-                  "Solving Real Problems 🚀",
-                  "Building AI Agents 🔥",
+                  "AI Engineer",
+                  "Full Stack Developer",
+                  "Problem Solver",
+                  "Building Scalable Products",
                 ]}
-                typeSpeed={45}
-                backSpeed={25}
+                typeSpeed={50}
+                backSpeed={30}
                 loop
               />
             </Text>
-            <Icon as={FaBrain} color={cyanLight} />
+            <Icon as={FaBrain} color={cyan} />
           </MotionHStack>
 
-          <MotionText
-            color={textSecondary}
-            fontSize="lg"
-            maxW="80%"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
-          >
-            Passionate developer creating high-quality apps, AI solutions, and
-            real-world products with modern tech.
-          </MotionText>
+          <Text fontSize="lg" color={textSecondary} maxW="90%">
+            I specialize in building reliable, scalable applications and intelligent
+            systems with a strong focus on performance, maintainability, and
+            real-world impact.
+          </Text>
         </VStack>
 
+        {/* ================= VIDEO ================= */}
         <MotionBox
           position="relative"
-          w="100%"
-          maxW="900px"
-          h={{ base: "240px", md: "430px" }}
-          mx="auto"
-          borderRadius="2xl"
+          h={{ base: "240px", md: "420px" }}
+          rounded="2xl"
           overflow="hidden"
-          boxShadow={`0 0 40px ${boxShadowColor}`}
-          whileHover={{ scale: 1.03, rotateY: 4, rotateX: 2 }}
-          transition="0.35s"
-          style={{ transformStyle: "preserve-3d" }}
+          border={`1px solid ${border}`}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
+          <Box
+            position="absolute"
+            top="12px"
+            left="12px"
+            px={3}
+            py={1}
+            bg="blackAlpha.700"
+            color="white"
+            fontSize="sm"
+            rounded="full"
+            zIndex={1}
+          >
+            Introduction Video
+          </Box>
           <iframe
             width="100%"
             height="100%"
             src="https://www.youtube.com/embed/YlSr3Ypl6UE"
             title="Introduction Video"
             allowFullScreen
-            style={{ borderRadius: "1rem" }}
           />
         </MotionBox>
       </SimpleGrid>
 
-      {/* EXPERIENCE */}
-      <MotionText
-        fontSize="3xl"
-        fontWeight="bold"
-        textAlign="center"
-        mb={10}
-        bgGradient={`linear(to-r, ${cyanLight}, ${boxBg})`}
-        bgClip="text"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        Work Experience
-      </MotionText>
-
-      <VStack spacing={12} position="relative" px={4}>
-        {/* Timeline Line */}
-        <motion.div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: 0,
-            bottom: 0,
-            width: "4px",
-            background: cyanLight,
-            transform: "translateX(-50%)",
-            borderRadius: "full",
-          }}
-          animate={{
-            boxShadow: [
-              `0 0 10px ${cyanLight}`,
-              `0 0 25px ${cyanLight}`,
-              `0 0 10px ${cyanLight}`,
-            ],
-          }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        />
+      {/* ================= EXPERIENCE ================= */}
+      <VStack spacing={14} mt={28}>
+        <VStack spacing={2}>
+          <Text fontSize="3xl" fontWeight="bold" color={cyan}>
+            Work Experience
+          </Text>
+          <Text fontSize="sm" color={textSecondary}>
+            Roles where I delivered measurable impact
+          </Text>
+        </VStack>
 
         {experiences.map((exp, index) => (
           <MotionBox
             key={index}
-            position="relative"
-            w={{ base: "100%", md: "46%" }}
-            alignSelf={index % 2 === 0 ? "flex-start" : "flex-end"}
-            p={6}
-            bg={boxBg}
-            borderRadius="2xl"
-            backdropFilter="blur(16px)"
-            border={`1px solid ${borderCyan}`}
-            boxShadow={`0 4px 25px ${boxShadowColor}`}
-            whileHover={{ scale: 1.05, y: -3 }}
-            transition="0.3s"
+            w="100%"
+            p={{ base: 6, md: 8 }}
+            bg={bgCard}
+            rounded="2xl"
+            border={`1px solid ${border}`}
+            whileHover={{ y: -4 }}
           >
-            {/* Timeline Dot */}
-            <motion.div
-              style={{
-                position: "absolute",
-                left: index % 2 === 0 ? "100%" : "-10px",
-                top: "20px",
-                width: "20px",
-                height: "20px",
-                borderRadius: "50%",
-                background: cyanLight,
-              }}
-              animate={{
-                boxShadow: [`0 0 12px ${cyanLight}`, `0 0 22px ${cyanLight}`],
-              }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            />
-
-            <Text fontSize="xl" fontWeight="bold" color={textPrimary} mb={2}>
+            <Text fontSize="xl" fontWeight="bold" color={textPrimary}>
               {exp.role} — {exp.company}
             </Text>
-            <Text color={cyanLight} mb={2} fontWeight="semibold">
+            <Text fontSize="sm" color={cyan} mt={1}>
               {exp.duration}
             </Text>
 
-            <HStack spacing={2} mb={2}>
+            <HStack spacing={2} mt={4} wrap="wrap">
               {exp.tech.map((t, i) => (
-                <Badge key={i} colorScheme="cyan">
+                <Badge key={i} colorScheme="cyan" rounded="full" px={3} py={1}>
                   {t}
                 </Badge>
               ))}
             </HStack>
 
+            <Divider my={4} />
+
             <VStack align="start" spacing={2}>
               {exp.points.map((p, i) => (
-                <Text key={i} color={textSecondary} fontSize="sm">
+                <Text key={i} fontSize="sm" color={textSecondary}>
                   • {p}
                 </Text>
               ))}
@@ -253,56 +178,42 @@ const AboutMeSection = () => {
         ))}
       </VStack>
 
-      {/* CODING PROFILES */}
-      <Text
-        fontSize="3xl"
-        fontWeight="bold"
-        mt={16}
-        textAlign="center"
-        color={cyanLight}
-      >
-        My Coding Profiles
-      </Text>
-
-      <SimpleGrid
-        columns={{ base: 1, md: 2 }}
-        spacing={10}
-        mt={8}
-        px={{ base: 4, md: 10 }}
-        alignItems="center"
-      >
+      {/* ================= PROOF ================= */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={16} mt={28}>
         <MotionBox
           p={6}
-          borderRadius="2xl"
-          bg={boxBg}
-          backdropFilter="blur(12px)"
-          whileHover={{ scale: 1.05 }}
-          boxShadow={`0 0 30px ${boxShadowColor}`}
+          bg={bgCard}
+          rounded="2xl"
+          border={`1px solid ${border}`}
+          whileHover={{ scale: 1.03 }}
         >
           <LeetCodeWidget usernamel={leet} />
         </MotionBox>
 
-        <VStack spacing={4} textAlign="left">
+        <VStack align="start" spacing={4}>
           <Text
-            fontSize="3xl"
-            fontWeight="bold"
-            bgGradient={`linear(to-r, ${cyanLight}, white)`}
-            bgClip="text"
+            fontSize="xs"
+            letterSpacing="wider"
+            color={textSecondary}
+            textTransform="uppercase"
           >
-            500+ Problems Solved
+            Proof of Work
           </Text>
+
+          <Text fontSize="4xl" fontWeight="extrabold" color={accent}>
+            500+
+          </Text>
+
+          <Text fontSize="lg" color={textSecondary}>
+            Solved 500+ algorithmic and data-structure problems, sharpening
+            analytical thinking and the ability to approach complex challenges
+            systematically.
+          </Text>
+
           <HStack spacing={3}>
-            <Icon as={FaProblem} color={cyanLight} boxSize={8} />
-            <Text fontSize="lg" color={textSecondary}>
-              Solving 500+ coding problems across platforms strengthened my{" "}
-              <b>problem-solving skills</b> and <b>logical thinking</b>, helping
-              me tackle complex challenges efficiently.
-            </Text>
+            <Icon as={FaProblem} color={cyan} boxSize={7} />
+            <Text color={textSecondary}>Consistent daily DSA practice</Text>
           </HStack>
-          <Box w="100%" h="2px" bg={cyanLight} opacity={0.4} rounded="full" />
-          <Text fontSize="md" color={textSecondary}>
-            I practice DSA daily to sharpen my brain like an engineer.
-          </Text>
         </VStack>
       </SimpleGrid>
     </Box>
