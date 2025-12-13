@@ -1,5 +1,5 @@
 // StartTupCarousel.jsx
-// User-friendly, accessible carousel: auto-scroll + swipe + dots + arrows + pause-on-interaction
+// Real carousel UX: px-based swipe, snap-to-slide, arrows, dots, autoplay, pause-on-hover
 
 import React, { useState, useEffect, useRef } from "react";
 import {
@@ -13,7 +13,7 @@ import {
   useColorModeValue,
   IconButton,
 } from "@chakra-ui/react";
-import { motion, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   FaRocket,
   FaPlayCircle,
@@ -56,18 +56,36 @@ const slides = [
 const StartTupCarousel = () => {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const x = useMotionValue(0);
+  const [width, setWidth] = useState(0);
   const containerRef = useRef(null);
 
   const bg = useColorModeValue("gray.50", "gray.900");
   const muted = useColorModeValue("gray.500", "gray.400");
 
-  const next = () => setIndex((i) => (i + 1) % slides.length);
-  const prev = () => setIndex((i) => (i - 1 + slides.length) % slides.length);
+  // measure container width (important for real carousel)
+  useEffect(() => {
+    if (containerRef.current) {
+      setWidth(containerRef.current.offsetWidth);
+    }
+    const handleResize = () => {
+      if (containerRef.current) {
+        setWidth(containerRef.current.offsetWidth);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
+  const next = () =>
+    setIndex((i) => Math.min(i + 1, slides.length - 1));
+  const prev = () => setIndex((i) => Math.max(i - 1, 0));
+
+  // autoplay
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isPaused]);
 
@@ -83,34 +101,39 @@ const StartTupCarousel = () => {
             Designing & Shipping a Real Startup Product
           </Text>
           <Text maxW="850px" fontSize="lg" color={muted}>
-            Explore this section at your own pace — swipe, click, or let it play automatically.
+            Swipe naturally, click controls, or let it autoplay — designed for
+            effortless exploration.
           </Text>
         </VStack>
 
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={16} w="full">
-          {/* LEFT : Accessible Carousel */}
+          {/* LEFT : TRUE CAROUSEL */}
           <Box
+            ref={containerRef}
             position="relative"
             overflow="hidden"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
-            ref={containerRef}
           >
             <MotionBox
               display="flex"
               drag="x"
-              style={{ x }}
-              dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={(_, info) => {
-                if (info.offset.x < -80) next();
-                if (info.offset.x > 80) prev();
+              dragConstraints={{
+                left: -width * (slides.length - 1),
+                right: 0,
               }}
-              animate={{ x: `-${index * 100}%` }}
-              transition={{ type: "spring", stiffness: 80, damping: 20 }}
-              w={`${slides.length * 100}%`}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -width / 4 && index < slides.length - 1) {
+                  setIndex(index + 1);
+                } else if (info.offset.x > width / 4 && index > 0) {
+                  setIndex(index - 1);
+                }
+              }}
+              animate={{ x: -index * width }}
+              transition={{ type: "spring", stiffness: 120, damping: 25 }}
             >
               {slides.map((slide, i) => (
-                <Box key={i} w="100%" pr={12}>
+                <Box key={i} minW={`${width}px`} pr={12}>
                   <VStack align="start" spacing={6} maxW="520px">
                     <Icon as={slide.icon} boxSize={10} color="purple.400" />
                     <Text fontSize="3xl" fontWeight="bold">
@@ -118,6 +141,9 @@ const StartTupCarousel = () => {
                     </Text>
                     <Text fontSize="lg" color={muted} lineHeight="tall">
                       {slide.content}
+                    </Text>
+                    <Text fontSize="sm" color="purple.400">
+                      {i + 1} / {slides.length}
                     </Text>
                   </VStack>
                 </Box>
@@ -131,12 +157,14 @@ const StartTupCarousel = () => {
                 icon={<FaChevronLeft />}
                 size="sm"
                 onClick={prev}
+                isDisabled={index === 0}
               />
               <IconButton
                 aria-label="Next"
                 icon={<FaChevronRight />}
                 size="sm"
                 onClick={next}
+                isDisabled={index === slides.length - 1}
               />
             </HStack>
 
@@ -150,13 +178,14 @@ const StartTupCarousel = () => {
                   bg={i === index ? "purple.400" : "gray.400"}
                   borderRadius="full"
                   cursor="pointer"
+                  transition="all 0.2s"
                   onClick={() => setIndex(i)}
                 />
               ))}
             </HStack>
           </Box>
 
-          {/* RIGHT : Fixed video */}
+          {/* RIGHT : VIDEO */}
           <VStack align="start" spacing={5}>
             <HStack>
               <Icon as={FaPlayCircle} boxSize={7} color="purple.400" />
@@ -183,7 +212,7 @@ const StartTupCarousel = () => {
             </Box>
 
             <Text fontSize="sm" color={muted}>
-              Swipe the content or use controls — designed for effortless exploration.
+              Real device recording — swipe-friendly, human-centered UX.
             </Text>
           </VStack>
         </SimpleGrid>
