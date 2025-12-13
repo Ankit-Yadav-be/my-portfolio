@@ -17,6 +17,7 @@ import TestimonialList from "./TestimonialsList";
 // import VisitorStats from "./VisitorStates";   // ✅ Already Commented
 import AboutMeSection from "./AboutMe";
 import { FaChartBar } from "react-icons/fa";
+import StartTupCarousel from "./StartTupCarousel";
 
 const Portfolio = () => {
   const [user, setUser] = useState({});
@@ -86,8 +87,9 @@ const Portfolio = () => {
       >
         {/* Visitor Stats Component — Disabled */}
         {/* {showVisitorStats && <VisitorStats />} */}
-
+        
         <AboutMeSection />
+        <StartTupCarousel />
         <ProjectsSection />
         <Certifications />
         <Divider my={4} borderColor="gray.600" />
