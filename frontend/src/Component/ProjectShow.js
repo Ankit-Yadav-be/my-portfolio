@@ -90,7 +90,7 @@ const Portfolio = () => {
         
         <AboutMeSection />
         <StartTupCarousel />
-        <ProjectsSection />
+        <ProjectsSection my={2} />
         <Certifications />
         <Divider my={4} borderColor="gray.600" />
         <TestimonialList />

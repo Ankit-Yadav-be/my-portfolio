@@ -15,11 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
-  FaRocket,
-  FaPlayCircle,
-  FaUsers,
-  FaCode,
-  FaChartLine,
+ 
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
@@ -29,25 +25,21 @@ const MotionBox = motion(Box);
 const slides = [
   {
     title: "Problem Worth Solving",
-    icon: FaUsers,
     content:
       "Finding trusted nearby businesses is still painful for users, while genuine local businesses struggle to get discovered digitally. Existing platforms lack true local relevance and personalization.",
   },
   {
     title: "Product Vision & Solution",
-    icon: FaRocket,
     content:
       "I built a location-first Android product that intelligently connects customers and businesses through proximity-based discovery, offers, and personalized recommendations.",
   },
   {
     title: "How the Platform Works",
-    icon: FaCode,
     content:
       "Customers explore & follow businesses, owners manage profiles and promotions, and admins ensure trust and smooth operations — all inside one scalable ecosystem.",
   },
   {
     title: "Engineering & Scalability",
-    icon: FaChartLine,
     content:
       "Powered by React Native (Expo), Node.js, Express, MongoDB, and Zustand with optimized APIs, clean data modeling, and scale-ready architecture.",
   },
