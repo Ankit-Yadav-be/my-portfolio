@@ -1,5 +1,5 @@
 // StartTupCarousel.jsx
-// Advanced recruiter-grade startup showcase with real carousel feel, progress indicators & premium motion
+// Advanced horizontal swipe carousel with left content (no cards) + right fixed video
 
 import React, { useState, useEffect } from "react";
 import {
@@ -7,14 +7,12 @@ import {
   Text,
   VStack,
   HStack,
-  Button,
   Badge,
   Icon,
   SimpleGrid,
   useColorModeValue,
-  Progress,
 } from "@chakra-ui/react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   FaRocket,
   FaPlayCircle,
@@ -27,28 +25,28 @@ const MotionBox = motion(Box);
 
 const slides = [
   {
-    title: "The Real-World Problem",
+    title: "Problem Worth Solving",
     icon: FaUsers,
     content:
-      "Customers struggle to discover trusted nearby businesses, while local business owners fail to reach the right audience. Existing platforms lack local intelligence and engagement depth.",
+      "Local customers still depend on word-of-mouth to find reliable nearby services, while genuine business owners struggle to stand out digitally. Existing platforms are noisy, generic, and not truly location-intelligent.",
   },
   {
-    title: "The Solution I Built",
+    title: "Product Vision & Solution",
     icon: FaRocket,
     content:
-      "A location-first Android application that bridges customers and nearby businesses using smart discovery, promotions, and engagement workflows.",
+      "I designed and built a location-first Android product that connects customers with nearby businesses through smart discovery, real-time offers, and personalized local recommendations.",
   },
   {
-    title: "Multi-Portal Platform",
+    title: "How the Platform Works",
     icon: FaCode,
     content:
-      "Customer Portal for discovery & offers, Business Portal for growth & analytics, and Admin Portal for secure platform governance.",
+      "Customers explore & follow businesses, owners manage profiles and promotions, and admins ensure trust, security, and smooth platform operations — all within a unified system.",
   },
   {
-    title: "Tech Stack & Scale",
+    title: "Engineering & Scale",
     icon: FaChartLine,
     content:
-      "React Native (Expo), Node.js, Express, MongoDB, Zustand with optimized APIs, compression, and scalable system design.",
+      "Built with React Native (Expo), Node.js, Express, MongoDB, and Zustand. APIs are optimized with compression, clean data models, and scalable architecture designed for growth.",
   },
 ];
 
@@ -56,40 +54,62 @@ const StartTupCarousel = () => {
   const [index, setIndex] = useState(0);
 
   const bg = useColorModeValue("gray.50", "gray.900");
-  const cardBg = useColorModeValue("white", "gray.800");
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    }, 4500);
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <Box bg={bg} py={24} px={{ base: 4, md: 16 }}>
-      <VStack spacing={16} maxW="1300px" mx="auto">
+    <Box bg={bg} py={24} px={{ base: 4, md: 20 }}>
+      <VStack spacing={14} maxW="1400px" mx="auto">
         {/* Header */}
         <VStack spacing={4} textAlign="center">
           <Badge colorScheme="purple" px={6} py={2} borderRadius="full">
-            Startup Product Showcase
+            Startup Case Study
           </Badge>
           <Text fontSize={{ base: "3xl", md: "5xl" }} fontWeight="extrabold">
-            From Problem Discovery to Scalable Product
+            Designing & Shipping a Real Startup Product
           </Text>
-          <Text maxW="800px" fontSize="lg" color="gray.500">
-            A recruiter-focused demonstration of my startup mindset — user problems, architecture decisions, and execution quality.
+          <Text maxW="850px" fontSize="lg" color="gray.500">
+            This section demonstrates how I identify real-world problems, translate them into product decisions, and engineer scalable solutions.
           </Text>
         </VStack>
 
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={14} w="full">
-          {/* Video */}
-          <MotionBox
-            bg={cardBg}
-            borderRadius="3xl"
-            p={6}
-            shadow="2xl"
-            whileHover={{ scale: 1.03 }}
-          >
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={16} w="full">
+          {/* LEFT : Horizontal swipe content */}
+          <Box overflow="hidden">
+            <MotionBox
+              display="flex"
+              drag="x"
+              dragConstraints={{ left: -300, right: 0 }}
+              animate={{ x: `-${index * 100}%` }}
+              transition={{ ease: "easeInOut", duration: 0.6 }}
+              w={`${slides.length * 100}%`}
+            >
+              {slides.map((slide, i) => (
+                <Box key={i} w="100%" pr={10}>
+                  <VStack align="start" spacing={6} maxW="520px">
+                    <Icon as={slide.icon} boxSize={10} color="purple.400" />
+                    <Text fontSize="3xl" fontWeight="bold">
+                      {slide.title}
+                    </Text>
+                    <Text fontSize="lg" color="gray.500" lineHeight="tall">
+                      {slide.content}
+                    </Text>
+                    <Text fontSize="sm" color="purple.400">
+                      {i + 1} / {slides.length}
+                    </Text>
+                  </VStack>
+                </Box>
+              ))}
+            </MotionBox>
+          </Box>
+
+          {/* RIGHT : Fixed video */}
+          <MotionBox whileHover={{ scale: 1.04 }}>
             <VStack align="start" spacing={5}>
               <HStack>
                 <Icon as={FaPlayCircle} boxSize={7} color="purple.400" />
@@ -100,9 +120,10 @@ const StartTupCarousel = () => {
 
               <Box
                 w="full"
-                h={{ base: "220px", md: "320px" }}
+                h={{ base: "240px", md: "340px" }}
                 borderRadius="2xl"
                 overflow="hidden"
+                shadow="2xl"
               >
                 <iframe
                   width="100%"
@@ -115,58 +136,11 @@ const StartTupCarousel = () => {
               </Box>
 
               <Text fontSize="sm" color="gray.500">
-                Recorded from a real working build, showcasing production-level flows.
+                Real device recording — showcasing production-ready flows and UX decisions.
               </Text>
             </VStack>
           </MotionBox>
-
-          {/* Advanced Carousel */}
-          <Box position="relative" h="100%">
-            <AnimatePresence mode="wait">
-              <MotionBox
-                key={index}
-                bg={cardBg}
-                borderRadius="3xl"
-                p={10}
-                shadow="2xl"
-                initial={{ opacity: 0, x: 80 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -80 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-              >
-                <VStack align="start" spacing={6}>
-                  <Icon as={slides[index].icon} boxSize={10} color="purple.400" />
-                  <Text fontSize="3xl" fontWeight="bold">
-                    {slides[index].title}
-                  </Text>
-                  <Text fontSize="lg" color="gray.500" lineHeight="tall">
-                    {slides[index].content}
-                  </Text>
-
-                  <HStack spacing={2} pt={4} w="full">
-                    {slides.map((_, i) => (
-                      <Progress
-                        key={i}
-                        value={i === index ? 100 : 0}
-                        size="xs"
-                        colorScheme="purple"
-                        flex="1"
-                        borderRadius="full"
-                      />
-                    ))}
-                  </HStack>
-                </VStack>
-              </MotionBox>
-            </AnimatePresence>
-          </Box>
         </SimpleGrid>
-
-        {/* CTA */}
-        <MotionBox whileHover={{ scale: 1.08 }}>
-          <Button size="lg" colorScheme="purple" rightIcon={<FaRocket />}>
-            Explore My Product Thinking
-          </Button>
-        </MotionBox>
       </VStack>
     </Box>
   );
