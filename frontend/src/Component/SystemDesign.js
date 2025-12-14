@@ -8,81 +8,81 @@ const MotionDiv = motion.div;
 const SystemDesign = () => {
   const navigate = useNavigate();
 
+  const cardVariants = {
+    hover: {
+      scale: 1.05,
+      rotateY: 10,
+      transition: { duration: 0.4, type: "spring", stiffness: 200 },
+    },
+  };
+
   const styles = {
     page: {
       minHeight: "100vh",
-      background:
-        "linear-gradient(135deg, #0f0c29, #302b63, #24243e)", // gradient dark background
       padding: "60px 20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      color: "#ffffff",
+      background: "radial-gradient(circle at top left, #0f0c29, #302b63)",
+      color: "#fff",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
     header: {
       textAlign: "center",
       marginBottom: "80px",
-      position: "relative",
     },
     title: {
-      fontSize: "56px",
-      fontWeight: 800,
-      marginBottom: "16px",
-      background:
-        "linear-gradient(90deg, #00ffff, #ff00ff, #ffcc00)",
+      fontSize: "5rem",
+      fontWeight: 900,
+      background: "linear-gradient(90deg, #00ffff, #ff00ff, #ffcc00)",
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
+      marginBottom: "20px",
     },
     subtitle: {
-      fontSize: "18px",
+      fontSize: "1.2rem",
       color: "#b0b0d0",
-      maxWidth: "720px",
-      margin: "0 auto",
+      maxWidth: "700px",
       lineHeight: 1.8,
     },
     grid: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-      gap: "50px",
+      gap: "60px",
+      width: "100%",
       maxWidth: "1100px",
-      margin: "0 auto",
     },
     card: {
-      background: "rgba(30,30,50,0.85)",
+      position: "relative",
+      background: "rgba(255,255,255,0.05)",
       borderRadius: "25px",
       padding: "36px",
-      boxShadow: "0 15px 35px rgba(0,255,255,0.2)",
+      backdropFilter: "blur(12px)",
+      border: "1px solid rgba(255,255,255,0.2)",
       cursor: "pointer",
-      border: "1px solid rgba(255,255,255,0.1)",
-      transition: "all 0.3s ease-in-out",
-      position: "relative",
+      perspective: "1000px",
       overflow: "hidden",
     },
-    cardOverlay: {
-      content: '""',
-      position: "absolute",
-      top: "-50%",
-      left: "-50%",
-      width: "200%",
-      height: "200%",
-      background: "linear-gradient(60deg, #00ffff, #ff00ff, #ffcc00, #00ffff)",
-      opacity: 0.15,
-      transform: "rotate(25deg)",
-      pointerEvents: "none",
+    cardInner: {
+      position: "relative",
+      transformStyle: "preserve-3d",
     },
     icon: {
-      fontSize: "50px",
+      fontSize: "48px",
       marginBottom: "20px",
+      color: "#00ffff",
     },
     cardTitle: {
-      fontSize: "26px",
+      fontSize: "1.8rem",
       fontWeight: 700,
-      marginBottom: "14px",
-      color: "#ffffff",
+      marginBottom: "12px",
     },
     cardText: {
-      fontSize: "16px",
+      fontSize: "1rem",
+      lineHeight: 1.6,
       color: "#c0c0d0",
-      lineHeight: 1.7,
-      marginBottom: "28px",
+      marginBottom: "24px",
+      minHeight: "100px",
     },
     button: {
       padding: "12px 28px",
@@ -91,80 +91,67 @@ const SystemDesign = () => {
       fontSize: "16px",
       fontWeight: 600,
       cursor: "pointer",
+      background: "linear-gradient(90deg, #00ffff, #ff00ff)",
+      color: "#fff",
+      boxShadow: "0 10px 25px rgba(0,255,255,0.2)",
       transition: "all 0.3s ease",
-      boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
     },
-    buttonBlue: {
-      backgroundColor: "#2563eb",
-      color: "#ffffff",
-    },
-    buttonGreen: {
-      backgroundColor: "#16a34a",
-      color: "#ffffff",
+    buttonHover: {
+      transform: "translateY(-3px)",
+      boxShadow: "0 15px 30px rgba(0,255,255,0.3)",
     },
   };
 
+  const Card = ({ icon, title, text, onClick }) => (
+    <MotionDiv
+      style={styles.card}
+      variants={cardVariants}
+      whileHover="hover"
+      onClick={onClick}
+    >
+      <div style={styles.cardInner}>
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {icon}
+        </motion.div>
+        <div style={styles.cardTitle}>{title}</div>
+        <div style={styles.cardText}>{text}</div>
+        <motion.button
+          style={styles.button}
+          whileHover={styles.buttonHover}
+          onClick={onClick}
+        >
+          Explore
+        </motion.button>
+      </div>
+    </MotionDiv>
+  );
+
   return (
     <div style={styles.page}>
-      {/* Header */}
-      <div style={styles.header}>
+      <header style={styles.header}>
         <h1 style={styles.title}>System Design</h1>
         <p style={styles.subtitle}>
           Structured roadmap to master High Level Design (HLD) and Low Level
           Design (LLD) with a Java-first, interview-oriented approach.
         </p>
-      </div>
+      </header>
 
-      {/* Cards */}
       <div style={styles.grid}>
-        {/* HLD Card */}
-        <MotionDiv
-          style={styles.card}
-          whileHover={{
-            scale: 1.08,
-            boxShadow: "0 20px 40px rgba(0,255,255,0.5)",
-          }}
-          transition={{ duration: 0.4 }}
-        >
-          <div style={styles.cardOverlay}></div>
-          <FaProjectDiagram style={{ ...styles.icon, color: "#00ffff" }} />
-          <div style={styles.cardTitle}>High Level Design (HLD)</div>
-          <div style={styles.cardText}>
-            Focus on system architecture, scalability, load balancers,
-            databases, caching, queues, and real-world distributed system
-            decisions.
-          </div>
-          <button
-            style={{ ...styles.button, ...styles.buttonBlue }}
-            onClick={() => navigate("/system-design/hld")}
-          >
-            Go to HLD
-          </button>
-        </MotionDiv>
-
-        {/* LLD Card */}
-        <MotionDiv
-          style={styles.card}
-          whileHover={{
-            scale: 1.08,
-            boxShadow: "0 20px 40px rgba(0,255,0,0.5)",
-          }}
-          transition={{ duration: 0.4 }}
-        >
-          <div style={styles.cardOverlay}></div>
-          <FaCogs style={{ ...styles.icon, color: "#00ff99" }} />
-          <div style={styles.cardTitle}>Low Level Design (LLD)</div>
-          <div style={styles.cardText}>
-            Covers class design, object relationships, SOLID principles, and
-            design patterns with clean Java-based implementations.
-          </div>
-          <button
-            style={{ ...styles.button, ...styles.buttonGreen }}
-            onClick={() => navigate("/system-design/lld")}
-          >
-            Go to LLD
-          </button>
-        </MotionDiv>
+        <Card
+          icon={<FaProjectDiagram style={{ ...styles.icon, color: "#00ffff" }} />}
+          title="High Level Design (HLD)"
+          text="Focus on system architecture, scalability, load balancers, databases, caching, queues, and real-world distributed system decisions."
+          onClick={() => navigate("/system-design/hld")}
+        />
+        <Card
+          icon={<FaCogs style={{ ...styles.icon, color: "#ff00ff" }} />}
+          title="Low Level Design (LLD)"
+          text="Covers class design, object relationships, SOLID principles, and design patterns with clean Java-based implementations."
+          onClick={() => navigate("/system-design/lld")}
+        />
       </div>
     </div>
   );
