@@ -13,6 +13,9 @@ const ProblemDetail = lazy(() => import("./Component/ProblemDetail"));
 const AdminPanel = lazy(() => import("./Component/AdminPanel"));
 const ProblemsExplorer = lazy(() => import("./Component/ProblemExplorer"));
 const Navbar = lazy(() => import("./Component/Navbar"));
+const SystemDesign = lazy(() => import("./Component/SystemDesign"));
+const Hld = lazy(() => import("./Component/Hld"));
+const Lld = lazy(() => import("./Component/Lld"));
 
 // ⭐ Detail Page
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
@@ -47,6 +50,9 @@ function App() {
               <Route path="/skill" element={<SkillsSection />} />
               <Route path="/add-project" element={<AddProjectForm />} />
               <Route path="/admin" element={<VisitorDashboard />} />
+              <Route path="/system-design" element={<SystemDesign />} />
+              <Route path="/system-design/hld" element={<Hld />} />
+              <Route path="/system-design/lld" element={<Lld />} />
 
               {/* ⭐ Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />

@@ -1,13 +1,22 @@
 // Navbar.jsx
+// Fixed & improved: active route handling for sub-routes, cleaned styles
+
 import React from "react";
-import { Box, HStack, Button, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Button,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaCode, FaLaptopCode, FaHome } from "react-icons/fa";
+import { FaCode, FaLaptopCode, FaHome, FaSitemap } from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { colorMode } = useColorMode();
+
   const bg = useColorModeValue("whiteAlpha.900", "gray.900");
   const activeBg = useColorModeValue("blue.500", "teal.400");
 
@@ -15,7 +24,14 @@ const Navbar = () => {
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Web", path: "/problem-list", icon: <FaCode /> },
     { name: "DSA", path: "/dsa", icon: <FaLaptopCode /> },
-  ]; 
+    { name: "System Design", path: "/system-design", icon: <FaSitemap /> },
+  ];
+
+  // ✅ active even for sub-routes like /system-design/hld
+  const isRouteActive = (path) =>
+    path === "/"
+      ? location.pathname === "/"
+      : location.pathname.startsWith(path);
 
   return (
     <Box
@@ -23,7 +39,7 @@ const Navbar = () => {
       position="fixed"
       top={0}
       left={0}
-      zIndex="100"
+      zIndex={100}
       bg={bg}
       boxShadow="md"
       backdropFilter="saturate(180%) blur(10px)"
@@ -32,31 +48,31 @@ const Navbar = () => {
     >
       <HStack spacing={6} justify="center">
         {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const active = isRouteActive(item.path);
+
           return (
             <Button
               key={item.path}
               leftIcon={item.icon}
               size="md"
-              fontWeight="bold"
-              variant={isActive ? "solid" : "ghost"}
-              colorScheme={isActive ? "blue" : "gray"}
-              bg={isActive ? activeBg : "transparent"}
+              fontWeight="semibold"
+              variant={active ? "solid" : "ghost"}
+              bg={active ? activeBg : "transparent"}
               color={
-                isActive
+                active
                   ? "white"
                   : colorMode === "dark"
                   ? "whiteAlpha.900"
                   : "blackAlpha.900"
               }
               _hover={{
-                transform: "scale(1.08)",
-                bgGradient: isActive
-                  ? "linear(to-r, blue.500, blue.700)"
-                  : "linear(to-r, teal.300, teal.500)",
+                transform: "scale(1.06)",
+                bg: active
+                  ? activeBg
+                  : "linear-gradient(90deg, #38bdf8, #22c55e)",
                 color: "white",
               }}
-              transition="all 0.3s ease"
+              transition="all 0.25s ease"
               onClick={() => navigate(item.path)}
             >
               {item.name}
