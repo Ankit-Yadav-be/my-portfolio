@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, Spinner } from "@chakra-ui/react";
 
+
 // 🔥 Lazy-loaded components
 const ProjectShow = lazy(() => import("./Component/ProjectShow"));
 const AddProjectForm = lazy(() => import("./Component/AddProjectForm"));
@@ -16,6 +17,7 @@ const Navbar = lazy(() => import("./Component/Navbar"));
 const SystemDesign = lazy(() => import("./Component/SystemDesign"));
 const Hld = lazy(() => import("./Component/Hld"));
 const Lld = lazy(() => import("./Component/Lld"));
+const Oops = lazy(() => import("./Component/Oops"));
 
 // ⭐ Detail Page
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
@@ -53,6 +55,7 @@ function App() {
               <Route path="/system-design" element={<SystemDesign />} />
               <Route path="/system-design/hld" element={<Hld />} />
               <Route path="/system-design/lld" element={<Lld />} />
+              <Route path="/system-design/lld/oops" element={<Oops />} />
 
               {/* ⭐ Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />

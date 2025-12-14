@@ -5,6 +5,7 @@ const Lld = () => {
    * 🔑 LLD LEARNING DATA
    * Add new topics here daily (OOPs, Design Patterns, Case Studies)
    * UI will automatically scale
+   * Dark mode professional style
    */
   const lldTopics = [
     {
@@ -29,7 +30,8 @@ const Lld = () => {
     page: {
       minHeight: "100vh",
       padding: "40px 20px",
-      backgroundColor: "#f8fafc",
+      backgroundColor: "#1e1e2f",
+      color: "#ffffff",
       fontFamily: "system-ui, -apple-system, BlinkMacSystemFont",
     },
     header: {
@@ -43,7 +45,7 @@ const Lld = () => {
     },
     subtitle: {
       fontSize: "18px",
-      color: "#64748b",
+      color: "#a1a1b5",
       lineHeight: 1.6,
     },
     container: {
@@ -54,17 +56,17 @@ const Lld = () => {
       gap: "30px",
     },
     card: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#2c2c3e",
       borderRadius: "18px",
       padding: "28px",
-      boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+      boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
     },
     meta: {
       display: "flex",
       justifyContent: "space-between",
       marginBottom: "10px",
       fontSize: "14px",
-      color: "#64748b",
+      color: "#a1a1b5",
     },
     status: {
       fontWeight: 600,
@@ -74,10 +76,11 @@ const Lld = () => {
       fontSize: "22px",
       fontWeight: 600,
       marginBottom: "10px",
+      color: "#f0f0f0",
     },
     description: {
       fontSize: "16px",
-      color: "#475569",
+      color: "#c0c0d0",
       lineHeight: 1.6,
       marginBottom: "14px",
     },
@@ -92,7 +95,7 @@ const Lld = () => {
     link: {
       fontSize: "14px",
       fontWeight: 600,
-      color: "#2563eb",
+      color: "#00ffcc",
       textDecoration: "none",
     },
   };

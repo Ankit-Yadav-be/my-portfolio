@@ -11,9 +11,10 @@ const SystemDesign = () => {
   const styles = {
     page: {
       minHeight: "100vh",
-      backgroundColor: "#f7fafc",
+      backgroundColor: "#1e1e2f",
       padding: "40px 20px",
       fontFamily: "system-ui, -apple-system, BlinkMacSystemFont",
+      color: "#ffffff",
     },
     header: {
       textAlign: "center",
@@ -23,10 +24,11 @@ const SystemDesign = () => {
       fontSize: "48px",
       fontWeight: 700,
       marginBottom: "12px",
+      color: "#f0f0f0",
     },
     subtitle: {
       fontSize: "18px",
-      color: "#6b7280",
+      color: "#a1a1b5",
       maxWidth: "720px",
       margin: "0 auto",
       lineHeight: 1.6,
@@ -39,10 +41,10 @@ const SystemDesign = () => {
       margin: "0 auto",
     },
     card: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#2c2c3e",
       borderRadius: "20px",
       padding: "32px",
-      boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+      boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
       cursor: "pointer",
     },
     icon: {
@@ -53,10 +55,11 @@ const SystemDesign = () => {
       fontSize: "24px",
       fontWeight: 600,
       marginBottom: "12px",
+      color: "#f0f0f0",
     },
     cardText: {
       fontSize: "16px",
-      color: "#6b7280",
+      color: "#c0c0d0",
       lineHeight: 1.6,
       marginBottom: "24px",
     },
