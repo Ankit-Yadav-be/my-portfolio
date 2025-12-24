@@ -20,6 +20,7 @@ const Hld = lazy(() => import("./Component/Hld"));
 const Lld = lazy(() => import("./Component/Lld"));
 const Oops = lazy(() => import("./Component/Oops"));
 const UML = lazy(() => import("./Component/UML"));
+const JavascriptInterview = lazy(() => import("./Component/JavascriptInterview"));
 
 // ⭐ Detail Page
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
@@ -59,6 +60,7 @@ function App() {
               <Route path="/system-design/lld" element={<Lld />} />
               <Route path="/system-design/lld/oops" element={<Oops />} />
               <Route path="/system-design/lld/uml" element={<UML/>} />
+              <Route path="/javascript-interview" element={<JavascriptInterview/>} />
 
               {/* ⭐ Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />

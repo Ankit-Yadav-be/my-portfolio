@@ -8,9 +8,11 @@ import {
   Tag,
   useColorModeValue,
   Divider,
+  Button,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FiCpu, FiCode, FiCloud, FiZap, FiDatabase } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const MotionBox = motion(Box);
 
@@ -20,6 +22,12 @@ export default function FeatureIntro() {
   const secondaryText = useColorModeValue("gray.700", "gray.300");
   const highlight = useColorModeValue("teal.600", "teal.300");
   const tagBg = useColorModeValue("whiteAlpha.800", "blackAlpha.400");
+
+  const navigate = useNavigate();
+
+  const handleJSInterviewClick = () => {
+    navigate("/javascript-interview"); // Your page route
+  };
 
   return (
     <MotionBox
@@ -155,6 +163,20 @@ export default function FeatureIntro() {
           🎯 Tip: Start with easy problems to build confidence, explore AI integration gradually, 
           and learn scalable patterns step by step!
         </Text>
+
+        {/* New Button */}
+        <Button
+          mt={6}
+          colorScheme="teal"
+          size="lg"
+          fontWeight="bold"
+          rounded="full"
+          shadow="md"
+          _hover={{ transform: "scale(1.05)", shadow: "xl" }}
+          onClick={handleJSInterviewClick}
+        >
+          💻 Explore JS Interview Problems
+        </Button>
       </VStack>
     </MotionBox>
   );
