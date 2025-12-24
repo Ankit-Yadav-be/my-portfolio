@@ -1,19 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Lld = () => {
+  const navigate = useNavigate();
+
   /**
-   * 🔑 LLD LEARNING DATA
-   * Add new topics here daily (OOPs, Design Patterns, Case Studies)
-   * UI will automatically scale
-   * Dark mode professional style
+   * 🔑 LLD DAILY LEARNING INDEX
+   * Only MAIN TOPICS here
+   * Detailed explanation lives on separate pages
    */
   const lldTopics = [
     {
       date: "2025-12-14",
-      title: "Java OOPs – Foundation for LLD",
-      description:
-        "Deep dive into Object-Oriented Programming concepts and how they form the base of Low Level Design.",
-      topics: [
+      title: "OOPs Concepts (Foundation of LLD)",
+      shortNote:
+        "Learned core OOPs concepts that form the base of Low Level Design and clean class-level architecture.",
+      subTopics: [
         "Classes & Objects",
         "Encapsulation",
         "Inheritance",
@@ -22,7 +24,21 @@ const Lld = () => {
         "SOLID Principles",
       ],
       status: "Completed",
-      link: "/system-design/lld/oops",
+      route: "/system-design/lld/oops",
+    },
+    {
+      date: "2025-12-15",
+      title: "UML Diagrams (LLD Basics)",
+      shortNote:
+        "Understood how UML diagrams help in visualizing low level design using class and sequence diagrams.",
+      subTopics: [
+        "What is UML",
+        "Class Diagram",
+        "Sequence Diagram",
+        "Associations (IS-A / HAS-A)",
+      ],
+      status: "Completed",
+      route: "/system-design/lld/uml",
     },
   ];
 
@@ -64,19 +80,20 @@ const Lld = () => {
     meta: {
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: "10px",
       fontSize: "14px",
       color: "#a1a1b5",
+      marginBottom: "12px",
     },
     status: {
+      color: "#22c55e",
       fontWeight: 600,
-      color: "#16a34a",
     },
     cardTitle: {
       fontSize: "22px",
       fontWeight: 600,
       marginBottom: "10px",
       color: "#f0f0f0",
+      cursor: "pointer",
     },
     description: {
       fontSize: "16px",
@@ -86,17 +103,22 @@ const Lld = () => {
     },
     topicList: {
       paddingLeft: "18px",
-      marginBottom: "16px",
+      marginBottom: "18px",
     },
     topicItem: {
       fontSize: "15px",
       marginBottom: "6px",
+      color: "#e5e7eb",
     },
-    link: {
-      fontSize: "14px",
+    button: {
+      backgroundColor: "#00ffcc",
+      color: "#0f172a",
+      border: "none",
+      padding: "10px 18px",
+      borderRadius: "8px",
       fontWeight: 600,
-      color: "#00ffcc",
-      textDecoration: "none",
+      cursor: "pointer",
+      fontSize: "14px",
     },
   };
 
@@ -106,13 +128,12 @@ const Lld = () => {
       <div style={styles.header}>
         <h1 style={styles.title}>Low Level Design (LLD)</h1>
         <p style={styles.subtitle}>
-          This section documents my Low Level Design journey. It focuses on
-          class-level design, object relationships, SOLID principles, and
-          Java-based implementation thinking.
+          Daily learning log for Low Level Design. Each topic links to detailed
+          notes with diagrams, explanations, and Java-based implementation.
         </p>
       </div>
 
-      {/* LLD Learning Cards */}
+      {/* Topic Cards */}
       <div style={styles.container}>
         {lldTopics.map((item, index) => (
           <div key={index} style={styles.card}>
@@ -121,20 +142,29 @@ const Lld = () => {
               <span style={styles.status}>{item.status}</span>
             </div>
 
-            <div style={styles.cardTitle}>{item.title}</div>
-            <div style={styles.description}>{item.description}</div>
+            <div
+              style={styles.cardTitle}
+              onClick={() => navigate(item.route)}
+            >
+              {item.title}
+            </div>
+
+            <div style={styles.description}>{item.shortNote}</div>
 
             <ul style={styles.topicList}>
-              {item.topics.map((topic, i) => (
+              {item.subTopics.map((topic, i) => (
                 <li key={i} style={styles.topicItem}>
                   {topic}
                 </li>
               ))}
             </ul>
 
-            <a href={item.link} style={styles.link}>
+            <button
+              style={styles.button}
+              onClick={() => navigate(item.route)}
+            >
               View detailed notes →
-            </a>
+            </button>
           </div>
         ))}
       </div>

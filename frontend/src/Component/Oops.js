@@ -1,10 +1,7 @@
 import React from 'react';
 
 const Oops = () => {
-  /**
-   * ✅ OOPs Concepts Detailed Page
-   * Dark mode professional UI with all core concepts and Java code examples
-   */
+ 
 
   const oopsConcepts = [
     {
