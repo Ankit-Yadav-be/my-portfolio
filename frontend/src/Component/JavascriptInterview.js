@@ -1,10 +1,9 @@
 // src/pages/JavascriptInterview.jsx
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Heading,
   Text,
-  VStack,
   SimpleGrid,
   Badge,
   useColorModeValue,
@@ -12,7 +11,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 const MotionBox = motion(Box);
 
@@ -64,6 +62,8 @@ const interviewProblems = [
 const JavascriptInterview = () => {
   const cardBg = useColorModeValue("white", "gray.800");
   const cardShadow = useColorModeValue("md", "dark-lg");
+  const textColor = useColorModeValue("gray.700", "gray.300");
+  const hintColor = useColorModeValue("gray.600", "gray.400");
 
   const [openHints, setOpenHints] = useState({});
 
@@ -113,7 +113,7 @@ const JavascriptInterview = () => {
             <Heading size="md" mb={2}>
               {problem.title}
             </Heading>
-            <Text fontSize="md" color={useColorModeValue("gray.700", "gray.300")}>
+            <Text fontSize="md" color={textColor}>
               {problem.description}
             </Text>
 
@@ -128,12 +128,7 @@ const JavascriptInterview = () => {
             </Button>
 
             <Collapse in={openHints[problem.id]} animateOpacity>
-              <Text
-                mt={2}
-                fontSize="sm"
-                color={useColorModeValue("gray.600", "gray.400")}
-                fontStyle="italic"
-              >
+              <Text mt={2} fontSize="sm" color={hintColor} fontStyle="italic">
                 💡 Hint: {problem.hint}
               </Text>
             </Collapse>
