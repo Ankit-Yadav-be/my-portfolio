@@ -9,128 +9,241 @@ import {
   useColorModeValue,
   Collapse,
   Button,
+  Code,
+  VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
 
-const interviewProblems = [
+const interviewQuestions = [
   {
     id: 1,
-    title: "var, let, const",
-    description: "Explain differences between var, let, and const in JavaScript.",
-    hint: "var is function-scoped, let and const are block-scoped. const cannot be reassigned.",
-    difficulty: "Easy",
+    title: "var vs let vs const",
+    level: "Easy",
+    question: "What is the difference between var, let and const?",
+    explanation:
+      "var is function scoped and hoisted with undefined. let and const are block scoped and exist in the temporal dead zone. const variables cannot be reassigned.",
+    code: `var a = 10;
+let b = 20;
+const c = 30;
+
+{
+  var a = 100;
+  let b = 200;
+}
+
+console.log(a); // 100
+console.log(b); // 20`,
   },
   {
     id: 2,
     title: "Hoisting",
-    description: "What is hoisting in JavaScript?",
-    hint: "Declarations are moved to the top of their scope. var variables are hoisted with undefined, functions are fully hoisted.",
-    difficulty: "Easy",
+    level: "Easy",
+    question: "What is hoisting in JavaScript?",
+    explanation:
+      "Hoisting moves declarations to the top of their scope. var is initialized with undefined, while let and const remain uninitialized.",
+    code: `console.log(x); // undefined
+var x = 10;
+
+console.log(y); // ReferenceError
+let y = 20;`,
   },
   {
     id: 3,
     title: "Closures",
-    description: "Explain closures with an example.",
-    hint: "A closure gives access to the outer function’s scope from an inner function, even after the outer function has executed.",
-    difficulty: "Medium",
+    level: "Medium",
+    question: "What is a closure and why is it used?",
+    explanation:
+      "A closure allows a function to remember variables from its outer scope even after the outer function has executed.",
+    code: `function outer() {
+  let count = 0;
+  return function inner() {
+    count++;
+    console.log(count);
+  };
+}
+
+const fn = outer();
+fn(); // 1
+fn(); // 2`,
   },
   {
     id: 4,
-    title: "Debounce vs Throttle",
-    description: "Explain the difference between debounce and throttle.",
-    hint: "Debounce delays execution until after a pause, throttle limits execution to once per time interval.",
-    difficulty: "Medium",
+    title: "Event Loop",
+    level: "Hard",
+    question: "Explain the JavaScript event loop.",
+    explanation:
+      "The event loop handles asynchronous execution using the call stack, microtask queue, and callback queue.",
+    code: `console.log("Start");
+
+setTimeout(() => console.log("Timeout"), 0);
+
+Promise.resolve().then(() => console.log("Promise"));
+
+console.log("End");
+
+// Output:
+// Start
+// End
+// Promise
+// Timeout`,
   },
   {
     id: 5,
-    title: "'this' keyword",
-    description: "Explain how 'this' works in different contexts.",
-    hint: "'this' depends on the call site: object method, standalone function, arrow function, class, or event handler.",
-    difficulty: "Medium",
+    title: "this keyword",
+    level: "Medium",
+    question: "How does the this keyword work in JavaScript?",
+    explanation:
+      "The value of this depends on how a function is called. Arrow functions do not bind their own this.",
+    code: `const obj = {
+  name: "Ankit",
+  normal() {
+    console.log(this.name);
+  },
+  arrow: () => {
+    console.log(this.name);
+  },
+};
+
+obj.normal(); // Ankit
+obj.arrow();  // undefined`,
   },
   {
     id: 6,
-    title: "Promises & Async/Await",
-    description: "Explain how promises work and how async/await simplifies them.",
-    hint: "Promises represent future values. async/await allows writing asynchronous code in a synchronous style.",
-    difficulty: "Medium",
+    title: "Debounce vs Throttle",
+    level: "Hard",
+    question: "What is the difference between debounce and throttle?",
+    explanation:
+      "Debounce delays execution until activity stops. Throttle ensures execution at fixed intervals.",
+    code: `function debounce(fn, delay) {
+  let timer;
+  return function () {
+    clearTimeout(timer);
+    timer = setTimeout(fn, delay);
+  };
+}
+
+function throttle(fn, limit) {
+  let allow = true;
+  return function () {
+    if (allow) {
+      fn();
+      allow = false;
+      setTimeout(() => (allow = true), limit);
+    }
+  };
+}`,
+  },
+  {
+    id: 7,
+    title: "Promises and Async Await",
+    level: "Medium",
+    question: "How does async/await work internally?",
+    explanation:
+      "async/await is syntactic sugar over promises that makes asynchronous code easier to read and maintain.",
+    code: `async function fetchData() {
+  try {
+    const response = await fetch("/api/data");
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}`,
   },
 ];
 
 const JavascriptInterview = () => {
-  const cardBg = useColorModeValue("white", "gray.800");
-  const cardShadow = useColorModeValue("md", "dark-lg");
+  const bg = useColorModeValue("white", "gray.800");
+  const shadow = useColorModeValue("lg", "dark-lg");
   const textColor = useColorModeValue("gray.700", "gray.300");
-  const hintColor = useColorModeValue("gray.600", "gray.400");
+  const codeBg = useColorModeValue("gray.100", "gray.900");
 
-  const [openHints, setOpenHints] = useState({});
+  const [open, setOpen] = useState({});
 
-  const toggleHint = (id) => {
-    setOpenHints((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggle = (id) => {
+    setOpen((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
-    <Box p={8}>
+    <Box px={{ base: 4, sm: 6, md: 10 }} py={{ base: 6, md: 10 }}>
       <Heading
-        mb={6}
-        size="2xl"
+        mb={{ base: 6, md: 8 }}
+        fontSize={{ base: "2xl", md: "3xl" }}
         bgGradient="linear(to-r, teal.400, blue.500)"
         bgClip="text"
       >
-        💻 JavaScript Interview Questions
+        JavaScript Interview Master Guide
       </Heading>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-        {interviewProblems.map((problem) => (
+      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
+        {interviewQuestions.map((item) => (
           <MotionBox
-            key={problem.id}
-            bg={cardBg}
-            p={6}
+            key={item.id}
+            bg={bg}
+            p={{ base: 4, md: 6 }}
             rounded="2xl"
-            shadow={cardShadow}
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.3 }}
+            shadow={shadow}
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            whileHover={{ y: -4 }}
           >
-            <Badge
-              mb={2}
-              colorScheme={
-                problem.difficulty === "Easy"
-                  ? "green"
-                  : problem.difficulty === "Medium"
-                  ? "yellow"
-                  : "red"
-              }
-              fontSize="0.9em"
-              px={2}
-              py={1}
-              rounded="full"
-            >
-              {problem.difficulty}
-            </Badge>
+            <VStack align="start" spacing={3}>
+              <Badge
+                colorScheme={
+                  item.level === "Easy"
+                    ? "green"
+                    : item.level === "Medium"
+                    ? "yellow"
+                    : "red"
+                }
+              >
+                {item.level}
+              </Badge>
 
-            <Heading size="md" mb={2}>
-              {problem.title}
-            </Heading>
-            <Text fontSize="md" color={textColor}>
-              {problem.description}
-            </Text>
+              <Heading size="md">{item.title}</Heading>
+
+              <Text fontWeight="semibold">
+                {item.question}
+              </Text>
+
+              <Text fontSize="sm" color={textColor}>
+                {item.explanation}
+              </Text>
+            </VStack>
 
             <Button
-              mt={3}
+              mt={5}
+              w={{ base: "100%", sm: "fit-content" }}
+              alignSelf={{ base: "stretch", sm: "flex-start" }}
               size="sm"
               colorScheme="teal"
-              onClick={() => toggleHint(problem.id)}
+              onClick={() => toggle(item.id)}
               rounded="full"
+              whiteSpace="nowrap"
             >
-              {openHints[problem.id] ? "Hide Hint" : "Show Hint"}
+              {open[item.id] ? "Hide Code" : "Show Code"}
             </Button>
 
-            <Collapse in={openHints[problem.id]} animateOpacity>
-              <Text mt={2} fontSize="sm" color={hintColor} fontStyle="italic">
-                💡 Hint: {problem.hint}
-              </Text>
+            <Collapse in={open[item.id]} animateOpacity>
+              <Box
+                mt={4}
+                p={3}
+                bg={codeBg}
+                rounded="lg"
+                overflowX="auto"
+              >
+                <Code
+                  display="block"
+                  whiteSpace="pre"
+                  fontSize={{ base: "xs", md: "sm" }}
+                  w="100%"
+                >
+                  {item.code}
+                </Code>
+              </Box>
             </Collapse>
           </MotionBox>
         ))}
