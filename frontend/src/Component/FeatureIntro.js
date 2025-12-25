@@ -1,145 +1,207 @@
 // src/components/FeatureIntro.jsx
 import {
   Box,
-  Text,
   Heading,
+  Text,
   VStack,
   HStack,
-  Stack,
-  Tag,
-  useColorModeValue,
+  Badge,
   Divider,
   Button,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { FiCpu, FiCode, FiCloud, FiZap, FiDatabase } from "react-icons/fi";
+import {
+  FiCpu,
+  FiCode,
+  FiCloud,
+  FiZap,
+  FiDatabase,
+  FiArrowRight,
+} from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const MotionBox = motion(Box);
 
 export default function FeatureIntro() {
-  const bg = useColorModeValue("teal.50", "teal.900");
-  const textColor = useColorModeValue("gray.800", "gray.100");
-  const secondaryText = useColorModeValue("gray.700", "gray.300");
-  const highlight = useColorModeValue("teal.600", "teal.300");
-
   const navigate = useNavigate();
+
+  const bg = useColorModeValue(
+    "linear-gradient(145deg, #0f2027, #203a43, #2c5364)",
+    "linear-gradient(145deg, #0b0f1a, #111827)"
+  );
+
+  const cardBg = useColorModeValue("whiteAlpha.900", "whiteAlpha.50");
+  const primaryText = useColorModeValue("gray.900", "gray.100");
+  const secondaryText = useColorModeValue("gray.600", "gray.400");
+  const accent = "cyan.400";
 
   return (
     <MotionBox
-      initial={{ opacity: 0, y: -30 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       bg={bg}
-      p={{ base: 4, sm: 6, md: 8 }}
-      mb={6}
+      p={{ base: 5, md: 8 }}
       rounded="2xl"
       shadow="2xl"
-      borderLeftWidth={{ base: 4, md: 8 }}
-      borderLeftColor={highlight}
+      position="relative"
+      overflow="hidden"
+      mb={6}
     >
-      <VStack align="start" spacing={{ base: 3, md: 4 }}>
-        {/* Heading */}
-        <Heading
-          size={{ base: "md", sm: "lg", md: "xl" }}
-          bgGradient="linear(to-r, teal.400, blue.500)"
-          bgClip="text"
-        >
-          🚀 Master Coding, Deployment & Scalable Apps
-        </Heading>
+      {/* Subtle Border */}
+      <Box
+        position="absolute"
+        inset="0"
+        border="1px solid"
+        borderColor="whiteAlpha.200"
+        rounded="2xl"
+        pointerEvents="none"
+      />
 
-        {/* Intro Text */}
-        <Text fontSize={{ base: "sm", md: "md" }} color={secondaryText}>
-          This section is your <b>one-stop hub</b> for everything a student or beginner needs:
-          from solving algorithm problems to building scalable MERN apps using
-          <b> MVC architecture</b>.
-        </Text>
+      <Box
+        bg={cardBg}
+        rounded="xl"
+        p={{ base: 5, md: 8 }}
+        backdropFilter="blur(14px)"
+      >
+        <VStack align="start" spacing={5}>
+          {/* Heading */}
+          <Heading
+            size="lg"
+            color={primaryText}
+            fontWeight="bold"
+            letterSpacing="tight"
+          >
+            Build, Deploy & Scale Real-World Applications
+          </Heading>
 
-        <Text fontSize={{ base: "sm", md: "md" }} color={secondaryText}>
-          You’ll get practical guidance, code examples, and step-by-step solutions for:
-        </Text>
+          {/* Intro */}
+          <Text fontSize="md" color={secondaryText} lineHeight="1.7">
+            This section focuses on transforming you from a problem solver into
+            a <b>production-ready developer</b>. You will learn how modern
+            applications are designed, deployed, and scaled in real systems.
+          </Text>
 
-        {/* Tags Section – Responsive */}
-        <Stack
-          direction={{ base: "column", sm: "row" }}
-          wrap="wrap"
-          spacing={3}
-          justify={{ base: "center", sm: "flex-start" }}
-          w="100%"
-        >
-          {[
-            { label: "Development Hurdles", icon: <FiCpu />, color: "green" },
-            { label: "Coding Challenges", icon: <FiCode />, color: "blue" },
-            { label: "Free Deployment", icon: <FiCloud />, color: "purple" },
-            { label: "AI Guidance", icon: <FiZap />, color: "yellow" },
-            { label: "Scalable Architecture", icon: <FiDatabase />, color: "red" },
-          ].map((item, i) => (
-            <Tag
-              key={i}
-              size="lg"
-              borderRadius="full"
-              px={4}
-              py={2}
-              fontWeight="bold"
-              colorScheme={item.color}
-              leftIcon={item.icon}
-              cursor="pointer"
-              w={{ base: "100%", sm: "auto" }}
-              justifyContent="center"
-              _hover={{ transform: "scale(1.05)", shadow: "lg" }}
+          <Text fontSize="md" color={secondaryText} lineHeight="1.7">
+            From coding challenges to MERN-based architectures, everything here
+            follows industry-proven practices used by professional teams.
+          </Text>
+
+          {/* Feature Badges */}
+          <HStack spacing={3} flexWrap="wrap">
+            <Badge
+              px={3}
+              py={1}
+              rounded="md"
+              colorScheme="green"
+              display="flex"
+              alignItems="center"
+              gap={2}
             >
-              {item.label}
-            </Tag>
-          ))}
-        </Stack>
+              <FiCpu /> Development Hurdles
+            </Badge>
 
-        <Divider borderColor={highlight} />
+            <Badge
+              px={3}
+              py={1}
+              rounded="md"
+              colorScheme="blue"
+              display="flex"
+              alignItems="center"
+              gap={2}
+            >
+              <FiCode /> Coding Challenges
+            </Badge>
 
-        {/* Learn Section */}
-        <Text fontSize={{ base: "sm", md: "md" }} color={secondaryText}>
-          💡 You will learn:
-        </Text>
+            <Badge
+              px={3}
+              py={1}
+              rounded="md"
+              colorScheme="purple"
+              display="flex"
+              alignItems="center"
+              gap={2}
+            >
+              <FiCloud /> Free Deployment
+            </Badge>
 
-        <VStack align="start" spacing={2}>
-          {[
-            "How to solve coding problems systematically.",
-            "How to integrate AI models with sample code.",
-            "Best practices for MERN apps using MVC.",
-            "Deployment, scalability & optimization.",
-            "Real-world project-based learning.",
-          ].map((text, i) => (
-            <Text key={i} fontSize={{ base: "sm", md: "md" }} color={secondaryText}>
-              • {text}
+            <Badge
+              px={3}
+              py={1}
+              rounded="md"
+              colorScheme="yellow"
+              display="flex"
+              alignItems="center"
+              gap={2}
+            >
+              <FiZap /> AI-Assisted Guidance
+            </Badge>
+
+            <Badge
+              px={3}
+              py={1}
+              rounded="md"
+              colorScheme="red"
+              display="flex"
+              alignItems="center"
+              gap={2}
+            >
+              <FiDatabase /> Scalable Architecture
+            </Badge>
+          </HStack>
+
+          <Divider borderColor="whiteAlpha.300" />
+
+          {/* Learning Outcomes */}
+          <VStack align="start" spacing={2}>
+            <Text
+              fontSize="sm"
+              fontWeight="semibold"
+              color={accent}
+              letterSpacing="wide"
+            >
+              WHAT YOU WILL LEARN
             </Text>
-          ))}
+
+            <Text fontSize="sm" color={secondaryText}>
+              • Systematic approaches to solve coding problems.
+            </Text>
+            <Text fontSize="sm" color={secondaryText}>
+              • How to integrate AI models with clean, maintainable code.
+            </Text>
+            <Text fontSize="sm" color={secondaryText}>
+              • MERN best practices using MVC architecture.
+            </Text>
+            <Text fontSize="sm" color={secondaryText}>
+              • Deployment strategies, scalability, and optimization.
+            </Text>
+            <Text fontSize="sm" color={secondaryText}>
+              • Real-world project driven development mindset.
+            </Text>
+          </VStack>
+
+          {/* CTA */}
+          <Button
+            mt={6}
+            alignSelf="flex-start"
+            rightIcon={<FiArrowRight />}
+            colorScheme="cyan"
+            size="lg"
+            px={8}
+            rounded="full"
+            fontWeight="semibold"
+            shadow="md"
+            _hover={{
+              transform: "translateY(-2px)",
+              shadow: "xl",
+            }}
+            onClick={() => navigate("/javascript-interview")}
+          >
+            Explore JavaScript Interview Problems
+          </Button>
         </VStack>
-
-        <Text
-          fontSize={{ base: "xs", md: "sm" }}
-          color={highlight}
-          fontWeight="semibold"
-          mt={2}
-        >
-          🎯 Tip: Start small, stay consistent, and build scalable solutions step by step.
-        </Text>
-
-        {/* CTA Button – Fully Responsive */}
-        <Button
-          mt={6}
-          w={{ base: "100%", sm: "auto" }}
-          px={8}
-          py={6}
-          colorScheme="teal"
-          size="lg"
-          fontWeight="bold"
-          rounded="full"
-          shadow="md"
-          _hover={{ transform: "scale(1.05)", shadow: "xl" }}
-          onClick={() => navigate("/javascript-interview")}
-        >
-          💻 Explore JS Interview Problems
-        </Button>
-      </VStack>
+      </Box>
     </MotionBox>
   );
 }
