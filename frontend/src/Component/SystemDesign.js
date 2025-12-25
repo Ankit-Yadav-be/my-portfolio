@@ -6,10 +6,10 @@ const MotionDiv = motion.div;
 
 const SystemDesign = () => {
   const navigate = useNavigate();
+  const isMobile = window.innerWidth < 1024;
 
   return (
     <div style={styles.page}>
-      {/* Background */}
       <div style={styles.background} />
 
       {/* Header */}
@@ -21,40 +21,52 @@ const SystemDesign = () => {
         </p>
       </header>
 
-      {/* Diagonal Container */}
-      <div style={styles.diagonalContainer}>
+      {/* Layout */}
+      <div
+        style={{
+          ...styles.container,
+          flexDirection: isMobile ? "column" : "row",
+          height: isMobile ? "auto" : "520px",
+        }}
+      >
         {/* HLD */}
         <MotionDiv
-          initial={{ opacity: 0, x: -80 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ ...styles.panel, ...styles.hld }}
+          initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : -80 }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          transition={{ duration: 0.7 }}
+          style={{
+            ...styles.panel,
+            ...(isMobile ? styles.mobilePanel : styles.hld),
+            textAlign: "left",
+          }}
           onClick={() => navigate("/system-design/hld")}
         >
           <h2 style={styles.panelTitle}>High Level Design</h2>
           <p style={styles.panelText}>
-            Design scalable distributed systems. Learn architecture decisions,
-            databases, caching, queues, load balancing, consistency models and
+            Learn how to design scalable distributed systems. Focus on
+            architecture, databases, caching, queues, load balancing and
             real-world tradeoffs used by top tech companies.
           </p>
-
           <span style={styles.cta}>Explore HLD →</span>
         </MotionDiv>
 
         {/* LLD */}
         <MotionDiv
-          initial={{ opacity: 0, x: 80 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ ...styles.panel, ...styles.lld }}
+          initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 80 }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          transition={{ duration: 0.7 }}
+          style={{
+            ...styles.panel,
+            ...(isMobile ? styles.mobilePanel : styles.lld),
+            textAlign: isMobile ? "left" : "right",
+          }}
           onClick={() => navigate("/system-design/lld")}
         >
           <h2 style={styles.panelTitle}>Low Level Design</h2>
           <p style={styles.panelText}>
             Master class design, object relationships, SOLID principles and
-            design patterns with clean, interview-ready Java implementations.
+            design patterns with clean Java-based implementations.
           </p>
-
           <span style={styles.cta}>Explore LLD →</span>
         </MotionDiv>
       </div>
@@ -65,11 +77,11 @@ const SystemDesign = () => {
 const styles = {
   page: {
     minHeight: "100vh",
-    position: "relative",
-    fontFamily: "'Inter', system-ui, sans-serif",
     background: "#0b0f1a",
     color: "#fff",
-    overflow: "hidden",
+    fontFamily: "'Inter', system-ui, sans-serif",
+    position: "relative",
+    overflowX: "hidden",
   },
 
   background: {
@@ -82,81 +94,79 @@ const styles = {
 
   header: {
     textAlign: "center",
-    paddingTop: "100px",
-    paddingBottom: "60px",
+    padding: "80px 20px 50px",
     position: "relative",
     zIndex: 1,
   },
 
   title: {
-    fontSize: "4.5rem",
+    fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
     fontWeight: 900,
     letterSpacing: "-0.03em",
   },
 
   subtitle: {
     marginTop: "20px",
-    fontSize: "1.2rem",
+    fontSize: "1.1rem",
     maxWidth: "720px",
     marginInline: "auto",
     color: "#a1a1aa",
     lineHeight: 1.7,
   },
 
-  diagonalContainer: {
-    position: "relative",
-    height: "520px",
+  container: {
+    display: "flex",
+    gap: "24px",
     maxWidth: "1200px",
     margin: "0 auto",
-    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+    padding: "0 20px 80px",
+    position: "relative",
     zIndex: 1,
   },
 
   panel: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    width: "60%",
-    padding: "80px 60px",
+    flex: 1,
+    padding: "60px 50px",
     backdropFilter: "blur(16px)",
     cursor: "pointer",
-    transition: "all 0.4s ease",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    transition: "all 0.35s ease",
+    borderRadius: "24px",
   },
 
   hld: {
-    left: 0,
     clipPath: "polygon(0 0, 100% 0, 85% 100%, 0% 100%)",
     background: "rgba(56,189,248,0.12)",
-    borderRight: "1px solid rgba(255,255,255,0.1)",
+    border: "1px solid rgba(255,255,255,0.08)",
   },
 
   lld: {
-    right: 0,
     clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)",
     background: "rgba(168,85,247,0.12)",
-    borderLeft: "1px solid rgba(255,255,255,0.1)",
-    textAlign: "right",
+    border: "1px solid rgba(255,255,255,0.08)",
+  },
+
+  mobilePanel: {
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.1)",
   },
 
   panelTitle: {
-    fontSize: "2.8rem",
+    fontSize: "2.3rem",
     fontWeight: 800,
-    marginBottom: "24px",
+    marginBottom: "20px",
   },
 
   panelText: {
-    fontSize: "1.15rem",
-    lineHeight: 1.8,
+    fontSize: "1.05rem",
+    lineHeight: 1.75,
     color: "#d4d4d8",
-    maxWidth: "420px",
+    maxWidth: "520px",
   },
 
   cta: {
-    marginTop: "40px",
-    fontSize: "1rem",
+    display: "inline-block",
+    marginTop: "32px",
+    fontSize: "0.95rem",
     fontWeight: 600,
     letterSpacing: "0.04em",
     color: "#38bdf8",
