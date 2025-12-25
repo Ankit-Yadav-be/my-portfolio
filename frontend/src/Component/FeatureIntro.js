@@ -1,4 +1,3 @@
-// src/components/FeatureIntro.jsx
 import {
   Box,
   Heading,
@@ -6,9 +5,8 @@ import {
   VStack,
   HStack,
   Badge,
-  Divider,
   Button,
-  useColorModeValue,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
@@ -25,183 +23,154 @@ const MotionBox = motion(Box);
 
 export default function FeatureIntro() {
   const navigate = useNavigate();
-
-  const bg = useColorModeValue(
-    "linear-gradient(145deg, #0f2027, #203a43, #2c5364)",
-    "linear-gradient(145deg, #0b0f1a, #111827)"
-  );
-
-  const cardBg = useColorModeValue("whiteAlpha.900", "whiteAlpha.50");
-  const primaryText = useColorModeValue("gray.900", "gray.100");
-  const secondaryText = useColorModeValue("gray.600", "gray.400");
-  const accent = "cyan.400";
+  const isMobile = useBreakpointValue({ base: true, lg: false });
 
   return (
-    <MotionBox
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      bg={bg}
-      p={{ base: 5, md: 8 }}
-      rounded="2xl"
-      shadow="2xl"
+    <Box
       position="relative"
+      bg="#0b0f1a"
+      py={{ base: 12, lg: 24 }}
+      px={{ base: 4, lg: 8 }}
       overflow="hidden"
-      mb={6}
+      rounded="2xl"
+      mb={8}
     >
-      {/* Subtle Border */}
+      {/* Ambient background */}
       <Box
         position="absolute"
-        inset="0"
-        border="1px solid"
-        borderColor="whiteAlpha.200"
-        rounded="2xl"
-        pointerEvents="none"
+        inset={0}
+        bg="radial-gradient(circle at top left, rgba(56,189,248,0.15), transparent 40%), radial-gradient(circle at bottom right, rgba(168,85,247,0.15), transparent 40%)"
+        zIndex={0}
       />
 
+      {/* Header */}
+      <VStack spacing={4} textAlign="center" mb={12} position="relative" zIndex={1}>
+        <Heading
+          fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+          fontWeight="800"
+          letterSpacing="-0.02em"
+        >
+          Build, Deploy & Scale
+        </Heading>
+        <Text
+          maxW="720px"
+          color="gray.400"
+          fontSize={{ base: "sm", md: "md" }}
+          lineHeight="1.7"
+        >
+          Everything you need to go from solving problems to building
+          production-ready, scalable applications using modern engineering
+          practices.
+        </Text>
+      </VStack>
+
+      {/* CONTENT */}
       <Box
-        bg={cardBg}
-        rounded="xl"
-        p={{ base: 5, md: 8 }}
-        backdropFilter="blur(14px)"
+        position="relative"
+        maxW="1200px"
+        mx="auto"
+        zIndex={1}
+        display="flex"
+        flexDirection={isMobile ? "column" : "row"}
+        gap={6}
       >
-        <VStack align="start" spacing={5}>
-          {/* Heading */}
-          <Heading
-            size="lg"
-            color={primaryText}
-            fontWeight="bold"
-            letterSpacing="tight"
-          >
-            Build, Deploy & Scale Real-World Applications
-          </Heading>
+        {/* LEFT PANEL */}
+        <MotionBox
+          initial={{ opacity: 0, x: isMobile ? 0 : -60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          flex={1}
+          p={{ base: 6, md: 10 }}
+          bg="rgba(56,189,248,0.12)"
+          backdropFilter="blur(14px)"
+          border="1px solid rgba(255,255,255,0.08)"
+          borderRadius="2xl"
+          clipPath={
+            isMobile
+              ? "none"
+              : "polygon(0 0, 100% 0, 85% 100%, 0% 100%)"
+          }
+        >
+          <VStack align="start" spacing={5}>
+            <Heading fontSize="2xl" fontWeight="700">
+              Build & Develop
+            </Heading>
 
-          {/* Intro */}
-          <Text fontSize="md" color={secondaryText} lineHeight="1.7">
-            This section focuses on transforming you from a problem solver into
-            a <b>production-ready developer</b>. You will learn how modern
-            applications are designed, deployed, and scaled in real systems.
-          </Text>
-
-          <Text fontSize="md" color={secondaryText} lineHeight="1.7">
-            From coding challenges to MERN-based architectures, everything here
-            follows industry-proven practices used by professional teams.
-          </Text>
-
-          {/* Feature Badges */}
-          <HStack spacing={3} flexWrap="wrap">
-            <Badge
-              px={3}
-              py={1}
-              rounded="md"
-              colorScheme="green"
-              display="flex"
-              alignItems="center"
-              gap={2}
-            >
-              <FiCpu /> Development Hurdles
-            </Badge>
-
-            <Badge
-              px={3}
-              py={1}
-              rounded="md"
-              colorScheme="blue"
-              display="flex"
-              alignItems="center"
-              gap={2}
-            >
-              <FiCode /> Coding Challenges
-            </Badge>
-
-            <Badge
-              px={3}
-              py={1}
-              rounded="md"
-              colorScheme="purple"
-              display="flex"
-              alignItems="center"
-              gap={2}
-            >
-              <FiCloud /> Free Deployment
-            </Badge>
-
-            <Badge
-              px={3}
-              py={1}
-              rounded="md"
-              colorScheme="yellow"
-              display="flex"
-              alignItems="center"
-              gap={2}
-            >
-              <FiZap /> AI-Assisted Guidance
-            </Badge>
-
-            <Badge
-              px={3}
-              py={1}
-              rounded="md"
-              colorScheme="red"
-              display="flex"
-              alignItems="center"
-              gap={2}
-            >
-              <FiDatabase /> Scalable Architecture
-            </Badge>
-          </HStack>
-
-          <Divider borderColor="whiteAlpha.300" />
-
-          {/* Learning Outcomes */}
-          <VStack align="start" spacing={2}>
-            <Text
-              fontSize="sm"
-              fontWeight="semibold"
-              color={accent}
-              letterSpacing="wide"
-            >
-              WHAT YOU WILL LEARN
+            <Text color="gray.300" lineHeight="1.7">
+              Strengthen fundamentals through coding challenges, development
+              hurdles, and AI-assisted guidance while building clean,
+              maintainable applications.
             </Text>
 
-            <Text fontSize="sm" color={secondaryText}>
-              • Systematic approaches to solve coding problems.
-            </Text>
-            <Text fontSize="sm" color={secondaryText}>
-              • How to integrate AI models with clean, maintainable code.
-            </Text>
-            <Text fontSize="sm" color={secondaryText}>
-              • MERN best practices using MVC architecture.
-            </Text>
-            <Text fontSize="sm" color={secondaryText}>
-              • Deployment strategies, scalability, and optimization.
-            </Text>
-            <Text fontSize="sm" color={secondaryText}>
-              • Real-world project driven development mindset.
-            </Text>
+            <HStack wrap="wrap" spacing={2}>
+              <Badge colorScheme="green">
+                <FiCpu /> Development
+              </Badge>
+              <Badge colorScheme="blue">
+                <FiCode /> Coding
+              </Badge>
+              <Badge colorScheme="yellow">
+                <FiZap /> AI Guidance
+              </Badge>
+            </HStack>
           </VStack>
+        </MotionBox>
 
-          {/* CTA */}
-          <Button
-            mt={6}
-            alignSelf="flex-start"
-            rightIcon={<FiArrowRight />}
-            colorScheme="cyan"
-            size="lg"
-            px={8}
-            rounded="full"
-            fontWeight="semibold"
-            shadow="md"
-            _hover={{
-              transform: "translateY(-2px)",
-              shadow: "xl",
-            }}
-            onClick={() => navigate("/javascript-interview")}
-          >
-            Explore JavaScript Interview Problems
-          </Button>
-        </VStack>
+        {/* RIGHT PANEL */}
+        <MotionBox
+          initial={{ opacity: 0, x: isMobile ? 0 : 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          flex={1}
+          p={{ base: 6, md: 10 }}
+          bg="rgba(168,85,247,0.12)"
+          backdropFilter="blur(14px)"
+          border="1px solid rgba(255,255,255,0.08)"
+          borderRadius="2xl"
+          textAlign={isMobile ? "left" : "right"}
+          clipPath={
+            isMobile
+              ? "none"
+              : "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)"
+          }
+        >
+          <VStack align={isMobile ? "start" : "end"} spacing={5}>
+            <Heading fontSize="2xl" fontWeight="700">
+              Deploy & Scale
+            </Heading>
+
+            <Text color="gray.300" lineHeight="1.7" maxW="420px">
+              Learn scalable architecture, free deployment strategies, and
+              optimization techniques used in real-world MERN applications.
+            </Text>
+
+            <HStack wrap="wrap" spacing={2} justify={isMobile ? "flex-start" : "flex-end"}>
+              <Badge colorScheme="purple">
+                <FiCloud /> Deployment
+              </Badge>
+              <Badge colorScheme="red">
+                <FiDatabase /> Architecture
+              </Badge>
+            </HStack>
+          </VStack>
+        </MotionBox>
       </Box>
-    </MotionBox>
+
+      {/* CTA */}
+      <Box textAlign="center" mt={12} position="relative" zIndex={1}>
+        <Button
+          rightIcon={<FiArrowRight />}
+          colorScheme="cyan"
+          size="lg"
+          rounded="full"
+          px={10}
+          shadow="xl"
+          _hover={{ transform: "translateY(-2px)" }}
+          onClick={() => navigate("/javascript-interview")}
+        >
+          Explore JavaScript Interview Problems
+        </Button>
+      </Box>
+    </Box>
   );
 }
