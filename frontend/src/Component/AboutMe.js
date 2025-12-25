@@ -48,152 +48,84 @@ const AboutMeSection = () => {
 
   return (
     <Box maxW="1280px" mx="auto" px={{ base: 6, md: 12 }} mt={{ base: 12, md: 24 }}>
-      {/* ================= HERO ================= */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 12, md: 20 }}>
-        <VStack align="start" spacing={6}>
-          <Text
-            fontSize="xs"
-            letterSpacing="wider"
-            textTransform="uppercase"
-            color={textSecondary}
-          >
-            Full Stack • AI • Product Engineering
-          </Text>
+      
+      {/* ================= HERO (DIAGONAL) ================= */}
+      <MotionBox position="relative" overflow="hidden" rounded="3xl" mb={28}>
+        {/* Diagonal Accent */}
+        <Box
+          position="absolute"
+          top="-40%"
+          left="-30%"
+          w="160%"
+          h="160%"
+          bg="linear-gradient(135deg, rgba(34,211,238,0.15), transparent 60%)"
+          transform="rotate(-12deg)"
+          pointerEvents="none"
+        />
 
-          <MotionText
-            fontSize={{ base: "3xl", md: "5xl" }}
-            fontWeight="extrabold"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Hi, I’m <span style={{ color: accent }}>Ankit Yadav</span>
-          </MotionText>
-
-          <MotionHStack spacing={3}>
-            <Icon as={FaRobot} color={cyan} />
-            <Text fontSize="xl" color={cyan} fontWeight="semibold">
-              <ReactTyped
-                strings={[
-                  "AI Engineer",
-                  "Full Stack Developer",
-                  "Problem Solver",
-                  "Building Scalable Products",
-                ]}
-                typeSpeed={50}
-                backSpeed={30}
-                loop
-              />
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 14, md: 20 }} position="relative" zIndex={1}>
+          {/* LEFT CONTENT */}
+          <VStack align="start" spacing={6}>
+            <Text fontSize="xs" letterSpacing="wider" textTransform="uppercase" color={textSecondary}>
+              Full Stack • AI • Product Engineering
             </Text>
-            <Icon as={FaBrain} color={cyan} />
-          </MotionHStack>
 
-          <Text fontSize="lg" color={textSecondary} maxW="90%">
-            I specialize in building reliable, scalable applications and intelligent
-            systems with a strong focus on performance, maintainability, and
-            real-world impact.
-          </Text>
-        </VStack>
-
-        {/* ================= VIDEO ================= */}
-        <MotionBox
-          position="relative"
-          h={{ base: "260px", md: "460px" }}
-          rounded="3xl"
-          overflow="hidden"
-          border={`1px solid ${border}`}
-          bg={useColorModeValue("white", "gray.900")}
-          boxShadow="0 30px 70px rgba(0,0,0,0.35)"
-          whileHover={{ scale: 1.015 }}
-          transition={{ type: "spring", stiffness: 160, damping: 22 }}
-        >
-          {/* Premium Label */}
-          <HStack
-            position="absolute"
-            top="16px"
-            left="16px"
-            spacing={2}
-            px={4}
-            py={2}
-            bg="blackAlpha.800"
-            backdropFilter="blur(10px)"
-            rounded="full"
-            zIndex={3}
-            boxShadow="lg"
-            pointerEvents="none"
-          >
-            <Icon as={FaRobot} color={cyan} />
-            <Text
-              fontSize="xs"
-              fontWeight="bold"
-              letterSpacing="wide"
-              color="white"
+            <MotionText
+              fontSize={{ base: "3xl", md: "5xl" }}
+              fontWeight="extrabold"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              INTRODUCTION VIDEO
+              Hi, I’m <span style={{ color: accent }}>Ankit Yadav</span>
+            </MotionText>
+
+            <MotionHStack spacing={3}>
+              <Icon as={FaRobot} color={cyan} />
+              <Text fontSize="xl" color={cyan} fontWeight="semibold">
+                <ReactTyped
+                  strings={["AI Engineer","Full Stack Developer","Problem Solver","Building Scalable Products"]}
+                  typeSpeed={50} backSpeed={30} loop
+                />
+              </Text>
+              <Icon as={FaBrain} color={cyan} />
+            </MotionHStack>
+
+            <Text fontSize="lg" color={textSecondary} maxW="90%">
+              I build scalable applications and intelligent systems with strong emphasis on performance, clean architecture, and real-world impact.
             </Text>
-          </HStack>
+          </VStack>
 
-          {/* Gradient Overlay */}
-          <Box
-            position="absolute"
-            inset={0}
-            bgGradient="linear(to-t, blackAlpha.700, transparent 60%)"
-            zIndex={1}
-            pointerEvents="none"
-          />
+          {/* RIGHT VIDEO */}
+          <MotionBox
+            position="relative"
+            h={{ base: "260px", md: "460px" }}
+            rounded="3xl"
+            overflow="hidden"
+            border={`1px solid ${border}`}
+            bg="black"
+            boxShadow="0 30px 70px rgba(0,0,0,0.45)"
+            whileHover={{ scale: 1.015 }}
+          >
+            <Box position="absolute" inset={0} bgGradient="linear(to-t, blackAlpha.700, transparent 60%)" zIndex={1} />
 
-          {/* VIDEO */}
-          <Box position="relative" w="100%" h="100%" zIndex={0}>
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/YlSr3Ypl6UE?rel=0&modestbranding=1"
+              src="https://www.youtube.com/embed/YlSr3Ypl6UE"
               title="Introduction Video"
-              style={{
-                border: "none",
-                borderRadius: "24px",
-              }}
+              style={{ border: "none", borderRadius: "24px" }}
               allowFullScreen
             />
-          </Box>
-
-          {/* Bottom Caption */}
-          <VStack
-            position="absolute"
-            bottom="0"
-            w="100%"
-            px={{ base: 4, md: 8 }}
-            py={{ base: 3, md: 5 }}
-            spacing={1}
-            align="start"
-            zIndex={2}
-            pointerEvents="none"
-          >
-            <Text fontSize="sm" color="gray.300">
-              Founder’s Introduction
-            </Text>
-            <Text
-              fontSize={{ base: "sm", md: "md" }}
-              fontWeight="semibold"
-              color="white"
-              maxW="90%"
-            >
-              My background, mindset, and approach to building scalable real-world
-              products.
-            </Text>
-          </VStack>
-        </MotionBox>
-      </SimpleGrid>
+          </MotionBox>
+        </SimpleGrid>
+      </MotionBox>
 
       {/* ================= EXPERIENCE ================= */}
       <VStack spacing={14} mt={28}>
         <VStack spacing={2}>
-          <Text fontSize="3xl" fontWeight="bold" color={cyan}>
-            Work Experience
-          </Text>
-          <Text fontSize="sm" color={textSecondary}>
-            Roles where I delivered measurable impact
-          </Text>
+          <Text fontSize="3xl" fontWeight="bold" color={cyan}>Work Experience</Text>
+          <Text fontSize="sm" color={textSecondary}>Roles where I delivered measurable impact</Text>
         </VStack>
 
         {experiences.map((exp, index) => (
@@ -209,15 +141,11 @@ const AboutMeSection = () => {
             <Text fontSize="xl" fontWeight="bold" color={textPrimary}>
               {exp.role} — {exp.company}
             </Text>
-            <Text fontSize="sm" color={cyan} mt={1}>
-              {exp.duration}
-            </Text>
+            <Text fontSize="sm" color={cyan} mt={1}>{exp.duration}</Text>
 
             <HStack spacing={2} mt={4} wrap="wrap">
               {exp.tech.map((t, i) => (
-                <Badge key={i} colorScheme="cyan" rounded="full" px={3} py={1}>
-                  {t}
-                </Badge>
+                <Badge key={i} colorScheme="cyan" rounded="full" px={3} py={1}>{t}</Badge>
               ))}
             </HStack>
 
@@ -225,53 +153,59 @@ const AboutMeSection = () => {
 
             <VStack align="start" spacing={2}>
               {exp.points.map((p, i) => (
-                <Text key={i} fontSize="sm" color={textSecondary}>
-                  • {p}
-                </Text>
+                <Text key={i} fontSize="sm" color={textSecondary}>• {p}</Text>
               ))}
             </VStack>
           </MotionBox>
         ))}
       </VStack>
 
-      {/* ================= PROOF ================= */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={16} mt={28}>
-        <MotionBox
-          p={6}
-          bg={bgCard}
-          rounded="2xl"
-          border={`1px solid ${border}`}
-          whileHover={{ scale: 1.03 }}
-        >
-          <LeetCodeWidget usernamel={leet} />
-        </MotionBox>
+      {/* ================= PROOF (DIAGONAL) ================= */}
+      <MotionBox position="relative" overflow="hidden" mt={28}>
+        {/* Diagonal Glow */}
+        <Box
+          position="absolute"
+          bottom="-40%"
+          right="-30%"
+          w="160%"
+          h="160%"
+          bg="linear-gradient(135deg, rgba(99,102,241,0.18), transparent 60%)"
+          transform="rotate(12deg)"
+          pointerEvents="none"
+        />
 
-        <VStack align="start" spacing={4}>
-          <Text
-            fontSize="xs"
-            letterSpacing="wider"
-            color={textSecondary}
-            textTransform="uppercase"
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={16} position="relative" zIndex={1}>
+          {/* LEFT CONTENT */}
+          <VStack align="start" spacing={5}>
+            <Text fontSize="xs" letterSpacing="wider" textTransform="uppercase" color={textSecondary}>
+              Proof of Work
+            </Text>
+
+            <Text fontSize="5xl" fontWeight="extrabold" color={accent}>500+</Text>
+
+            <Text fontSize="lg" color={textSecondary}>
+              Solved 500+ algorithmic and data-structure problems, developing strong analytical thinking and interview-level problem-solving skills.
+            </Text>
+
+            <HStack spacing={3}>
+              <Icon as={FaProblem} color={cyan} boxSize={7} />
+              <Text color={textSecondary}>Daily consistency & pattern-based DSA practice</Text>
+            </HStack>
+          </VStack>
+
+          {/* RIGHT WIDGET */}
+          <MotionBox
+            p={6}
+            bg={bgCard}
+            rounded="2xl"
+            border={`1px solid ${border}`}
+            backdropFilter="blur(14px)"
+            whileHover={{ y: -6 }}
           >
-            Proof of Work
-          </Text>
-
-          <Text fontSize="4xl" fontWeight="extrabold" color={accent}>
-            500+
-          </Text>
-
-          <Text fontSize="lg" color={textSecondary}>
-            Solved 500+ algorithmic and data-structure problems, sharpening
-            analytical thinking and the ability to approach complex challenges
-            systematically.
-          </Text>
-
-          <HStack spacing={3}>
-            <Icon as={FaProblem} color={cyan} boxSize={7} />
-            <Text color={textSecondary}>Consistent daily DSA practice</Text>
-          </HStack>
-        </VStack>
-      </SimpleGrid>
+            <LeetCodeWidget usernamel={leet} />
+          </MotionBox>
+        </SimpleGrid>
+      </MotionBox>
     </Box>
   );
 };
