@@ -21,7 +21,6 @@ const Lld = () => {
         "Inheritance",
         "Polymorphism",
         "Abstraction",
-        "SOLID Principles",
       ],
       status: "Completed",
       route: "/system-design/lld/oops",
@@ -39,6 +38,21 @@ const Lld = () => {
       ],
       status: "Completed",
       route: "/system-design/lld/uml",
+    },
+    {
+      date: "2025-12-16",
+      title: "SOLID Design Principles",
+      shortNote:
+        "Deep understanding of SOLID principles with real-world Java examples, focusing on scalable and maintainable system design.",
+      subTopics: [
+        "S — Single Responsibility Principle (SRP)",
+        "O — Open Closed Principle (OCP)",
+        "L — Liskov Substitution Principle (LSP)",
+        "I — Interface Segregation Principle (ISP)",
+        "D — Dependency Inversion Principle (DIP)",
+      ],
+      status: "In Progress",
+      route: "/system-design/lld/solid",
     },
   ];
 

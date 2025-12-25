@@ -4,6 +4,7 @@ import { Box, Spinner } from "@chakra-ui/react";
 
 
 
+
 // 🔥 Lazy-loaded components
 const ProjectShow = lazy(() => import("./Component/ProjectShow"));
 const AddProjectForm = lazy(() => import("./Component/AddProjectForm"));
@@ -20,6 +21,7 @@ const Hld = lazy(() => import("./Component/Hld"));
 const Lld = lazy(() => import("./Component/Lld"));
 const Oops = lazy(() => import("./Component/Oops"));
 const UML = lazy(() => import("./Component/UML"));
+const Solid = lazy(() => import("./Component/Solid"));
 const JavascriptInterview = lazy(() => import("./Component/JavascriptInterview"));
 
 // ⭐ Detail Page
@@ -61,6 +63,7 @@ function App() {
               <Route path="/system-design/lld/oops" element={<Oops />} />
               <Route path="/system-design/lld/uml" element={<UML/>} />
               <Route path="/javascript-interview" element={<JavascriptInterview/>} />
+              <Route path="/system-design/lld/solid" element={<Solid/>} />
 
               {/* ⭐ Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />
