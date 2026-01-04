@@ -2,9 +2,6 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, Spinner } from "@chakra-ui/react";
 
-
-
-
 // 🔥 Lazy-loaded components
 const ProjectShow = lazy(() => import("./Component/ProjectShow"));
 const AddProjectForm = lazy(() => import("./Component/AddProjectForm"));
@@ -22,7 +19,12 @@ const Lld = lazy(() => import("./Component/Lld"));
 const Oops = lazy(() => import("./Component/Oops"));
 const UML = lazy(() => import("./Component/UML"));
 const Solid = lazy(() => import("./Component/Solid"));
-const JavascriptInterview = lazy(() => import("./Component/JavascriptInterview"));
+const NetworkingProtocols = lazy(() => import("./Component/NetworkingProtocols"));
+const CapTheorem = lazy(() => import("./Component/CapTheorem"));
+
+const JavascriptInterview = lazy(() =>
+  import("./Component/JavascriptInterview")
+);
 
 // ⭐ Detail Page
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
@@ -59,11 +61,16 @@ function App() {
               <Route path="/admin" element={<VisitorDashboard />} />
               <Route path="/system-design" element={<SystemDesign />} />
               <Route path="/system-design/hld" element={<Hld />} />
+              <Route path="/system-design/hld/network-protocols" element={<NetworkingProtocols />} />
+              <Route path="/system-design/hld/cap-theorem" element={<CapTheorem />} />
               <Route path="/system-design/lld" element={<Lld />} />
               <Route path="/system-design/lld/oops" element={<Oops />} />
-              <Route path="/system-design/lld/uml" element={<UML/>} />
-              <Route path="/javascript-interview" element={<JavascriptInterview/>} />
-              <Route path="/system-design/lld/solid" element={<Solid/>} />
+              <Route path="/system-design/lld/uml" element={<UML />} />
+              <Route
+                path="/javascript-interview"
+                element={<JavascriptInterview />}
+              />
+              <Route path="/system-design/lld/solid" element={<Solid />} />
 
               {/* ⭐ Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />

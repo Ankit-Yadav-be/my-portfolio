@@ -156,10 +156,7 @@ const Lld = () => {
               <span style={styles.status}>{item.status}</span>
             </div>
 
-            <div
-              style={styles.cardTitle}
-              onClick={() => navigate(item.route)}
-            >
+            <div style={styles.cardTitle} onClick={() => navigate(item.route)}>
               {item.title}
             </div>
 
@@ -173,10 +170,7 @@ const Lld = () => {
               ))}
             </ul>
 
-            <button
-              style={styles.button}
-              onClick={() => navigate(item.route)}
-            >
+            <button style={styles.button} onClick={() => navigate(item.route)}>
               View detailed notes →
             </button>
           </div>
