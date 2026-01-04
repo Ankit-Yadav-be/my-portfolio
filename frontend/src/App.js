@@ -21,6 +21,9 @@ const UML = lazy(() => import("./Component/UML"));
 const Solid = lazy(() => import("./Component/Solid"));
 const NetworkingProtocols = lazy(() => import("./Component/NetworkingProtocols"));
 const CapTheorem = lazy(() => import("./Component/CapTheorem"));
+const Microservices = lazy(() => import("./Component/Microservices"));
+const ScaleApp = lazy(() => import("./Component/ScaleApp"));
+
 
 const JavascriptInterview = lazy(() =>
   import("./Component/JavascriptInterview")
@@ -63,6 +66,8 @@ function App() {
               <Route path="/system-design/hld" element={<Hld />} />
               <Route path="/system-design/hld/network-protocols" element={<NetworkingProtocols />} />
               <Route path="/system-design/hld/cap-theorem" element={<CapTheorem />} />
+              <Route path="/system-design/hld/microservices" element={<Microservices />} />
+              <Route path="/system-design/hld/scaling-1m-users" element={<ScaleApp />} />
               <Route path="/system-design/lld" element={<Lld />} />
               <Route path="/system-design/lld/oops" element={<Oops />} />
               <Route path="/system-design/lld/uml" element={<UML />} />

@@ -9,38 +9,73 @@ const Hld = () => {
    * Only MAIN HLD TOPICS here
    * Detailed explanations live on separate pages
    */
-  const hldTopics = [
-    {
-      date: "2026-01-04",
-      title: "Network Protocols (Foundation of HLD)",
-      shortNote:
-        "Studied how distributed systems communicate over networks, including application-layer models and transport-layer protocols.",
-      subTopics: [
-        "Client–Server vs Peer-to-Peer Model",
-        "HTTP, FTP, SMTP, IMAP, POP",
-        "WebSockets (Bidirectional Communication)",
-        "WebRTC (Real-Time P2P Communication)",
-        "TCP vs UDP (Transport Layer)",
-      ],
-      status: "Completed",
-      route: "/system-design/hld/network-protocols",
-    },
-    {
-      date: "2026-01-05",
-      title: "CAP Theorem (Distributed Systems Core)",
-      shortNote:
-        "Learned trade-offs between Consistency, Availability, and Partition Tolerance with real-world system examples.",
-      subTopics: [
-        "Consistency vs Availability",
-        "Partition Tolerance",
-        "CP vs AP vs CA Systems",
-        "Eventual Consistency",
-        "Real-world Database Examples",
-      ],
-      status: "Completed",
-      route: "/system-design/hld/cap-theorem",
-    },
-  ];
+const hldTopics = [
+  {
+    date: "2026-01-04",
+    title: "Network Protocols (Foundation of HLD)",
+    shortNote:
+      "Studied how distributed systems communicate over networks, including application-layer models and transport-layer protocols.",
+    subTopics: [
+      "Client–Server vs Peer-to-Peer Model",
+      "HTTP, FTP, SMTP, IMAP, POP",
+      "WebSockets (Bidirectional Communication)",
+      "WebRTC (Real-Time P2P Communication)",
+      "TCP vs UDP (Transport Layer)",
+    ],
+    status: "Completed",
+    route: "/system-design/hld/network-protocols",
+  },
+  {
+    date: "2026-01-05",
+    title: "CAP Theorem (Distributed Systems Core)",
+    shortNote:
+      "Learned trade-offs between Consistency, Availability, and Partition Tolerance with real-world system examples.",
+    subTopics: [
+      "Consistency vs Availability",
+      "Partition Tolerance",
+      "CP vs AP vs CA Systems",
+      "Eventual Consistency",
+      "Real-world Database Examples",
+    ],
+    status: "Completed",
+    route: "/system-design/hld/cap-theorem",
+  },
+  {
+    date: "2026-01-06",
+    title: "Microservices Architecture & Decomposition Patterns",
+    shortNote:
+      "Understood monolithic vs microservices architecture, decomposition strategies, and transaction management using Saga pattern.",
+    subTopics: [
+      "Monolithic vs Microservices Architecture",
+      "Pros & Cons of Microservices",
+      "Decomposition by Business Capability",
+      "Decomposition by Subdomain (DDD)",
+      "Saga Pattern (Distributed Transactions)",
+    ],
+    status: "Completed",
+    route: "/system-design/hld/microservices",
+  },
+  {
+    date: "2026-01-07",
+    title: "Scaling System from Zero to One Million Users",
+    shortNote:
+      "Learned step-by-step system evolution from a single server to a globally scalable architecture handling millions of users.",
+    subTopics: [
+      "Single Server Architecture",
+      "App Server & Database Separation",
+      "Load Balancer & Horizontal Scaling",
+      "Database Replication (Master–Slave)",
+      "Caching Strategies",
+      "CDN for Static Content",
+      "Multiple Data Centers",
+      "Message Queues (Async Processing)",
+      "Database Sharding (Horizontal & Vertical)",
+    ],
+    status: "Completed",
+    route: "/system-design/hld/scaling-1m-users",
+  },
+];
+
 
   const styles = {
     page: {
