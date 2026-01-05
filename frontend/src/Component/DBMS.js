@@ -31,11 +31,11 @@ const DBMS = () => {
 
   return (
     <Flex
-      mt="80px"
-      minH="100vh"
+      mt="80px" // navbar offset
+      minH="calc(100vh - 80px)"
       direction={{ base: "column", md: "row" }}
     >
-      {/* ================= LEFT SIDEBAR ================= */}
+      {/* ========== LEFT SIDEBAR ========== */}
       <Box
         w={{ base: "100%", md: "30%" }}
         bg={sidebarBg}
@@ -43,9 +43,9 @@ const DBMS = () => {
         borderBottom={{ base: "1px solid", md: "none" }}
         borderColor={borderColor}
         p={6}
-        position={{ base: "relative", md: "sticky" }}
-        top="80px"
-        h={{ md: "calc(100vh - 80px)" }}
+        position={{ base: "static", md: "sticky" }} // 🔥 FIX
+        top={{ md: "80px" }}
+        alignSelf="flex-start"
       >
         <Heading size="md" mb={2}>
           DBMS
@@ -61,7 +61,7 @@ const DBMS = () => {
             colorScheme="blue"
             onClick={() => setActiveTopic("abstraction")}
           >
-            📘 Database Abstraction
+             Database Abstraction
           </Button>
 
           <Button
@@ -70,17 +70,18 @@ const DBMS = () => {
             colorScheme="blue"
             onClick={() => setActiveTopic("architecture")}
           >
-            🏗 Database Architecture
+             Database Architecture
           </Button>
         </VStack>
       </Box>
 
-      {/* ================= RIGHT CONTENT ================= */}
+      {/* ========== RIGHT CONTENT ========== */}
       <Box
         w={{ base: "100%", md: "70%" }}
         bg={contentBg}
         p={{ base: 4, md: 8 }}
-        overflowY="auto"
+        minH="100%"
+        overflow={{ base: "visible", md: "auto" }} // 🔥 FIX
       >
         {renderComponent()}
       </Box>
