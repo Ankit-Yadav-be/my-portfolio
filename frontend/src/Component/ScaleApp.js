@@ -1,6 +1,9 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const ScalingOneMillionUsers = () => {
+
+    const navigate = useNavigate();
+
   const styles = {
     page: {
       minHeight: "100vh",
@@ -231,24 +234,44 @@ const ScalingOneMillionUsers = () => {
         </div>
 
         {/* 8. Message Queue */}
-        <div style={styles.card}>
-          <h2 style={styles.h2}>8️⃣ Messaging Queues (Async Processing)</h2>
-          <p style={styles.text}>
-            Message queues decouple services and handle traffic spikes
-            gracefully.
-          </p>
+        {/* Kafka Deep Dive Navigation */}
+<div style={styles.card}>
+  <h2 style={styles.h2}>🔗 Deep Dive: Apache Kafka</h2>
 
-          <h3 style={styles.h3}>📦 Examples</h3>
-          <ul style={styles.list}>
-            <li>Email notifications</li>
-            <li>Order processing</li>
-            <li>Analytics events</li>
-          </ul>
+  <p style={styles.text}>
+    For large-scale systems, messaging queues are not enough.
+    <b> Apache Kafka</b> is used when we need
+    <b> high throughput, durability, replayability, and event streaming</b>.
+  </p>
 
-          <div style={styles.highlight}>
-            Interview Line: Queues turn synchronous bottlenecks into async flows.
-          </div>
-        </div>
+  <ul style={styles.list}>
+    <li>Event-driven architecture</li>
+    <li>Decoupled microservices</li>
+    <li>Uber / Netflix / LinkedIn scale</li>
+  </ul>
+
+  <div style={styles.highlight}>
+    Interview Tip: When scale + async + analytics come together → Kafka
+  </div>
+
+  <button
+    onClick={() => navigate("/system-design/hld/scaling-1m-users/kafka")}
+    style={{
+      marginTop: "14px",
+      backgroundColor: "#38bdf8",
+      color: "#020617",
+      border: "none",
+      padding: "10px 18px",
+      borderRadius: "8px",
+      fontWeight: 600,
+      cursor: "pointer",
+      fontSize: "14px",
+    }}
+  >
+    Learn Kafka in Depth →
+  </button>
+</div>
+
 
         {/* 9. Sharding */}
         <div style={styles.card}>

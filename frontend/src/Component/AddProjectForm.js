@@ -11,7 +11,7 @@ import {
   TagLabel,
   TagCloseButton,
   useToast,
-  Select
+  Select,
 } from "@chakra-ui/react";
 import axios from "axios";
 

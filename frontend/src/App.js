@@ -23,6 +23,7 @@ const NetworkingProtocols = lazy(() => import("./Component/NetworkingProtocols")
 const CapTheorem = lazy(() => import("./Component/CapTheorem"));
 const Microservices = lazy(() => import("./Component/Microservices"));
 const ScaleApp = lazy(() => import("./Component/ScaleApp"));
+const KafkaDesign = lazy(() => import("./Component/Kafka"));
 
 
 const JavascriptInterview = lazy(() =>
@@ -68,6 +69,7 @@ function App() {
               <Route path="/system-design/hld/cap-theorem" element={<CapTheorem />} />
               <Route path="/system-design/hld/microservices" element={<Microservices />} />
               <Route path="/system-design/hld/scaling-1m-users" element={<ScaleApp />} />
+               <Route path="/system-design/hld/scaling-1m-users/kafka" element={<KafkaDesign />} />
               <Route path="/system-design/lld" element={<Lld />} />
               <Route path="/system-design/lld/oops" element={<Oops />} />
               <Route path="/system-design/lld/uml" element={<UML />} />
