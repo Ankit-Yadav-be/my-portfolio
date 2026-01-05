@@ -24,6 +24,7 @@ const CapTheorem = lazy(() => import("./Component/CapTheorem"));
 const Microservices = lazy(() => import("./Component/Microservices"));
 const ScaleApp = lazy(() => import("./Component/ScaleApp"));
 const KafkaDesign = lazy(() => import("./Component/Kafka"));
+const DBMS = lazy(() => import("./Component/DBMS"));
 
 
 const JavascriptInterview = lazy(() =>
@@ -64,6 +65,7 @@ function App() {
               <Route path="/add-project" element={<AddProjectForm />} />
               <Route path="/admin" element={<VisitorDashboard />} />
               <Route path="/system-design" element={<SystemDesign />} />
+              <Route path="/dbms" element={<DBMS />} />
               <Route path="/system-design/hld" element={<Hld />} />
               <Route path="/system-design/hld/network-protocols" element={<NetworkingProtocols />} />
               <Route path="/system-design/hld/cap-theorem" element={<CapTheorem />} />

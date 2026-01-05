@@ -14,7 +14,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaCode, FaLaptopCode, FaHome, FaSitemap, FaBars } from "react-icons/fa";
+import {
+  FaCode,
+  FaLaptopCode,
+  FaHome,
+  FaSitemap,
+  FaBars,
+  FaDatabase,
+} from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -25,19 +32,23 @@ const Navbar = () => {
   const bg = useColorModeValue("whiteAlpha.900", "gray.900");
   const activeBg = useColorModeValue("blue.500", "teal.400");
 
+  // 🔥 UPDATED NAV ITEMS (DBMS ADDED)
   const navItems = [
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Web", path: "/problem-list", icon: <FaCode /> },
     { name: "DSA", path: "/dsa", icon: <FaLaptopCode /> },
+    { name: "DBMS", path: "/dbms", icon: <FaDatabase /> }, // ✅ NEW
     { name: "System Design", path: "/system-design", icon: <FaSitemap /> },
   ];
 
   const isRouteActive = (path) =>
-    path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+    path === "/"
+      ? location.pathname === "/"
+      : location.pathname.startsWith(path);
 
   const handleNavClick = (path) => {
     navigate(path);
-    setDrawerOpen(false); // close drawer on mobile
+    setDrawerOpen(false);
   };
 
   return (
@@ -53,8 +64,12 @@ const Navbar = () => {
       px={6}
       py={3}
     >
-      {/* Desktop */}
-      <HStack spacing={6} justify="center" display={{ base: "none", md: "flex" }}>
+      {/* ================= DESKTOP ================= */}
+      <HStack
+        spacing={6}
+        justify="center"
+        display={{ base: "none", md: "flex" }}
+      >
         {navItems.map((item) => {
           const active = isRouteActive(item.path);
           return (
@@ -88,9 +103,16 @@ const Navbar = () => {
         })}
       </HStack>
 
-      {/* Mobile Hamburger */}
-      <Box display={{ base: "flex", md: "none" }} justifyContent="space-between" alignItems="center">
-        <Box fontWeight="bold">Logo</Box>
+      {/* ================= MOBILE ================= */}
+      <Box
+        display={{ base: "flex", md: "none" }}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Box fontWeight="bold" fontSize="lg">
+          Portfolio
+        </Box>
+
         <IconButton
           icon={<FaBars />}
           aria-label="Menu"
@@ -99,8 +121,12 @@ const Navbar = () => {
         />
       </Box>
 
-      {/* Mobile Drawer */}
-      <Drawer placement="right" isOpen={isDrawerOpen} onClose={() => setDrawerOpen(false)}>
+      {/* ================= MOBILE DRAWER ================= */}
+      <Drawer
+        placement="right"
+        isOpen={isDrawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
         <DrawerOverlay />
         <DrawerContent bg={bg}>
           <DrawerCloseButton />
