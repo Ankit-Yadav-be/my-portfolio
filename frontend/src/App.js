@@ -52,7 +52,7 @@ function App() {
         >
           <Navbar />
 
-          <Box pt="80px">
+          <Box pt="20px">
             <TrackVisitor />
 
             <Routes>
