@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Abstraction from "./dbmsCompo/Abstraction";
 import Architecture from "./dbmsCompo/Architecture";
+import KeysAndReferentialIntegrity from "./dbmsCompo/KeysAndRef";
 
 const DBMS = () => {
   const [activeTopic, setActiveTopic] = useState("abstraction");
@@ -24,6 +25,8 @@ const DBMS = () => {
         return <Abstraction />;
       case "architecture":
         return <Architecture />;
+        case "keys": 
+        return <KeysAndReferentialIntegrity />;
       default:
         return <Abstraction />;
     }
