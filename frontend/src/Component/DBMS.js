@@ -8,6 +8,7 @@ import {
   useColorModeValue,
   Text,
 } from "@chakra-ui/react";
+
 import Abstraction from "./dbmsCompo/Abstraction";
 import Architecture from "./dbmsCompo/Architecture";
 import KeysAndReferentialIntegrity from "./dbmsCompo/KeysAndRef";
@@ -25,7 +26,7 @@ const DBMS = () => {
         return <Abstraction />;
       case "architecture":
         return <Architecture />;
-        case "keys": 
+      case "keys":
         return <KeysAndReferentialIntegrity />;
       default:
         return <Abstraction />;
@@ -34,11 +35,11 @@ const DBMS = () => {
 
   return (
     <Flex
-      mt="80px" // navbar offset
+      mt="80px" // navbar height offset
       minH="calc(100vh - 80px)"
       direction={{ base: "column", md: "row" }}
     >
-      {/* ========== LEFT SIDEBAR ========== */}
+      {/* ================= LEFT SIDEBAR ================= */}
       <Box
         w={{ base: "100%", md: "30%" }}
         bg={sidebarBg}
@@ -46,18 +47,18 @@ const DBMS = () => {
         borderBottom={{ base: "1px solid", md: "none" }}
         borderColor={borderColor}
         p={6}
-        position={{ base: "static", md: "sticky" }} // 🔥 FIX
+        position={{ base: "static", md: "sticky" }}
         top={{ md: "80px" }}
         alignSelf="flex-start"
       >
-        <Heading size="md" mb={2}>
+        <Heading size="md" mb={1}>
           DBMS
         </Heading>
-        <Text fontSize="sm" color="gray.500" mb={4}>
-          Core database concepts for SDE interviews
+        <Text fontSize="sm" color="gray.500" mb={5}>
+          Core DB concepts for SDE interviews
         </Text>
 
-        <VStack align="stretch" spacing={3}>
+        <VStack align="stretch" spacing={2}>
           <Button
             justifyContent="flex-start"
             variant={activeTopic === "abstraction" ? "solid" : "ghost"}
@@ -75,16 +76,25 @@ const DBMS = () => {
           >
              Database Architecture
           </Button>
+
+          <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "keys" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("keys")}
+          >
+             Keys & Referential Integrity
+          </Button>
         </VStack>
       </Box>
 
-      {/* ========== RIGHT CONTENT ========== */}
+      {/* ================= RIGHT CONTENT ================= */}
       <Box
         w={{ base: "100%", md: "70%" }}
         bg={contentBg}
         p={{ base: 4, md: 8 }}
         minH="100%"
-        overflow={{ base: "visible", md: "auto" }} // 🔥 FIX
+        overflow={{ base: "visible", md: "auto" }}
       >
         {renderComponent()}
       </Box>
