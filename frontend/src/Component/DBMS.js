@@ -14,6 +14,7 @@ import Architecture from "./dbmsCompo/Architecture";
 import KeysAndReferentialIntegrity from "./dbmsCompo/KeysAndRef";
 import ERModel from "./dbmsCompo/ERModel";
 import EER from "./dbmsCompo/EER";
+import Normalization from "./dbmsCompo/Normalization";
 
 const DBMS = () => {
   const [activeTopic, setActiveTopic] = useState("abstraction");
@@ -33,7 +34,9 @@ const DBMS = () => {
       case "er-model":
         return <ERModel />;
       case "eer":
-        return <EER />;  
+        return <EER />; 
+        case "normalization":
+        return <Normalization />; 
       default:
         return <Abstraction />;
     }
@@ -107,6 +110,14 @@ const DBMS = () => {
             onClick={() => setActiveTopic("eer")}
           >
              EER Model
+          </Button>
+            <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "normalization" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("normalization")}
+          >
+             Normalization
           </Button>
         </VStack>
       </Box>
