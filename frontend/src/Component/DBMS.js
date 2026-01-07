@@ -12,6 +12,7 @@ import {
 import Abstraction from "./dbmsCompo/Abstraction";
 import Architecture from "./dbmsCompo/Architecture";
 import KeysAndReferentialIntegrity from "./dbmsCompo/KeysAndRef";
+import ERModel from "./dbmsCompo/ERModel";
 
 const DBMS = () => {
   const [activeTopic, setActiveTopic] = useState("abstraction");
@@ -28,6 +29,8 @@ const DBMS = () => {
         return <Architecture />;
       case "keys":
         return <KeysAndReferentialIntegrity />;
+      case "er-model":
+        return <ERModel />;
       default:
         return <Abstraction />;
     }
@@ -35,7 +38,7 @@ const DBMS = () => {
 
   return (
     <Flex
-      mt="80px" // navbar height offset
+      mt="80px"
       minH="calc(100vh - 80px)"
       direction={{ base: "column", md: "row" }}
     >
@@ -84,6 +87,15 @@ const DBMS = () => {
             onClick={() => setActiveTopic("keys")}
           >
              Keys & Referential Integrity
+          </Button>
+
+          <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "er-model" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("er-model")}
+          >
+             ER Model
           </Button>
         </VStack>
       </Box>
