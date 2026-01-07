@@ -18,7 +18,7 @@ const ERModel = () => {
   return (
     <Box>
       <Heading size="lg" mb={4}>
-        🌐 ER (Entity–Relationship) Model
+         ER (Entity–Relationship) Model
       </Heading>
 
       <Text fontSize="md" mb={6}>
