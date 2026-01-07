@@ -25,6 +25,7 @@ const Microservices = lazy(() => import("./Component/Microservices"));
 const ScaleApp = lazy(() => import("./Component/ScaleApp"));
 const KafkaDesign = lazy(() => import("./Component/Kafka"));
 const DBMS = lazy(() => import("./Component/DBMS"));
+const NodeJsInterview = lazy(() => import("./Component/NodeJsInterview"));
 
 
 const JavascriptInterview = lazy(() =>
@@ -64,6 +65,7 @@ function App() {
               <Route path="/skill" element={<SkillsSection />} />
               <Route path="/add-project" element={<AddProjectForm />} />
               <Route path="/admin" element={<VisitorDashboard />} />
+              <Route path="/nodejs-interview" element={<NodeJsInterview />} />
               <Route path="/system-design" element={<SystemDesign />} />
               <Route path="/dbms" element={<DBMS />} />
               <Route path="/system-design/hld" element={<Hld />} />
@@ -81,7 +83,7 @@ function App() {
               />
               <Route path="/system-design/lld/solid" element={<Solid />} />
 
-              {/* ⭐ Lazy-loaded project detail */}
+              {/*  Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />
             </Routes>
           </Box>

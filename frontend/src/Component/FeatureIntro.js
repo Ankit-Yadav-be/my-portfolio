@@ -157,20 +157,75 @@ export default function FeatureIntro() {
       </Box>
 
       {/* CTA */}
-      <Box textAlign="center" mt={12} position="relative" zIndex={1}>
-        <Button
-          rightIcon={<FiArrowRight />}
-          colorScheme="cyan"
-          size="lg"
-          rounded="full"
-          px={10}
-          shadow="xl"
-          _hover={{ transform: "translateY(-2px)" }}
-          onClick={() => navigate("/javascript-interview")}
-        >
-          Explore JavaScript Interview Problems
-        </Button>
-      </Box>
+     {/* CTA */}
+<Box
+  textAlign="center"
+  mt={16}
+  position="relative"
+  zIndex={1}
+>
+  <VStack spacing={6}>
+    <Heading
+      fontSize={{ base: "xl", md: "2xl" }}
+      fontWeight="700"
+      letterSpacing="-0.02em"
+    >
+      Practice Interview-Ready Problems
+    </Heading>
+
+    <Text color="gray.400" maxW="600px" fontSize="sm">
+      Curated interview problems designed to strengthen fundamentals,
+      backend thinking, and real-world problem solving.
+    </Text>
+
+    <HStack
+      spacing={6}
+      flexWrap="wrap"
+      justify="center"
+    >
+      {/* JavaScript Button */}
+      <Button
+        rightIcon={<FiArrowRight />}
+        size="lg"
+        px={10}
+        rounded="full"
+        bgGradient="linear(to-r, cyan.400, blue.500)"
+        color="white"
+        shadow="0 0 25px rgba(56,189,248,0.45)"
+        _hover={{
+          transform: "translateY(-3px) scale(1.03)",
+          shadow: "0 0 35px rgba(56,189,248,0.75)",
+        }}
+        _active={{ transform: "scale(0.98)" }}
+        transition="all 0.25s ease"
+        onClick={() => navigate("/javascript-interview")}
+      >
+        JavaScript Interview Problems
+      </Button>
+
+      {/* Node.js Button */}
+      <Button
+        rightIcon={<FiArrowRight />}
+        size="lg"
+        px={10}
+        rounded="full"
+        bgGradient="linear(to-r, green.400, teal.500)"
+        color="white"
+        shadow="0 0 25px rgba(34,197,94,0.45)"
+        _hover={{
+          transform: "translateY(-3px) scale(1.03)",
+          shadow: "0 0 35px rgba(34,197,94,0.75)",
+        }}
+        _active={{ transform: "scale(0.98)" }}
+        transition="all 0.25s ease"
+        onClick={() => navigate("/nodejs-interview")}
+      >
+        Node.js Interview Problems
+      </Button>
+    </HStack>
+  </VStack>
+</Box>
+
     </Box>
   );
 }
