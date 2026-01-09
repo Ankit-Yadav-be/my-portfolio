@@ -23,8 +23,8 @@ const DeepLearning = () => {
     switch (activeTopic) {
       case "intro":
         return <Introduction />;
-        case "perceptron":
-        return <PerceptronNotes />; 
+      case "perceptron":
+        return <PerceptronNotes />;
       default:
         return <Introduction />;
     }
@@ -36,21 +36,18 @@ const DeepLearning = () => {
       minH="calc(100vh - 80px)"
       direction={{ base: "column", md: "row" }}
     >
-      {/* ================= LEFT SIDEBAR ================= */}
+      {/* LEFT SIDEBAR */}
       <Box
         w={{ base: "100%", md: "30%" }}
         bg={sidebarBg}
-        borderRight={{ base: "none", md: "1px solid" }}
+        borderRight={{ md: "1px solid" }}
         borderBottom={{ base: "1px solid", md: "none" }}
         borderColor={borderColor}
         p={6}
-        position={{ base: "static", md: "sticky" }}
-        top={{ md: "80px" }}
-        alignSelf="flex-start"
+        position={{ md: "sticky" }}
+        top="80px"
       >
-        <Heading size="md" mb={1}>
-          Deep Learning
-        </Heading>
+        <Heading size="md">Deep Learning</Heading>
         <Text fontSize="sm" color="gray.500" mb={5}>
           Concepts for ML / AI / SDE interviews
         </Text>
@@ -65,7 +62,7 @@ const DeepLearning = () => {
             Introduction
           </Button>
 
-             <Button
+          <Button
             justifyContent="flex-start"
             variant={activeTopic === "perceptron" ? "solid" : "ghost"}
             colorScheme="purple"
@@ -76,13 +73,11 @@ const DeepLearning = () => {
         </VStack>
       </Box>
 
-      {/* ================= RIGHT CONTENT ================= */}
+      {/* RIGHT CONTENT */}
       <Box
         w={{ base: "100%", md: "70%" }}
         bg={contentBg}
         p={{ base: 4, md: 8 }}
-        minH="100%"
-        overflow={{ base: "visible", md: "auto" }}
       >
         {renderComponent()}
       </Box>

@@ -5,21 +5,20 @@ import {
   VStack,
   Button,
   Heading,
-  Text,
   useColorModeValue,
+  Text,
 } from "@chakra-ui/react";
 
-import Introduction from "./dlCompo/Introduction";
-import NeuralNetworks from "./dlCompo/NeuralNetworks";
-import ActivationFunctions from "./dlCompo/ActivationFunctions";
-import Backpropagation from "./dlCompo/Backpropagation";
-import Optimizers from "./dlCompo/Optimizers";
-import CNN from "./dlCompo/CNN";
-import RNN from "./dlCompo/RNN";
-import PerceptronNotes from "./AIComponent/Perceptron";
+import Abstraction from "./dbmsCompo/Abstraction";
+import Architecture from "./dbmsCompo/Architecture";
+import KeysAndReferentialIntegrity from "./dbmsCompo/KeysAndRef";
+import ERModel from "./dbmsCompo/ERModel";
+import EER from "./dbmsCompo/EER";
+import Normalization from "./dbmsCompo/Normalization";
+import SQL from "./dbmsCompo/SQL";
 
-const DeepLearning = () => {
-  const [activeTopic, setActiveTopic] = useState("intro");
+const DBMS = () => {
+  const [activeTopic, setActiveTopic] = useState("abstraction");
 
   const sidebarBg = useColorModeValue("gray.50", "gray.900");
   const contentBg = useColorModeValue("white", "gray.800");
@@ -27,12 +26,22 @@ const DeepLearning = () => {
 
   const renderComponent = () => {
     switch (activeTopic) {
-      case "intro":
-        return <Introduction />;
-      case "perceptron":
-        return <PerceptronNotes />;
+      case "abstraction":
+        return <Abstraction />;
+      case "architecture":
+        return <Architecture />;
+      case "keys":
+        return <KeysAndReferentialIntegrity />;
+      case "er-model":
+        return <ERModel />;
+      case "eer":
+        return <EER />; 
+        case "normalization":
+        return <Normalization />; 
+      case "sql":
+        return <SQL />;  
       default:
-        return <Introduction />;
+        return <Abstraction />;
     }
   };
 
@@ -55,29 +64,71 @@ const DeepLearning = () => {
         alignSelf="flex-start"
       >
         <Heading size="md" mb={1}>
-          Deep Learning
+          DBMS
         </Heading>
         <Text fontSize="sm" color="gray.500" mb={5}>
-          Concepts for ML / AI / SDE interviews
+          Core DB concepts for SDE interviews
         </Text>
 
         <VStack align="stretch" spacing={2}>
           <Button
             justifyContent="flex-start"
-            variant={activeTopic === "intro" ? "solid" : "ghost"}
-            colorScheme="purple"
-            onClick={() => setActiveTopic("intro")}
+            variant={activeTopic === "abstraction" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("abstraction")}
           >
-            Introduction
+             Database Abstraction
           </Button>
 
           <Button
             justifyContent="flex-start"
-            variant={activeTopic === "nn" ? "solid" : "ghost"}
-            colorScheme="purple"
-            onClick={() => setActiveTopic("perceptron")}
+            variant={activeTopic === "architecture" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("architecture")}
           >
-            Perceptron
+             Database Architecture
+          </Button>
+
+          <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "keys" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("keys")}
+          >
+             Keys & Referential Integrity
+          </Button>
+
+          <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "er-model" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("er-model")}
+          >
+             ER Model
+          </Button>
+            <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "eer" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("eer")}
+          >
+             EER Model
+          </Button>
+            <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "normalization" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("normalization")}
+          >
+             Normalization
+          </Button>
+            <Button
+            justifyContent="flex-start"
+            variant={activeTopic === "sql" ? "solid" : "ghost"}
+            colorScheme="blue"
+            onClick={() => setActiveTopic("sql")}
+          >
+             SQL Basics
           </Button>
         </VStack>
       </Box>
@@ -96,4 +147,4 @@ const DeepLearning = () => {
   );
 };
 
-export default DeepLearning;
+export default DBMS;
