@@ -21,23 +21,32 @@ import {
   FaSitemap,
   FaBars,
   FaDatabase,
+  FaBrain,
+  FaChevronDown,
 } from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { colorMode } = useColorMode();
+
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
 
   const bg = useColorModeValue("whiteAlpha.900", "gray.900");
   const activeBg = useColorModeValue("blue.500", "teal.400");
 
-  // 🔥 UPDATED NAV ITEMS (DBMS ADDED)
+  // 🔥 NAV ITEMS WITH AI + DEEP LEARNING
   const navItems = [
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Web", path: "/problem-list", icon: <FaCode /> },
     { name: "DSA", path: "/dsa", icon: <FaLaptopCode /> },
-    { name: "DBMS", path: "/dbms", icon: <FaDatabase /> }, // ✅ NEW
+    { name: "DBMS", path: "/dbms", icon: <FaDatabase /> },
+    {
+      name: "AI",
+      icon: <FaBrain />,
+      children: [{ name: "Deep Learning", path: "/ai/deep-learning" }],
+    },
     { name: "System Design", path: "/system-design", icon: <FaSitemap /> },
   ];
 
@@ -49,6 +58,7 @@ const Navbar = () => {
   const handleNavClick = (path) => {
     navigate(path);
     setDrawerOpen(false);
+    setAiOpen(false);
   };
 
   return (
@@ -64,13 +74,78 @@ const Navbar = () => {
       px={6}
       py={3}
     >
-      {/* ================= DESKTOP ================= */}
+      {/* ================= DESKTOP NAV ================= */}
       <HStack
         spacing={6}
         justify="center"
         display={{ base: "none", md: "flex" }}
       >
         {navItems.map((item) => {
+          // ===== AI DROPDOWN =====
+          if (item.children) {
+            return (
+              <Box key={item.name} position="relative" role="group">
+                <Button
+                  leftIcon={item.icon}
+                  rightIcon={<FaChevronDown />}
+                  variant="ghost"
+                  fontWeight="semibold"
+                  color={
+                    colorMode === "dark"
+                      ? "whiteAlpha.900"
+                      : "blackAlpha.900"
+                  }
+                  _hover={{
+                    bg: "linear-gradient(90deg, #38bdf8, #22c55e)",
+                    color: "white",
+                  }}
+                >
+                  {item.name}
+                </Button>
+
+                {/* Dropdown */}
+                <Box
+                  position="absolute"
+                  top="100%"
+                  left="0"
+                  mt={2}
+                  bg={bg}
+                  boxShadow="xl"
+                  borderRadius="lg"
+                  minW="220px"
+                  opacity={0}
+                  visibility="hidden"
+                  transform="translateY(10px)"
+                  transition="all 0.25s ease"
+                  _groupHover={{
+                    opacity: 1,
+                    visibility: "visible",
+                    transform: "translateY(0)",
+                  }}
+                >
+                  <VStack align="stretch" p={2}>
+                    {item.children.map((child) => (
+                      <Button
+                        key={child.path}
+                        justifyContent="flex-start"
+                        variant="ghost"
+                        fontWeight="medium"
+                        _hover={{
+                          bg: "teal.400",
+                          color: "white",
+                        }}
+                        onClick={() => handleNavClick(child.path)}
+                      >
+                        {child.name}
+                      </Button>
+                    ))}
+                  </VStack>
+                </Box>
+              </Box>
+            );
+          }
+
+          // ===== NORMAL NAV ITEM =====
           const active = isRouteActive(item.path);
           return (
             <Button
@@ -103,7 +178,7 @@ const Navbar = () => {
         })}
       </HStack>
 
-      {/* ================= MOBILE ================= */}
+      {/* ================= MOBILE TOP BAR ================= */}
       <Box
         display={{ base: "flex", md: "none" }}
         justifyContent="space-between"
@@ -133,6 +208,41 @@ const Navbar = () => {
           <DrawerBody>
             <VStack spacing={4} mt={10}>
               {navItems.map((item) => {
+                // ===== AI COLLAPSIBLE =====
+                if (item.children) {
+                  return (
+                    <Box key={item.name} w="100%">
+                      <Button
+                        leftIcon={item.icon}
+                        rightIcon={<FaChevronDown />}
+                        w="100%"
+                        justifyContent="space-between"
+                        size="lg"
+                        variant="ghost"
+                        onClick={() => setAiOpen(!aiOpen)}
+                      >
+                        {item.name}
+                      </Button>
+
+                      {aiOpen && (
+                        <VStack align="stretch" pl={6} mt={2}>
+                          {item.children.map((child) => (
+                            <Button
+                              key={child.path}
+                              variant="ghost"
+                              justifyContent="flex-start"
+                              onClick={() => handleNavClick(child.path)}
+                            >
+                              {child.name}
+                            </Button>
+                          ))}
+                        </VStack>
+                      )}
+                    </Box>
+                  );
+                }
+
+                // ===== NORMAL MOBILE ITEM =====
                 const active = isRouteActive(item.path);
                 return (
                   <Button
@@ -151,14 +261,6 @@ const Navbar = () => {
                         ? "whiteAlpha.900"
                         : "blackAlpha.900"
                     }
-                    _hover={{
-                      transform: "scale(1.03)",
-                      bg: active
-                        ? activeBg
-                        : "linear-gradient(90deg, #38bdf8, #22c55e)",
-                      color: "white",
-                    }}
-                    transition="all 0.2s ease"
                     onClick={() => handleNavClick(item.path)}
                   >
                     {item.name}

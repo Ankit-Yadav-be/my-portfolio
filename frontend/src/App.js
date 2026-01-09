@@ -2,7 +2,8 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, Spinner } from "@chakra-ui/react";
 
-// 🔥 Lazy-loaded components
+
+//  Lazy-loaded components
 const ProjectShow = lazy(() => import("./Component/ProjectShow"));
 const AddProjectForm = lazy(() => import("./Component/AddProjectForm"));
 const TrackVisitor = lazy(() => import("./Component/TrackVisitors"));
@@ -26,6 +27,7 @@ const ScaleApp = lazy(() => import("./Component/ScaleApp"));
 const KafkaDesign = lazy(() => import("./Component/Kafka"));
 const DBMS = lazy(() => import("./Component/DBMS"));
 const NodeJsInterview = lazy(() => import("./Component/NodeJsInterview"));
+const DeepLearning = lazy(() => import("./Component/AIComponent/DeepLearning"));
 
 
 const JavascriptInterview = lazy(() =>
@@ -85,6 +87,10 @@ function App() {
 
               {/*  Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />
+              <Route
+                path="/ai/deep-learning/"
+                element={<DeepLearning />}
+              />
             </Routes>
           </Box>
         </Suspense>

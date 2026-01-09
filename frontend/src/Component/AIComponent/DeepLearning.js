@@ -9,14 +9,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-import Introduction from "./dlCompo/Introduction";
-import NeuralNetworks from "./dlCompo/NeuralNetworks";
-import ActivationFunctions from "./dlCompo/ActivationFunctions";
-import Backpropagation from "./dlCompo/Backpropagation";
-import Optimizers from "./dlCompo/Optimizers";
-import CNN from "./dlCompo/CNN";
-import RNN from "./dlCompo/RNN";
-import PerceptronNotes from "./AIComponent/Perceptron";
+import Introduction from "./Introduction";
+import PerceptronNotes from "./Perceptron";
 
 const DeepLearning = () => {
   const [activeTopic, setActiveTopic] = useState("intro");
@@ -29,8 +23,8 @@ const DeepLearning = () => {
     switch (activeTopic) {
       case "intro":
         return <Introduction />;
-      case "perceptron":
-        return <PerceptronNotes />;
+        case "perceptron":
+        return <PerceptronNotes />; 
       default:
         return <Introduction />;
     }
@@ -71,9 +65,9 @@ const DeepLearning = () => {
             Introduction
           </Button>
 
-          <Button
+             <Button
             justifyContent="flex-start"
-            variant={activeTopic === "nn" ? "solid" : "ghost"}
+            variant={activeTopic === "perceptron" ? "solid" : "ghost"}
             colorScheme="purple"
             onClick={() => setActiveTopic("perceptron")}
           >
