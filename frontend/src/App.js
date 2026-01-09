@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, Spinner } from "@chakra-ui/react";
 
-
 //  Lazy-loaded components
 const ProjectShow = lazy(() => import("./Component/ProjectShow"));
 const AddProjectForm = lazy(() => import("./Component/AddProjectForm"));
@@ -20,7 +19,9 @@ const Lld = lazy(() => import("./Component/Lld"));
 const Oops = lazy(() => import("./Component/Oops"));
 const UML = lazy(() => import("./Component/UML"));
 const Solid = lazy(() => import("./Component/Solid"));
-const NetworkingProtocols = lazy(() => import("./Component/NetworkingProtocols"));
+const NetworkingProtocols = lazy(() =>
+  import("./Component/NetworkingProtocols")
+);
 const CapTheorem = lazy(() => import("./Component/CapTheorem"));
 const Microservices = lazy(() => import("./Component/Microservices"));
 const ScaleApp = lazy(() => import("./Component/ScaleApp"));
@@ -28,7 +29,6 @@ const KafkaDesign = lazy(() => import("./Component/Kafka"));
 const DBMS = lazy(() => import("./Component/DBMS"));
 const NodeJsInterview = lazy(() => import("./Component/NodeJsInterview"));
 const DeepLearning = lazy(() => import("./Component/AIComponent/DeepLearning"));
-
 
 const JavascriptInterview = lazy(() =>
   import("./Component/JavascriptInterview")
@@ -71,11 +71,26 @@ function App() {
               <Route path="/system-design" element={<SystemDesign />} />
               <Route path="/dbms" element={<DBMS />} />
               <Route path="/system-design/hld" element={<Hld />} />
-              <Route path="/system-design/hld/network-protocols" element={<NetworkingProtocols />} />
-              <Route path="/system-design/hld/cap-theorem" element={<CapTheorem />} />
-              <Route path="/system-design/hld/microservices" element={<Microservices />} />
-              <Route path="/system-design/hld/scaling-1m-users" element={<ScaleApp />} />
-               <Route path="/system-design/hld/scaling-1m-users/kafka" element={<KafkaDesign />} />
+              <Route
+                path="/system-design/hld/network-protocols"
+                element={<NetworkingProtocols />}
+              />
+              <Route
+                path="/system-design/hld/cap-theorem"
+                element={<CapTheorem />}
+              />
+              <Route
+                path="/system-design/hld/microservices"
+                element={<Microservices />}
+              />
+              <Route
+                path="/system-design/hld/scaling-1m-users"
+                element={<ScaleApp />}
+              />
+              <Route
+                path="/system-design/hld/scaling-1m-users/kafka"
+                element={<KafkaDesign />}
+              />
               <Route path="/system-design/lld" element={<Lld />} />
               <Route path="/system-design/lld/oops" element={<Oops />} />
               <Route path="/system-design/lld/uml" element={<UML />} />
@@ -87,10 +102,7 @@ function App() {
 
               {/*  Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />
-              <Route
-                path="/ai/deep-learning/"
-                element={<DeepLearning />}
-              />
+              <Route path="/ai/deep-learning/" element={<DeepLearning />} />
             </Routes>
           </Box>
         </Suspense>
