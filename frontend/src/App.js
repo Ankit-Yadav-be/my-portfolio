@@ -2,7 +2,9 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, Spinner } from "@chakra-ui/react";
 
+
 //  Lazy-loaded components
+const ReactInterview = lazy(() => import("./Component/ReactInterview"));
 const ProjectShow = lazy(() => import("./Component/ProjectShow"));
 const AddProjectForm = lazy(() => import("./Component/AddProjectForm"));
 const TrackVisitor = lazy(() => import("./Component/TrackVisitors"));
@@ -98,6 +100,7 @@ function App() {
                 path="/javascript-interview"
                 element={<JavascriptInterview />}
               />
+              <Route path="/react-interview" element={<ReactInterview />} />
               <Route path="/system-design/lld/solid" element={<Solid />} />
 
               {/*  Lazy-loaded project detail */}
