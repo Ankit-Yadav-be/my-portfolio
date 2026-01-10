@@ -35,11 +35,11 @@ const DBMS = () => {
       case "er-model":
         return <ERModel />;
       case "eer":
-        return <EER />; 
-        case "normalization":
-        return <Normalization />; 
+        return <EER />;
+      case "normalization":
+        return <Normalization />;
       case "sql":
-        return <SQL />;  
+        return <SQL />;
       default:
         return <Abstraction />;
     }
@@ -77,7 +77,7 @@ const DBMS = () => {
             colorScheme="blue"
             onClick={() => setActiveTopic("abstraction")}
           >
-             Database Abstraction
+            Database Abstraction
           </Button>
 
           <Button
@@ -86,7 +86,7 @@ const DBMS = () => {
             colorScheme="blue"
             onClick={() => setActiveTopic("architecture")}
           >
-             Database Architecture
+            Database Architecture
           </Button>
 
           <Button
@@ -95,7 +95,7 @@ const DBMS = () => {
             colorScheme="blue"
             onClick={() => setActiveTopic("keys")}
           >
-             Keys & Referential Integrity
+            Keys & Referential Integrity
           </Button>
 
           <Button
@@ -104,31 +104,31 @@ const DBMS = () => {
             colorScheme="blue"
             onClick={() => setActiveTopic("er-model")}
           >
-             ER Model
+            ER Model
           </Button>
-            <Button
+          <Button
             justifyContent="flex-start"
             variant={activeTopic === "eer" ? "solid" : "ghost"}
             colorScheme="blue"
             onClick={() => setActiveTopic("eer")}
           >
-             EER Model
+            EER Model
           </Button>
-            <Button
+          <Button
             justifyContent="flex-start"
             variant={activeTopic === "normalization" ? "solid" : "ghost"}
             colorScheme="blue"
             onClick={() => setActiveTopic("normalization")}
           >
-             Normalization
+            Normalization
           </Button>
-            <Button
+          <Button
             justifyContent="flex-start"
             variant={activeTopic === "sql" ? "solid" : "ghost"}
             colorScheme="blue"
             onClick={() => setActiveTopic("sql")}
           >
-             SQL Basics
+            SQL Basics
           </Button>
         </VStack>
       </Box>

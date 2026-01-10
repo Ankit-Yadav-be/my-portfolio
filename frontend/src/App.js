@@ -31,7 +31,7 @@ const KafkaDesign = lazy(() => import("./Component/Kafka"));
 const DBMS = lazy(() => import("./Component/DBMS"));
 const NodeJsInterview = lazy(() => import("./Component/NodeJsInterview"));
 const DeepLearning = lazy(() => import("./Component/AIComponent/DeepLearning"));
-
+const FastAPI = lazy(() => import("./Component/FastApi/FastAPI"));
 const JavascriptInterview = lazy(() =>
   import("./Component/JavascriptInterview")
 );
@@ -106,6 +106,7 @@ function App() {
               {/*  Lazy-loaded project detail */}
               <Route path="/project/:id" element={<ProjectDetailPage />} />
               <Route path="/ai/deep-learning/" element={<DeepLearning />} />
+              <Route path="/fastapi/" element={<FastAPI />} />
             </Routes>
           </Box>
         </Suspense>

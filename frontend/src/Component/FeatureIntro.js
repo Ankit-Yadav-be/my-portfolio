@@ -16,6 +16,7 @@ import {
   FiZap,
   FiDatabase,
   FiArrowRight,
+  FiLayers,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +45,13 @@ export default function FeatureIntro() {
       />
 
       {/* Header */}
-      <VStack spacing={4} textAlign="center" mb={12} position="relative" zIndex={1}>
+      <VStack
+        spacing={4}
+        textAlign="center"
+        mb={12}
+        position="relative"
+        zIndex={1}
+      >
         <Heading
           fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
           fontWeight="800"
@@ -144,7 +151,11 @@ export default function FeatureIntro() {
               optimization techniques used in real-world MERN applications.
             </Text>
 
-            <HStack wrap="wrap" spacing={2} justify={isMobile ? "flex-start" : "flex-end"}>
+            <HStack
+              wrap="wrap"
+              spacing={2}
+              justify={isMobile ? "flex-start" : "flex-end"}
+            >
               <Badge colorScheme="purple">
                 <FiCloud /> Deployment
               </Badge>
@@ -157,93 +168,96 @@ export default function FeatureIntro() {
       </Box>
 
       {/* CTA */}
-     {/* CTA */}
-<Box
-  textAlign="center"
-  mt={16}
-  position="relative"
-  zIndex={1}
->
-  <VStack spacing={6}>
-    <Heading
-      fontSize={{ base: "xl", md: "2xl" }}
-      fontWeight="700"
-      letterSpacing="-0.02em"
-    >
-      Practice Interview-Ready Problems
-    </Heading>
+      <Box textAlign="center" mt={16} position="relative" zIndex={1}>
+        <VStack spacing={6}>
+          <Heading
+            fontSize={{ base: "xl", md: "2xl" }}
+            fontWeight="700"
+            letterSpacing="-0.02em"
+          >
+            Practice Interview-Ready Problems
+          </Heading>
 
-    <Text color="gray.400" maxW="600px" fontSize="sm">
-      Curated interview problems designed to strengthen fundamentals,
-      backend thinking, and real-world problem solving.
-    </Text>
+          <Text color="gray.400" maxW="600px" fontSize="sm">
+            Curated interview problems designed to strengthen fundamentals,
+            backend thinking, and real-world problem solving.
+          </Text>
 
-    <HStack
-      spacing={6}
-      flexWrap="wrap"
-      justify="center"
-    >
-      {/* JavaScript Button */}
-      <Button
-        rightIcon={<FiArrowRight />}
-        size="lg"
-        px={10}
-        rounded="full"
-        bgGradient="linear(to-r, cyan.400, blue.500)"
-        color="white"
-        shadow="0 0 25px rgba(56,189,248,0.45)"
-        _hover={{
-          transform: "translateY(-3px) scale(1.03)",
-          shadow: "0 0 35px rgba(56,189,248,0.75)",
-        }}
-        _active={{ transform: "scale(0.98)" }}
-        transition="all 0.25s ease"
-        onClick={() => navigate("/javascript-interview")}
-      >
-        JavaScript Interview Problems
-      </Button>
+          <HStack spacing={6} flexWrap="wrap" justify="center">
+            {/* JavaScript */}
+            <Button
+              rightIcon={<FiArrowRight />}
+              size="lg"
+              px={10}
+              rounded="full"
+              bgGradient="linear(to-r, cyan.400, blue.500)"
+              color="white"
+              shadow="0 0 25px rgba(56,189,248,0.45)"
+              _hover={{
+                transform: "translateY(-3px) scale(1.03)",
+                shadow: "0 0 35px rgba(56,189,248,0.75)",
+              }}
+              onClick={() => navigate("/javascript-interview")}
+            >
+              JavaScript Interview Problems
+            </Button>
 
-      {/* Node.js Button */}
-      <Button
-        rightIcon={<FiArrowRight />}
-        size="lg"
-        px={10}
-        rounded="full"
-        bgGradient="linear(to-r, green.400, teal.500)"
-        color="white"
-        shadow="0 0 25px rgba(34,197,94,0.45)"
-        _hover={{
-          transform: "translateY(-3px) scale(1.03)",
-          shadow: "0 0 35px rgba(34,197,94,0.75)",
-        }}
-        _active={{ transform: "scale(0.98)" }}
-        transition="all 0.25s ease"
-        onClick={() => navigate("/nodejs-interview")}
-      >
-        Node.js Interview Problems
-      </Button>
-      <Button
-        rightIcon={<FiArrowRight />}
-        size="lg"
-        px={10}
-        rounded="full"
-        bgGradient="linear(to-r, purple.400, pink.500)"
-        color="white"
-        shadow="0 0 25px rgba(168,85,247,0.45)"
-        _hover={{
-          transform: "translateY(-3px) scale(1.03)",
-          shadow: "0 0 35px rgba(168,85,247,0.75)",
-        }}
-        _active={{ transform: "scale(0.98)" }}
-        transition="all 0.25s ease"
-        onClick={() => navigate("/react-interview")}
-      >
-        React Interview Problems
-      </Button>
-    </HStack>
-  </VStack>
-</Box>
+            {/* Node.js */}
+            <Button
+              rightIcon={<FiArrowRight />}
+              size="lg"
+              px={10}
+              rounded="full"
+              bgGradient="linear(to-r, green.400, teal.500)"
+              color="white"
+              shadow="0 0 25px rgba(34,197,94,0.45)"
+              _hover={{
+                transform: "translateY(-3px) scale(1.03)",
+                shadow: "0 0 35px rgba(34,197,94,0.75)",
+              }}
+              onClick={() => navigate("/nodejs-interview")}
+            >
+              Node.js Interview Problems
+            </Button>
 
+            {/* React */}
+            <Button
+              rightIcon={<FiArrowRight />}
+              size="lg"
+              px={10}
+              rounded="full"
+              bgGradient="linear(to-r, purple.400, pink.500)"
+              color="white"
+              shadow="0 0 25px rgba(168,85,247,0.45)"
+              _hover={{
+                transform: "translateY(-3px) scale(1.03)",
+                shadow: "0 0 35px rgba(168,85,247,0.75)",
+              }}
+              onClick={() => navigate("/react-interview")}
+            >
+              React Interview Problems
+            </Button>
+
+            {/* FastAPI */}
+            <Button
+              rightIcon={<FiLayers />}
+              size="lg"
+              px={10}
+              rounded="full"
+              bgGradient="linear(to-r, orange.400, red.500)"
+              color="white"
+              shadow="0 0 25px rgba(251,146,60,0.45)"
+              _hover={{
+                transform: "translateY(-3px) scale(1.03)",
+                shadow: "0 0 35px rgba(251,146,60,0.75)",
+              }}
+              onClick={() => navigate("/fastapi")}
+            >
+              FastAPI – Backend & APIs
+            </Button>
+          </HStack>
+        </VStack>
+      </Box>
     </Box>
   );
 }
