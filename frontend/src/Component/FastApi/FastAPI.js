@@ -9,7 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-import Introduction from "./fastApiCompo/Introduction";
+import Introduction from "./Introduction";
 
 const FastAPI = () => {
   const [activeTopic, setActiveTopic] = useState("introduction");
