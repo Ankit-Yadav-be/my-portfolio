@@ -222,6 +222,24 @@ export default function FeatureIntro() {
       >
         Node.js Interview Problems
       </Button>
+      <Button
+        rightIcon={<FiArrowRight />}
+        size="lg"
+        px={10}
+        rounded="full"
+        bgGradient="linear(to-r, purple.400, pink.500)"
+        color="white"
+        shadow="0 0 25px rgba(168,85,247,0.45)"
+        _hover={{
+          transform: "translateY(-3px) scale(1.03)",
+          shadow: "0 0 35px rgba(168,85,247,0.75)",
+        }}
+        _active={{ transform: "scale(0.98)" }}
+        transition="all 0.25s ease"
+        onClick={() => navigate("/react-interview")}
+      >
+        React Interview Problems
+      </Button>
     </HStack>
   </VStack>
 </Box>
