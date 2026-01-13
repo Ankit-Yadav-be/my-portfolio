@@ -36,7 +36,7 @@ const JavascriptInterview = lazy(() =>
   import("./Component/JavascriptInterview")
 );
 const JavaCore = lazy(() => import("./Component/Java/JavaMain"));
-
+const DSAFormulaHandbook = lazy(() => import("./Component/Java/DsaFormula"));
 // ⭐ Detail Page
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 
@@ -109,6 +109,7 @@ function App() {
               <Route path="/project/:id" element={<ProjectDetailPage />} />
               <Route path="/ai/deep-learning/" element={<DeepLearning />} />
               <Route path="/fastapi/" element={<FastAPI />} />
+              <Route path="/formula" element={<DSAFormulaHandbook />} />
             </Routes>
           </Box>
         </Suspense>

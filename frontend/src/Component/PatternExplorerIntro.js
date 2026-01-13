@@ -60,7 +60,7 @@ export default function PatternExplorerIntro() {
         pointerEvents="none"
       />
 
-      {/* Bottom Diagonal Glow */}
+      {/* Bottom Glow */}
       <Box
         position="absolute"
         bottom="-35%"
@@ -72,7 +72,7 @@ export default function PatternExplorerIntro() {
         pointerEvents="none"
       />
 
-      {/* Subtle Border */}
+      {/* Border */}
       <Box
         position="absolute"
         inset="0"
@@ -92,12 +92,7 @@ export default function PatternExplorerIntro() {
       >
         <VStack align="start" spacing={5}>
           {/* Heading */}
-          <Heading
-            size="lg"
-            color={primaryText}
-            fontWeight="bold"
-            letterSpacing="tight"
-          >
+          <Heading size="lg" color={primaryText} fontWeight="bold">
             DSA Pattern Explorer
           </Heading>
 
@@ -110,28 +105,23 @@ export default function PatternExplorerIntro() {
 
           <Text fontSize="md" color={secondaryText} lineHeight="1.7">
             Problems are organized topic-wise and difficulty-wise, supported
-            with hints, starter logic, and progress tracking to help you stay
-            consistent.
+            with hints, starter logic, and progress tracking.
           </Text>
 
-          {/* Feature Badges */}
+          {/* Badges */}
           <HStack spacing={3} flexWrap="wrap">
             <Badge px={3} py={1} rounded="md" colorScheme="cyan" display="flex" gap={2}>
               <FiLayers /> Structured Topics
             </Badge>
-
             <Badge px={3} py={1} rounded="md" colorScheme="green" display="flex" gap={2}>
               <FiCheckSquare /> Progress Tracking
             </Badge>
-
             <Badge px={3} py={1} rounded="md" colorScheme="blue" display="flex" gap={2}>
               <FiCode /> Hints & Pseudocode
             </Badge>
-
             <Badge px={3} py={1} rounded="md" colorScheme="purple" display="flex" gap={2}>
               <FiTrendingUp /> Interview Patterns
             </Badge>
-
             <Badge px={3} py={1} rounded="md" colorScheme="orange" display="flex" gap={2}>
               <FiBook /> Guided Learning
             </Badge>
@@ -139,38 +129,31 @@ export default function PatternExplorerIntro() {
 
           <Divider borderColor="whiteAlpha.300" />
 
-          {/* Learning Outcomes */}
+          {/* Outcomes */}
           <VStack align="start" spacing={2}>
-            <Text
-              fontSize="sm"
-              fontWeight="semibold"
-              color={accent}
-              letterSpacing="wide"
-            >
+            <Text fontSize="sm" fontWeight="semibold" color={accent}>
               WHAT YOU WILL ACHIEVE
             </Text>
-
             <Text fontSize="sm" color={secondaryText}>
-              • Solve problems using proven DSA patterns instead of brute force.
+              • Solve problems using proven DSA patterns.
             </Text>
             <Text fontSize="sm" color={secondaryText}>
-              • Build consistency with topic-wise and difficulty-wise tracking.
+              • Build strong interview consistency.
             </Text>
             <Text fontSize="sm" color={secondaryText}>
-              • Learn how to approach unseen problems confidently.
+              • Approach unseen problems confidently.
             </Text>
             <Text fontSize="sm" color={secondaryText}>
-              • Strengthen DSA fundamentals for interviews & real-world systems.
+              • Strengthen core DSA fundamentals.
             </Text>
           </VStack>
 
-          {/* Footer Tip */}
-          <Text fontSize="sm" color="cyan.300" fontWeight="medium" pt={2}>
-            Pro tip: Master Easy patterns first, then scale up to Medium & Hard —
-            patterns repeat everywhere.
+          {/* Tip */}
+          <Text fontSize="sm" color="cyan.300" fontWeight="medium">
+            Pro tip: Patterns repeat everywhere — master them once.
           </Text>
 
-          {/* ================= JAVA NOTES CTA ================= */}
+          {/* ================= DSA FORMULA CTA ================= */}
           <Box
             mt={6}
             pt={5}
@@ -178,20 +161,49 @@ export default function PatternExplorerIntro() {
             borderTop="1px solid"
             borderColor="whiteAlpha.300"
           >
-            <HStack
-              spacing={4}
-              justify="space-between"
-              flexWrap="wrap"
-            >
+            <HStack spacing={4} justify="space-between" flexWrap="wrap">
               <Text fontSize="sm" color={secondaryText} maxW="420px">
-                Want to understand <b>how Java actually works internally</b> —
-                JVM, memory, execution engine, and more?
+                Revise all <b>Maths, Bit Manipulation, Binary Search</b> formulas
+                used in LeetCode & SDE interviews — in one place.
+              </Text>
+
+              <Button
+                onClick={() => navigate("/formula")}
+                leftIcon={<FiBook />}
+                rightIcon={<FiArrowRight />}
+                px={6}
+                py={5}
+                rounded="xl"
+                bgGradient="linear(to-r, purple.400, pink.500)"
+                color="white"
+                fontWeight="bold"
+                _hover={{
+                  transform: "translateY(-2px)",
+                  shadow: "xl",
+                }}
+              >
+                Open Formula Handbook
+              </Button>
+            </HStack>
+          </Box>
+
+          {/* ================= JAVA CTA ================= */}
+          <Box
+            mt={4}
+            pt={5}
+            w="100%"
+            borderTop="1px solid"
+            borderColor="whiteAlpha.300"
+          >
+            <HStack spacing={4} justify="space-between" flexWrap="wrap">
+              <Text fontSize="sm" color={secondaryText} maxW="420px">
+                Understand <b>how Java actually works internally</b> — JVM,
+                memory, execution engine, GC & more.
               </Text>
 
               <Button
                 onClick={() => navigate("/java")}
                 rightIcon={<FiArrowRight />}
-                size="md"
                 px={6}
                 py={5}
                 rounded="xl"
@@ -199,14 +211,9 @@ export default function PatternExplorerIntro() {
                 color="gray.900"
                 fontWeight="bold"
                 _hover={{
-                  bgGradient: "linear(to-r, cyan.300, blue.400)",
                   transform: "translateY(-2px)",
                   shadow: "xl",
                 }}
-                _active={{
-                  transform: "translateY(0)",
-                }}
-                transition="all 0.25s ease"
               >
                 Explore Java Mastery
               </Button>
