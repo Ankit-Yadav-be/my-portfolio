@@ -35,6 +35,7 @@ const FastAPI = lazy(() => import("./Component/FastApi/FastAPI"));
 const JavascriptInterview = lazy(() =>
   import("./Component/JavascriptInterview")
 );
+const JavaCore = lazy(() => import("./Component/Java/JavaMain"));
 
 // ⭐ Detail Page
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
@@ -72,6 +73,7 @@ function App() {
               <Route path="/nodejs-interview" element={<NodeJsInterview />} />
               <Route path="/system-design" element={<SystemDesign />} />
               <Route path="/dbms" element={<DBMS />} />
+              <Route path="/java" element={<JavaCore />} />
               <Route path="/system-design/hld" element={<Hld />} />
               <Route
                 path="/system-design/hld/network-protocols"

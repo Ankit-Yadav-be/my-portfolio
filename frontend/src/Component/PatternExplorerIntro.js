@@ -1,4 +1,3 @@
-// src/components/PatternExplorerIntro.jsx
 import {
   Box,
   Heading,
@@ -7,6 +6,7 @@ import {
   HStack,
   Badge,
   Divider,
+  Button,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
@@ -16,11 +16,15 @@ import {
   FiCode,
   FiTrendingUp,
   FiBook,
+  FiArrowRight,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const MotionBox = motion(Box);
 
 export default function PatternExplorerIntro() {
+  const navigate = useNavigate();
+
   const bg = useColorModeValue(
     "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
     "linear-gradient(135deg, #0b0f1a, #020617)"
@@ -98,8 +102,8 @@ export default function PatternExplorerIntro() {
           </Heading>
 
           <Text fontSize="md" color={secondaryText} lineHeight="1.7">
-            Practice Data Structures and Algorithms through a
-            <b> structured, pattern-based approach</b>. This module trains your
+            Practice Data Structures and Algorithms through a{" "}
+            <b>structured, pattern-based approach</b>. This module trains your
             brain to recognize problem patterns just like experienced
             interviewers expect.
           </Text>
@@ -165,6 +169,49 @@ export default function PatternExplorerIntro() {
             Pro tip: Master Easy patterns first, then scale up to Medium & Hard —
             patterns repeat everywhere.
           </Text>
+
+          {/* ================= JAVA NOTES CTA ================= */}
+          <Box
+            mt={6}
+            pt={5}
+            w="100%"
+            borderTop="1px solid"
+            borderColor="whiteAlpha.300"
+          >
+            <HStack
+              spacing={4}
+              justify="space-between"
+              flexWrap="wrap"
+            >
+              <Text fontSize="sm" color={secondaryText} maxW="420px">
+                Want to understand <b>how Java actually works internally</b> —
+                JVM, memory, execution engine, and more?
+              </Text>
+
+              <Button
+                onClick={() => navigate("/java")}
+                rightIcon={<FiArrowRight />}
+                size="md"
+                px={6}
+                py={5}
+                rounded="xl"
+                bgGradient="linear(to-r, cyan.400, blue.500)"
+                color="gray.900"
+                fontWeight="bold"
+                _hover={{
+                  bgGradient: "linear(to-r, cyan.300, blue.400)",
+                  transform: "translateY(-2px)",
+                  shadow: "xl",
+                }}
+                _active={{
+                  transform: "translateY(0)",
+                }}
+                transition="all 0.25s ease"
+              >
+                Explore Java Mastery
+              </Button>
+            </HStack>
+          </Box>
         </VStack>
       </Box>
     </MotionBox>
