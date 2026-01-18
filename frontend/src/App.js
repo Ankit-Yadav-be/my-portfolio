@@ -35,9 +35,9 @@ const FastAPI = lazy(() => import("./Component/FastApi/FastAPI"));
 const JavascriptInterview = lazy(() =>
   import("./Component/JavascriptInterview")
 );
-const JavaScriptDataStructures = lazy(() =>
-  import("./Component/JavaScriptDataStructures")
-);
+// const JavaScriptDataStructures = lazy(() =>
+//   import("./Component/JavaScriptDataStructures")
+// );
 const JavaCore = lazy(() => import("./Component/Java/JavaMain"));
 const DSAFormulaHandbook = lazy(() => import("./Component/Java/DsaFormula"));
 // ⭐ Detail Page
@@ -82,7 +82,7 @@ function App() {
                 path="/system-design/hld/network-protocols"
                 element={<NetworkingProtocols />}
               />
-              <Route path="/javascript-data-structures" element={<JavaScriptDataStructures />} />
+              {/* <Route path="/javascript-data-structures" element={<JavaScriptDataStructures />} /> */}
               <Route
                 path="/system-design/hld/cap-theorem"
                 element={<CapTheorem />}
