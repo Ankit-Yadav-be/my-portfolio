@@ -36,8 +36,7 @@
     "start": "serve -s dist -l 3000",
     "build": "react-scripts build && rm -rf dist && mv build dist",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "npx update-browserslist-db@latest --update-db"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
