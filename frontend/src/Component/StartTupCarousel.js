@@ -1,7 +1,5 @@
-// StartTupCarousel.jsx
-// Real carousel UX: px-based swipe, snap-to-slide, arrows, dots, autoplay, pause-on-hover
 
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import {
   Box,
   Text,
@@ -17,6 +15,7 @@ import { motion } from "framer-motion";
 import {
   FaChevronLeft,
   FaChevronRight,
+  FaPlayCircle
 } from "react-icons/fa";
 
 const MotionBox = motion(Box);
