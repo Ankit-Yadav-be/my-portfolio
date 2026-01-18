@@ -17,7 +17,6 @@ import {
   FaHtml5,
   FaCss3Alt,
   FaJs,
-  FaDatabase,
   FaDocker,
   FaAws,
   FaGoogle,

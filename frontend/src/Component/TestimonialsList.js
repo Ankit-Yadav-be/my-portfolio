@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { 
   Box, Text, Image, VStack, Flex, useColorMode, Icon, Modal, 
-  ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Button
+  ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody,
 } from "@chakra-ui/react";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa"; 
 import { motion } from "framer-motion";
@@ -11,18 +11,18 @@ import TestimonialForm from "./TestimonialForm";
 const TestimonialList = () => {
   const { colorMode } = useColorMode();
   const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
+ 
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
 
   useEffect(() => {
     axios.get("https://my-portfolio-lw4x.vercel.app/api/testimonials")
       .then((response) => {
         setTestimonials(response.data);
-        setLoading(false);
+        
       })
       .catch((error) => {
         console.error("Error fetching testimonials:", error);
-        setLoading(false);
+        
       });
   }, []);
 

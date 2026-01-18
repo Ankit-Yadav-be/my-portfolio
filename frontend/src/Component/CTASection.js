@@ -1,4 +1,4 @@
-import { Box, Button, Text, VStack, HStack, Link, useColorMode, Icon, Flex } from "@chakra-ui/react";
+import { Box, Button, Text, HStack, Link, useColorMode, Icon, Flex } from "@chakra-ui/react";
 import { FaLinkedin, FaGithub, FaEnvelope, FaCalendar, FaMoon, FaSun } from "react-icons/fa";
 import { motion } from "framer-motion";
 

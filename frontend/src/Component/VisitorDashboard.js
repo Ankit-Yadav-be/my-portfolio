@@ -11,7 +11,6 @@ import {
   Text,
   Spinner,
   Icon,
-  useColorModeValue,
   Flex,
   Badge,
 } from "@chakra-ui/react";

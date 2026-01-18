@@ -1,40 +1,24 @@
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  IconButton,
-  useColorMode,
-  Divider,
-  Tooltip,
-  Fade,
-  Text,
-} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Box, Divider } from "@chakra-ui/react";
 import axios from "axios";
+
 import ProjectsSection from "./ProjectSection";
 import Certifications from "./certifications";
 import LeftSection from "./LeftSection";
 import CTASection from "./CTASection";
 import TestimonialList from "./TestimonialsList";
-// import VisitorStats from "./VisitorStates";   // ✅ Already Commented
 import AboutMeSection from "./AboutMe";
-import { FaChartBar } from "react-icons/fa";
 import StartTupCarousel from "./StartTupCarousel";
 
 const Portfolio = () => {
   const [user, setUser] = useState({});
   const [isDarkMode, setIsDarkMode] = useState(true);
-  // const [showVisitorStats, setShowVisitorStats] = useState(false);  // ✅ Commented
-  const [highlightButton, setHighlightButton] = useState(true);
-  const [showIntro, setShowIntro] = useState(true);
-  const { toggleColorMode } = useColorMode();
 
   useEffect(() => {
     axios
       .get("https://my-portfolio-lw4x.vercel.app/api/user-profile")
       .then((response) => setUser(response.data))
       .catch((error) => console.error("Error fetching user profile:", error));
-
-    setTimeout(() => setHighlightButton(false), 3000);
-    setTimeout(() => setShowIntro(false), 7000);
   }, []);
 
   return (
@@ -54,28 +38,6 @@ const Portfolio = () => {
         setIsDarkMode={setIsDarkMode}
       />
 
-      {/* Visitor Stats Icon — Completely Disabled */}
-      {/* 
-      <Tooltip label="Check website visitor analytics" placement="left">
-        <IconButton
-          icon={<FaChartBar />}
-          colorScheme="blue"
-          position="fixed"
-          top={{ base: "90px", md: "80px" }}
-          right="20px"
-          zIndex="150"
-          size="lg"
-          onClick={() => setShowVisitorStats(!showVisitorStats)}
-          boxShadow={highlightButton ? "0 0 15px #00A3FF" : "none"}
-          transition="0.3s ease-in-out"
-          _hover={{
-            transform: "scale(1.1)",
-            boxShadow: "0 0 20px #00A3FF",
-          }}
-        />
-      </Tooltip>
-      */}
-
       {/* Right Section */}
       <Box
         flex="1"
@@ -85,9 +47,6 @@ const Portfolio = () => {
         borderRadius="lg"
         boxShadow="xl"
       >
-        {/* Visitor Stats Component — Disabled */}
-        {/* {showVisitorStats && <VisitorStats />} */}
-        
         <AboutMeSection />
         <StartTupCarousel />
         <ProjectsSection my={2} />

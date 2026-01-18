@@ -10,12 +10,12 @@ import {
   VStack,
   Divider,
   Spinner,
-  useColorMode,
   Stack,
-  Alert,
-  AlertIcon,
   Code,
   Icon,
+  useColorMode,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -77,7 +77,6 @@ const ProjectDetailPage = () => {
       try {
         const res = await axios.get(endpoint);
         const end = performance.now();
-
         setProject(res.data.data);
         setApiInfo({
           url: endpoint,
@@ -86,12 +85,13 @@ const ProjectDetailPage = () => {
         });
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchProject();
-  }, [id]);
+  }, [id, endpoint]);
 
   if (loading)
     return (
@@ -177,6 +177,7 @@ const ProjectDetailPage = () => {
                 </Box>
               )}
               <iframe
+                title={project.title} // ✅ added title for accessibility
                 src={getEmbedUrl(project.video)}
                 width="100%"
                 height="100%"
@@ -216,7 +217,7 @@ const ProjectDetailPage = () => {
                 const IconComp = techIcons[tech.toLowerCase()];
                 return (
                   <Badge
-                    key={idx}
+                    key={`${tech}-${idx}`}
                     px={3}
                     py={2}
                     borderRadius="md"
@@ -234,24 +235,30 @@ const ProjectDetailPage = () => {
           </Box>
 
           <HStack spacing={4} pt={4}>
-            <Button
-              as="a"
-              href={project.github}
-              target="_blank"
-              leftIcon={<FaGithub />}
-              variant="outline"
-            >
-              GitHub
-            </Button>
-            <Button
-              as="a"
-              href={project.link}
-              target="_blank"
-              leftIcon={<FaLink />}
-              colorScheme="teal"
-            >
-              Live Demo
-            </Button>
+            {project.github && (
+              <Button
+                as="a"
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                leftIcon={<FaGithub />}
+                variant="outline"
+              >
+                GitHub
+              </Button>
+            )}
+            {project.link && (
+              <Button
+                as="a"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                leftIcon={<FaLink />}
+                colorScheme="teal"
+              >
+                Live Demo
+              </Button>
+            )}
           </HStack>
         </VStack>
       </Stack>
