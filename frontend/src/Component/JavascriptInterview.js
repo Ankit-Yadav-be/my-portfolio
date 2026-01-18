@@ -1,4 +1,3 @@
-// src/pages/JavascriptInterview.jsx
 import React, { useState } from "react";
 import {
   Box,
@@ -11,8 +10,11 @@ import {
   Button,
   Code,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const MotionBox = motion(Box);
 
@@ -81,13 +83,7 @@ setTimeout(() => console.log("Timeout"), 0);
 
 Promise.resolve().then(() => console.log("Promise"));
 
-console.log("End");
-
-// Output:
-// Start
-// End
-// Promise
-// Timeout`,
+console.log("End");`,
   },
   {
     id: 5,
@@ -155,6 +151,8 @@ function throttle(fn, limit) {
 ];
 
 const JavascriptInterview = () => {
+  const navigate = useNavigate();
+
   const bg = useColorModeValue("white", "gray.800");
   const shadow = useColorModeValue("lg", "dark-lg");
   const textColor = useColorModeValue("gray.700", "gray.300");
@@ -168,14 +166,38 @@ const JavascriptInterview = () => {
 
   return (
     <Box px={{ base: 4, sm: 6, md: 10 }} py={{ base: 6, md: 10 }}>
-      <Heading
+      {/* 🔥 Header + CTA */}
+      <HStack
+        justify="space-between"
+        align="center"
         mb={{ base: 6, md: 8 }}
-        fontSize={{ base: "2xl", md: "3xl" }}
-        bgGradient="linear(to-r, teal.400, blue.500)"
-        bgClip="text"
+        flexWrap="wrap"
+        gap={4}
       >
-        JavaScript Interview Master Guide
-      </Heading>
+        <Heading
+          fontSize={{ base: "2xl", md: "3xl" }}
+          bgGradient="linear(to-r, teal.400, blue.500)"
+          bgClip="text"
+        >
+          JavaScript Interview Master Guide
+        </Heading>
+
+        <Button
+          rightIcon={<ArrowForwardIcon />}
+          colorScheme="purple"
+          rounded="full"
+          px={6}
+          py={5}
+          shadow="lg"
+          _hover={{
+            transform: "translateY(-2px)",
+            shadow: "2xl",
+          }}
+          onClick={() => navigate("/javascript-data-structures")}
+        >
+          JS Data Structures Notes
+        </Button>
+      </HStack>
 
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
         {interviewQuestions.map((item) => (
@@ -205,9 +227,7 @@ const JavascriptInterview = () => {
 
               <Heading size="md">{item.title}</Heading>
 
-              <Text fontWeight="semibold">
-                {item.question}
-              </Text>
+              <Text fontWeight="semibold">{item.question}</Text>
 
               <Text fontSize="sm" color={textColor}>
                 {item.explanation}
@@ -216,25 +236,17 @@ const JavascriptInterview = () => {
 
             <Button
               mt={5}
-              w={{ base: "100%", sm: "fit-content" }}
-              alignSelf={{ base: "stretch", sm: "flex-start" }}
               size="sm"
               colorScheme="teal"
-              onClick={() => toggle(item.id)}
               rounded="full"
-              whiteSpace="nowrap"
+              alignSelf="flex-start"
+              onClick={() => toggle(item.id)}
             >
               {open[item.id] ? "Hide Code" : "Show Code"}
             </Button>
 
             <Collapse in={open[item.id]} animateOpacity>
-              <Box
-                mt={4}
-                p={3}
-                bg={codeBg}
-                rounded="lg"
-                overflowX="auto"
-              >
+              <Box mt={4} p={3} bg={codeBg} rounded="lg" overflowX="auto">
                 <Code
                   display="block"
                   whiteSpace="pre"
