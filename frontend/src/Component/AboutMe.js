@@ -147,31 +147,42 @@ const AboutMeSection = () => {
         </VStack>
 
         {/* ================= VIDEO ================= */}
-        <MotionBox
-          position="relative"
-          h={{ base: "260px", md: "460px" }}
-          rounded="3xl"
-          overflow="hidden"
-          border={`1px solid ${border}`}
-          bg={useColorModeValue("white", "gray.900")}
-          boxShadow="0 30px 70px rgba(0,0,0,0.35)"
-          whileHover={{ scale: 1.015 }}
-        >
-          <Box
-            position="absolute"
-            inset={0}
-            bgGradient="linear(to-t, blackAlpha.700, transparent 60%)"
-            zIndex={1}
-          />
-          <iframe
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/YlSr3Ypl6UE?rel=0&modestbranding=1"
-            title="Introduction Video"
-            style={{ border: "none", borderRadius: "24px" }}
-            allowFullScreen
-          />
-        </MotionBox>
+       <MotionBox
+  position="relative"
+  h={{ base: "260px", md: "460px" }}
+  rounded="3xl"
+  overflow="hidden"
+  border={`1px solid ${border}`}
+  bg={useColorModeValue("white", "gray.900")}
+  boxShadow="0 30px 70px rgba(0,0,0,0.35)"
+  whileHover={{ scale: 1.015 }}
+>
+  {/* Gradient overlay (visual only) */}
+  <Box
+    position="absolute"
+    inset={0}
+    bgGradient="linear(to-t, blackAlpha.700, transparent 60%)"
+    zIndex={1}
+    pointerEvents="none"   // 🔥 THIS IS THE KEY
+  />
+
+  {/* IFRAME */}
+  <Box position="relative" zIndex={2} w="100%" h="100%">
+    <iframe
+      width="100%"
+      height="100%"
+      src="https://www.youtube.com/embed/YlSr3Ypl6UE?rel=0&modestbranding=1"
+      title="Introduction Video"
+      style={{
+        border: "none",
+        borderRadius: "24px",
+      }}
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowFullScreen
+    />
+  </Box>
+</MotionBox>
+
       </SimpleGrid>
 
       {/* ================= EXPERIENCE ================= */}
