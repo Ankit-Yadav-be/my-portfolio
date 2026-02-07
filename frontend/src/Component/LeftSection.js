@@ -159,7 +159,7 @@ const LeftSection = ({ user, isDarkMode, setIsDarkMode }) => {
           w="full"
           leftIcon={<FaDownload />}
           colorScheme={isDarkMode ? "cyan" : "red"}
-          onClick={() => (window.location.href = user.resumeLink || "/RESUMEE.pdf")}
+          onClick={() => (window.location.href = user.resumeLink || "/Ankit(Resume_SDE).pdf")}
         >
           Download Resume
         </Button>

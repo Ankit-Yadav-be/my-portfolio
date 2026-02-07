@@ -9,10 +9,17 @@ import {
   Badge,
   useColorModeValue,
   Divider,
+  Link,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
-import { FaRobot, FaBrain, FaCodeBranch } from "react-icons/fa";
+import {
+  FaRobot,
+  FaBrain,
+  FaCodeBranch,
+  FaLinkedin,
+  FaGlobe,
+} from "react-icons/fa";
 import { FaBrain as FaProblem } from "react-icons/fa";
 
 import LeetCodeWidget from "./LeetcodeWidgets";
@@ -39,6 +46,9 @@ const AboutMeSection = () => {
       company: "LiveInTech Venture Studio",
       location: "Bengaluru, India",
       duration: "Jan 2026 – Present",
+      linkedin:
+        "https://www.linkedin.com/company/liveintech-venturestudio/posts/?feedView=all",
+      website: "https://liveintech.co/",
       tech: [
         "Node.js",
         "MySQL",
@@ -60,6 +70,9 @@ const AboutMeSection = () => {
       company: "LitAmor",
       location: "Remote",
       duration: "Jul 2025 – Jan 2026",
+      linkedin:
+        "https://www.linkedin.com/company/lit-amor/posts/?feedView=all",
+      website: "https://www.litamor.co/",
       tech: ["React Native", "Firebase", "Firestore"],
       points: [
         "Built cross-platform mobile features with clean UI and scalable architecture.",
@@ -70,7 +83,12 @@ const AboutMeSection = () => {
   ];
 
   return (
-    <Box maxW="1280px" mx="auto" px={{ base: 6, md: 12 }} mt={{ base: 12, md: 24 }}>
+    <Box
+      maxW="1280px"
+      mx="auto"
+      px={{ base: 6, md: 12 }}
+      mt={{ base: 12, md: 24 }}
+    >
       {/* ================= HERO ================= */}
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 12, md: 20 }}>
         <VStack align="start" spacing={6}>
@@ -114,11 +132,11 @@ const AboutMeSection = () => {
           <Text fontSize="lg" color={textSecondary} maxW="92%">
             Associate Software Engineer at{" "}
             <b>LiveInTech Venture Studio, Bengaluru</b>. I work on backend
-            engineering, database design, and system scalability, with a strong
-            focus on writing clean, maintainable, and production-ready code.
+            engineering, database design, and system scalability with a strong
+            focus on clean, maintainable, and production-ready code.
           </Text>
 
-          <HStack spacing={4} pt={2}>
+          <HStack spacing={4}>
             <Badge colorScheme="cyan" px={4} py={1} rounded="full">
               Bengaluru 🇮🇳
             </Badge>
@@ -145,7 +163,6 @@ const AboutMeSection = () => {
             bgGradient="linear(to-t, blackAlpha.700, transparent 60%)"
             zIndex={1}
           />
-
           <iframe
             width="100%"
             height="100%"
@@ -195,6 +212,49 @@ const AboutMeSection = () => {
 
             <Divider my={4} />
 
+            {/* ================= COMPANY LINKS ================= */}
+            <HStack spacing={4} mb={4}>
+              <Link href={exp.linkedin} isExternal>
+                <HStack
+                  px={4}
+                  py={2}
+                  rounded="full"
+                  border={`1px solid ${border}`}
+                  _hover={{
+                    bg: "cyan.50",
+                    transform: "translateY(-2px)",
+                    boxShadow: "md",
+                  }}
+                  transition="all 0.25s ease"
+                >
+                  <Icon as={FaLinkedin} color="#0A66C2" />
+                  <Text fontSize="sm" fontWeight="medium">
+                    LinkedIn
+                  </Text>
+                </HStack>
+              </Link>
+
+              <Link href={exp.website} isExternal>
+                <HStack
+                  px={4}
+                  py={2}
+                  rounded="full"
+                  border={`1px solid ${border}`}
+                  _hover={{
+                    bg: "cyan.50",
+                    transform: "translateY(-2px)",
+                    boxShadow: "md",
+                  }}
+                  transition="all 0.25s ease"
+                >
+                  <Icon as={FaGlobe} color={cyan} />
+                  <Text fontSize="sm" fontWeight="medium">
+                    Website
+                  </Text>
+                </HStack>
+              </Link>
+            </HStack>
+
             <VStack align="start" spacing={2}>
               {exp.points.map((p, i) => (
                 <HStack key={i} align="start">
@@ -232,7 +292,7 @@ const AboutMeSection = () => {
           </Text>
 
           <Text fontSize="4xl" fontWeight="extrabold" color={accent}>
-          600+
+            600+
           </Text>
 
           <Text fontSize="lg" color={textSecondary}>
