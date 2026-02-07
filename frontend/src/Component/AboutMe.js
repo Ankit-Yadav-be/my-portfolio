@@ -38,7 +38,7 @@ const AboutMeSection = () => {
       role: "Associate Software Engineer",
       company: "LiveInTech Venture Studio",
       location: "Bengaluru, India",
-      duration: "Feb 2026 – Present",
+      duration: "Jan 2026 – Present",
       tech: [
         "Node.js",
         "MySQL",
