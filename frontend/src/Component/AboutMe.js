@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
-import { FaRobot, FaBrain } from "react-icons/fa";
+import { FaRobot, FaBrain, FaCodeBranch } from "react-icons/fa";
 import { FaBrain as FaProblem } from "react-icons/fa";
 
 import LeetCodeWidget from "./LeetcodeWidgets";
@@ -32,16 +32,39 @@ const AboutMeSection = () => {
   const accent = "#FFE082";
   const border = useColorModeValue("gray.200", "whiteAlpha.200");
 
+  /* ================= EXPERIENCE DATA ================= */
   const experiences = [
+    {
+      role: "Associate Software Engineer",
+      company: "LiveInTech Venture Studio",
+      location: "Bengaluru, India",
+      duration: "Feb 2026 – Present",
+      tech: [
+        "Node.js",
+        "MySQL",
+        "Drizzle ORM",
+        "Redis",
+        "BullMQ",
+        "Docker",
+      ],
+      points: [
+        "Working on scalable backend systems for real-world production applications.",
+        "Designing and optimizing relational database schemas using MySQL and Drizzle ORM.",
+        "Implementing caching and background job processing with Redis and BullMQ.",
+        "Collaborating with senior engineers to build maintainable, high-performance services.",
+        "Actively contributing to code reviews, debugging, and system improvements.",
+      ],
+    },
     {
       role: "Android Developer Intern",
       company: "LitAmor",
-      duration: "Jul 2025 – Present",
+      location: "Remote",
+      duration: "Jul 2025 – Jan 2026",
       tech: ["React Native", "Firebase", "Firestore"],
       points: [
-        "Designed and developed scalable cross-platform mobile applications.",
-        "Improved backend efficiency and reduced response latency by ~40%.",
-        "Collaborated closely with product teams to deliver production-ready features.",
+        "Built cross-platform mobile features with clean UI and scalable architecture.",
+        "Integrated Firebase services for authentication, storage, and real-time data.",
+        "Worked closely with product teams to deliver production-ready features.",
       ],
     },
   ];
@@ -57,7 +80,7 @@ const AboutMeSection = () => {
             textTransform="uppercase"
             color={textSecondary}
           >
-            Full Stack • AI • Product Engineering
+            Associate Software Engineer • Backend • Scalable Systems
           </Text>
 
           <MotionText
@@ -75,10 +98,10 @@ const AboutMeSection = () => {
             <Text fontSize="xl" color={cyan} fontWeight="semibold">
               <ReactTyped
                 strings={[
-                  "AI Engineer",
-                  "Full Stack Developer",
-                  "Problem Solver",
+                  "Associate Software Engineer",
+                  "Backend & System Design",
                   "Building Scalable Products",
+                  "Problem Solver",
                 ]}
                 typeSpeed={50}
                 backSpeed={30}
@@ -88,11 +111,21 @@ const AboutMeSection = () => {
             <Icon as={FaBrain} color={cyan} />
           </MotionHStack>
 
-          <Text fontSize="lg" color={textSecondary} maxW="90%">
-            I specialize in building reliable, scalable applications and intelligent
-            systems with a strong focus on performance, maintainability, and
-            real-world impact.
+          <Text fontSize="lg" color={textSecondary} maxW="92%">
+            Associate Software Engineer at{" "}
+            <b>LiveInTech Venture Studio, Bengaluru</b>. I work on backend
+            engineering, database design, and system scalability, with a strong
+            focus on writing clean, maintainable, and production-ready code.
           </Text>
+
+          <HStack spacing={4} pt={2}>
+            <Badge colorScheme="cyan" px={4} py={1} rounded="full">
+              Bengaluru 🇮🇳
+            </Badge>
+            <Badge colorScheme="yellow" px={4} py={1} rounded="full">
+              Full-Time
+            </Badge>
+          </HStack>
         </VStack>
 
         {/* ================= VIDEO ================= */}
@@ -105,83 +138,22 @@ const AboutMeSection = () => {
           bg={useColorModeValue("white", "gray.900")}
           boxShadow="0 30px 70px rgba(0,0,0,0.35)"
           whileHover={{ scale: 1.015 }}
-          transition={{ type: "spring", stiffness: 160, damping: 22 }}
         >
-          {/* Premium Label */}
-          <HStack
-            position="absolute"
-            top="16px"
-            left="16px"
-            spacing={2}
-            px={4}
-            py={2}
-            bg="blackAlpha.800"
-            backdropFilter="blur(10px)"
-            rounded="full"
-            zIndex={3}
-            boxShadow="lg"
-            pointerEvents="none"
-          >
-            <Icon as={FaRobot} color={cyan} />
-            <Text
-              fontSize="xs"
-              fontWeight="bold"
-              letterSpacing="wide"
-              color="white"
-            >
-              INTRODUCTION VIDEO
-            </Text>
-          </HStack>
-
-          {/* Gradient Overlay */}
           <Box
             position="absolute"
             inset={0}
             bgGradient="linear(to-t, blackAlpha.700, transparent 60%)"
             zIndex={1}
-            pointerEvents="none"
           />
 
-          {/* VIDEO */}
-          <Box position="relative" w="100%" h="100%" zIndex={0}>
-            <iframe
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/YlSr3Ypl6UE?rel=0&modestbranding=1"
-              title="Introduction Video"
-              style={{
-                border: "none",
-                borderRadius: "24px",
-              }}
-              allowFullScreen
-            />
-          </Box>
-
-          {/* Bottom Caption */}
-          <VStack
-            position="absolute"
-            bottom="0"
-            w="100%"
-            px={{ base: 4, md: 8 }}
-            py={{ base: 3, md: 5 }}
-            spacing={1}
-            align="start"
-            zIndex={2}
-            pointerEvents="none"
-          >
-            <Text fontSize="sm" color="gray.300">
-              Founder’s Introduction
-            </Text>
-            <Text
-              fontSize={{ base: "sm", md: "md" }}
-              fontWeight="semibold"
-              color="white"
-              maxW="90%"
-            >
-              My background, mindset, and approach to building scalable real-world
-              products.
-            </Text>
-          </VStack>
+          <iframe
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/YlSr3Ypl6UE?rel=0&modestbranding=1"
+            title="Introduction Video"
+            style={{ border: "none", borderRadius: "24px" }}
+            allowFullScreen
+          />
         </MotionBox>
       </SimpleGrid>
 
@@ -189,10 +161,10 @@ const AboutMeSection = () => {
       <VStack spacing={14} mt={28}>
         <VStack spacing={2}>
           <Text fontSize="3xl" fontWeight="bold" color={cyan}>
-            Work Experience
+            Professional Experience
           </Text>
           <Text fontSize="sm" color={textSecondary}>
-            Roles where I delivered measurable impact
+            Career journey & real-world impact
           </Text>
         </VStack>
 
@@ -210,7 +182,7 @@ const AboutMeSection = () => {
               {exp.role} — {exp.company}
             </Text>
             <Text fontSize="sm" color={cyan} mt={1}>
-              {exp.duration}
+              {exp.duration} • {exp.location}
             </Text>
 
             <HStack spacing={2} mt={4} wrap="wrap">
@@ -225,9 +197,12 @@ const AboutMeSection = () => {
 
             <VStack align="start" spacing={2}>
               {exp.points.map((p, i) => (
-                <Text key={i} fontSize="sm" color={textSecondary}>
-                  • {p}
-                </Text>
+                <HStack key={i} align="start">
+                  <Icon as={FaCodeBranch} mt={1} color={cyan} />
+                  <Text fontSize="sm" color={textSecondary}>
+                    {p}
+                  </Text>
+                </HStack>
               ))}
             </VStack>
           </MotionBox>
@@ -253,22 +228,23 @@ const AboutMeSection = () => {
             color={textSecondary}
             textTransform="uppercase"
           >
-            Proof of Work
+            Problem Solving
           </Text>
 
           <Text fontSize="4xl" fontWeight="extrabold" color={accent}>
-            500+
+          600+
           </Text>
 
           <Text fontSize="lg" color={textSecondary}>
-            Solved 500+ algorithmic and data-structure problems, sharpening
-            analytical thinking and the ability to approach complex challenges
-            systematically.
+            Solved 500+ DSA and algorithmic problems, strengthening logical
+            thinking, debugging skills, and system-level problem solving.
           </Text>
 
           <HStack spacing={3}>
             <Icon as={FaProblem} color={cyan} boxSize={7} />
-            <Text color={textSecondary}>Consistent daily DSA practice</Text>
+            <Text color={textSecondary}>
+              Consistent daily problem-solving mindset
+            </Text>
           </HStack>
         </VStack>
       </SimpleGrid>
